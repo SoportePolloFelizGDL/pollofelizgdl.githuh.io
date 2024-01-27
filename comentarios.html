@@ -1,12 +1,14 @@
-<html>
+<html lang="es">
     <head>
+        <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Formulario de Comentarios</title>
         <link rel="stylesheet" href="estilo.css">
         <style>
             .img-center{
                 text-align: center;
             }
         </style>
-
     </head>
     <body>
         <div class="img-center">
@@ -20,24 +22,22 @@
         <button><a href="empleado.html">EMPLEADO DEL MES</a></button>
         </div>
         <div class="img-center">
-            <h2>Nos interesa conocer tu opinion</h1>
-
-                <form action="/formulario" method="post">
-                    <label for="Nombre">Nombre:</label>
-                    <input type="text" id="Nombre" name="Nombre" placeholder="Nombre">
-                    <br>
-                    <label for="Apellido">Apellido:</label>
-                    <input type="text" id="Apellido" name="Apellido" placeholder="Apellido">
-                    <br>
-                    <label for="E-mail">E-mail:</label>
-                    <input type="text" id="E-mail" name="E-mail" placeholder="E-mail">
-                    <br>
-                    <label for="Comentario">Comentario:</label>
-                    <textarea cols="50" rows="10"  name="Comentario" id="Comentario" placeholder="Ingrese su Comentario" cols="30" rows="10"></textarea>
-                    <br>
-                    <!--input type="submit"-->
-                    <button><a href="Enviar.html">Enviar</a></button>
-                </form>
+            <h2>Nos interesa conocer tu opinión</h2>
+        <form action="procesar_comentarios.php" method="post">
+            <label for="Nombre">Nombre:</label>
+            <input type="text" id="Nombre" name="Nombre" placeholder="Nombre" required>
+            <br>
+            <label for="Apellido">Apellido:</label>
+            <input type="text" id="Apellido" name="Apellido" placeholder="Apellido" required>
+            <br>
+            <label for="E-mail">E-mail:</label>
+            <input type="email" id="E-mail" name="E-mail" placeholder="E-mail" required>
+            <br>
+            <label for="Comentario">Comentario:</label>
+            <textarea name="Comentario" id="Comentario" placeholder="Ingrese su Comentario" cols="30" rows="10" required></textarea>
+            <br>
+           <button type="submit">Enviar</button>
+        </form>
 
         </div>
 
