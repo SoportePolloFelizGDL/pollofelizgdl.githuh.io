@@ -2,7 +2,7 @@ button {
     background: yellow; /* Fondo amarillo */
     cursor: pointer;
     border: 2px solid red; /* Marco rojo */
-    padding: 10px 20px; /* Ajusta el espaciado según sea necesario */
+    padding: 10px 1px; /* Ajusta el espaciado según sea necesario */
     color: black; /* Letras negras */
     font-size: 24px;
     font-weight: bold;
