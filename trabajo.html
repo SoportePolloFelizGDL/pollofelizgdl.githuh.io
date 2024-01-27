@@ -1,15 +1,17 @@
-<html>
-    <head>
-        <link rel="stylesheet" href="estilo.css">
-        <style>
-            .img-center{
-                text-align: center;
-            }
-        </style>
+<!DOCTYPE html>
+<html lang="es">
 
-    </head>
-    <body>
-        <div class="img-center">
+<head>
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        .img-center {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="img-center">
         <H1>BOLSA DE TRABAJO</H1>
         <button><a href="index.html">INICIO</a></button>
         <button><a href="nosotros.html">NOSOTROS</a></button>
@@ -18,16 +20,52 @@
         <button><a href="trabajo.html">BOLSA DE TRABAJO</a></button>
         <button><a href="encuentranos.html">ENCUENTRANOS</a></button>
         <button><a href="empleado.html">EMPLEADO DEL MES</a></button>
-        </div>
+    </div>
 
-        <div class="img-center">
-            
-            <h1></h1>
-            <hr>
-            <img src="Menu/Empleo.png" width="75%" alt="Pollo Feliz GDL">
-            
-        </div>
-    
-    </body>
-    </html>
-    
+    <div class="img-center">
+        <h1>Bolsa de Trabajo</h1>
+        <hr>
+        <img src="Menu/Empleo.png" width="75%" alt="Pollo Feliz GDL">
+
+        <h2>Te interesa trabajar con nosotros?</h2>
+
+        <form id="trabajoForm" onsubmit="enviarSolicitud(); return false;">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <br>
+
+            <label for="sucursal">Sucursal en la que te gustaría trabajar:</label>
+            <input type="text" id="sucursal" placeholder="Sucursal" required>
+            <br>
+
+            <button type="submit">
+                <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+            </button>
+        </form>
+    </div>
+
+    <script>
+        function enviarSolicitud() {
+            var nombre = document.getElementById("nombre").value;
+            var sucursal = document.getElementById("sucursal").value;
+
+            if (nombre && sucursal) {
+                var mensaje = "Hola, soy " + nombre +
+                              ", y estoy interesado en trabajar en la sucursal " + sucursal;
+
+                var numero1 = "523319641074";
+                var numero2 = "523337010866";
+
+                var enlaceWhatsApp1 = "https://wa.me/" + numero1 + "/?text=" + encodeURIComponent(mensaje);
+                var enlaceWhatsApp2 = "https://wa.me/" + numero2 + "/?text=" + encodeURIComponent(mensaje);
+
+                window.open(enlaceWhatsApp1, '_blank');
+                window.open(enlaceWhatsApp2, '_blank');
+            } else {
+                alert("Por favor, completa todos los campos antes de enviar el formulario.");
+            }
+        }
+    </script>
+</body>
+
+</html>   
