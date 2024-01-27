@@ -1,18 +1,20 @@
+<!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Formulario de Comentarios</title>
-        <link rel="stylesheet" href="estilo.css">
-        <style>
-            .img-center{
-                text-align: center;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="img-center">
-        <H1>COMENTARIOS</H1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Comentarios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-0mSb8j/7Wn4M1JkUGqf3q2cjsT5PWgEbYH8F5bJ6Up/c1z4hZp0M6W6I5ITZU4Cj" crossorigin="anonymous">
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        .img-center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="img-center">
+        <h1>COMENTARIOS</h1>
         <button><a href="index.html">INICIO</a></button>
         <button><a href="nosotros.html">NOSOTROS</a></button>
         <button><a href="carta.html">NUESTRA CARTA</a></button>
@@ -20,26 +22,54 @@
         <button><a href="trabajo.html">BOLSA DE TRABAJO</a></button>
         <button><a href="encuentranos.html">ENCUENTRANOS</a></button>
         <button><a href="empleado.html">EMPLEADO DEL MES</a></button>
-        </div>
-        <div class="img-center">
-            <h2>Nos interesa conocer tu opinión</h2>
-        <form action="procesar_comentarios.php" method="post">
-            <label for="Nombre">Nombre:</label>
-            <input type="text" id="Nombre" name="Nombre" placeholder="Nombre" required>
-            <br>
-            <label for="Apellido">Apellido:</label>
-            <input type="text" id="Apellido" name="Apellido" placeholder="Apellido" required>
-            <br>
-            <label for="E-mail">E-mail:</label>
-            <input type="email" id="E-mail" name="E-mail" placeholder="E-mail" required>
-            <br>
-            <label for="Comentario">Comentario:</label>
-            <textarea name="Comentario" id="Comentario" placeholder="Ingrese su Comentario" cols="30" rows="10" required></textarea>
-            <br>
-           <button type="submit">Enviar</button>
-        </form>
+    </div>
 
-        </div>
+    <div class="img-center">
+    <h2>Nos interesa conocer tu opinión</h2>
 
-    </body>
+    <form id="comentariosForm" onsubmit="enviarComentario(); return false;">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" placeholder="nombre" required>
+        <br>
+        
+        <label for="sucursal">Sucursal:</label>
+        <input type="text" id="sucursal" placeholder="sucursal" required>
+        <br>
+
+        <label for="correo">Correo:</label>
+        <input type="email" id="correo" placeholder="Correo Electrónico" required>
+        <br>
+
+        <label for="comentario">Comentario:</label>
+        <textarea id="comentario" placeholder="Escribe tu comentario aquí" required></textarea>
+        <br>
+
+        <button type="submit">
+            <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+        </button>
+    </form>
+
+    <script>
+        function enviarComentario() {
+            var nombre = document.getElementById("nombre").value;
+            var sucursal = document.getElementById("sucursal").value;
+            var correo = document.getElementById("correo").value;
+            var comentario = document.getElementById("comentario").value;
+
+            if (nombre && correo && comentario) {
+                var mensaje = " Hola, soy " + nombre +
+                              ", cliente de la sucursal " + sucursal +
+                              ", mi correo es: " + correo +
+                              "; y " + comentario;
+
+                var enlaceWhatsApp = "https://wa.me/523337010888/?text=" + encodeURIComponent(mensaje);
+
+                window.open(enlaceWhatsApp, '_blank');
+            } else {
+                alert("Por favor, completa todos los campos antes de enviar el comentario.");
+            }
+        }
+    </script>
+    </div>
+</body>
 </html>
