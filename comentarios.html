@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="img-center">
         <h1>COMENTARIOS</h1>
@@ -25,51 +27,57 @@
     </div>
 
     <div class="img-center">
-    <h2>Nos interesa conocer tu opinión</h2>
+        <h2>Nos interesa conocer tu opinión</h2>
 
-    <form id="comentariosForm" onsubmit="enviarComentario(); return false;">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" placeholder="nombre" required>
-        <br>
-        
-        <label for="sucursal">Sucursal:</label>
-        <input type="text" id="sucursal" placeholder="sucursal" required>
-        <br>
+        <form id="comentariosForm" onsubmit="enviarComentario(); return false;">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" placeholder="nombre" required>
+            <br>
 
-        <label for="correo">Correo:</label>
-        <input type="email" id="correo" placeholder="Correo Electrónico" required>
-        <br>
+            <label for="sucursal">Sucursal:</label>
+            <select id="sucursal" required>
+                <option value="" disabled selected>Selecciona una sucursal</option>
+                <option value="Aguilas">Aguilas</option>
+                <option value="Tapatío">Tapatío</option>
+                <!-- Agrega el resto de las sucursales aquí -->
+            </select>
+            <br>
 
-        <label for="comentario">Comentario:</label>
-        <textarea id="comentario" placeholder="Escribe tu comentario aquí" required></textarea>
-        <br>
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" placeholder="Correo Electrónico" required>
+            <br>
 
-        <button type="submit">
-            <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
-        </button>
-    </form>
+            <label for="comentario">Comentario:</label>
+            <textarea id="comentario" placeholder="Escribe tu comentario aquí" required></textarea>
+            <br>
 
-    <script>
-        function enviarComentario() {
-            var nombre = document.getElementById("nombre").value;
-            var sucursal = document.getElementById("sucursal").value;
-            var correo = document.getElementById("correo").value;
-            var comentario = document.getElementById("comentario").value;
+            <button type="submit">
+                <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+            </button>
+        </form>
 
-            if (nombre && correo && comentario) {
-                var mensaje = " Hola, soy " + nombre +
-                              ", cliente de la sucursal " + sucursal +
-                              ", mi correo es: " + correo +
-                              "; y resulta que " + comentario;
+        <script>
+            function enviarComentario() {
+                var nombre = document.getElementById("nombre").value;
+                var sucursal = document.getElementById("sucursal").value;
+                var correo = document.getElementById("correo").value;
+                var comentario = document.getElementById("comentario").value;
 
-                var enlaceWhatsApp = "https://wa.me/523337010888/?text=" + encodeURIComponent(mensaje);
+                if (nombre && correo && comentario && sucursal) {
+                    var mensaje = " Hola, soy " + nombre +
+                        ", cliente de la sucursal " + sucursal +
+                        ", mi correo es: " + correo +
+                        "; y resulta que " + comentario;
 
-                window.open(enlaceWhatsApp, '_blank');
-            } else {
-                alert("Por favor, completa todos los campos antes de enviar el comentario.");
+                    var enlaceWhatsApp = "https://wa.me/523337010888/?text=" + encodeURIComponent(mensaje);
+
+                    window.open(enlaceWhatsApp, '_blank');
+                } else {
+                    alert("Por favor, completa todos los campos antes de enviar el comentario.");
+                }
             }
-        }
-    </script>
+        </script>
     </div>
 </body>
+
 </html>
