@@ -1,12 +1,11 @@
 button {
-    background: yellow; /* Fondo amarillo */
+    background: red; /* Fondo rojo */
     cursor: pointer;
-    border: 2px solid red; /* Marco rojo */
-    padding: 10px 1px; /* Ajusta el espaciado según sea necesario */
-    color: black; /* Letras negras */
+    border: 2px solid yellow; /* Marco amarillo */
+    padding: 10px 20px; /* Ajusta el espaciado según sea necesario */
+    color: white; /* color de Letras */
     font-size: 24px;
     font-weight: bold;
     position: relative;
     border-radius: 12px;
-    text-decoration: none; /* Elimina el subrayado */
 }
