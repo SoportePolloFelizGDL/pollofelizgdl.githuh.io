@@ -1,11 +1,8 @@
-/* Agrega estilos al contenedor de los botones */
-.container {
-    display: flex;
-    justify-content: center; /* Centra los elementos horizontalmente */
-    align-items: center; /* Centra los elementos verticalmente */
-    height: 100vh; /* Ajusta la altura según sea necesario */
+/* Estilos generales */
+body, .img-center {
+    margin: 0;
 }
-
+/* Estilos específicos para los botones */
 button {
     border: 0;
     background-image: linear-gradient(
@@ -15,21 +12,14 @@ button {
         red
     );
     border-radius: 8px;
-    color: black;
+    color: black !important; /* Asegura que el color sea negro */
     font-size: 18px;
     padding: 4px;
     cursor: pointer;
     transition: .3s;
     margin: 0 8px; /* Ajusta el espacio entre los botones según sea necesario */
+    text-decoration: none !important; /* Elimina cualquier subrayado */
 }
-
-button span {
-    background-color: #11111100;
-    padding: 16px 24px;
-    border-radius: 1px;
-    transition: .3s;
-}
-
-button :active {
-    transform: scale(0.9);
+button:hover {
+    transform: scale(1.1); /* Cambia el valor según sea necesario para el tamaño de crecimiento */
 }
