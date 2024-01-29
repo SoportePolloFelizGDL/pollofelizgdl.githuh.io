@@ -1,11 +1,35 @@
+/* Agrega estilos al contenedor de los botones */
+.container {
+    display: flex;
+    justify-content: center; /* Centra los elementos horizontalmente */
+    align-items: center; /* Centra los elementos verticalmente */
+    height: 100vh; /* Ajusta la altura según sea necesario */
+}
+
 button {
-    background: red; /* Fondo rojo */
+    border: 0;
+    background-image: linear-gradient(
+        150deg,
+        red,
+        yellow,
+        red
+    );
+    border-radius: 8px;
+    color: black;
+    font-size: 18px;
+    padding: 4px;
     cursor: pointer;
-    border: 2px solid yellow; /* Marco amarillo */
-    padding: 10px 20px; /* Ajusta el espaciado según sea necesario */
-    color: white; /* color de Letras */
-    font-size: 24px;
-    font-weight: bold;
-    position: relative;
-    border-radius: 12px;
+    transition: .3s;
+    margin: 0 8px; /* Ajusta el espacio entre los botones según sea necesario */
+}
+
+button span {
+    background-color: #11111100;
+    padding: 16px 24px;
+    border-radius: 1px;
+    transition: .3s;
+}
+
+button :active {
+    transform: scale(0.9);
 }
