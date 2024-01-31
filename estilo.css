@@ -1,25 +1,10 @@
-/* Estilos generales */
-body, .img-center {
-    margin: 0;
-}
-/* Estilos específicos para los botones */
-button {
-    border: 0;
-    background-image: linear-gradient(
-        150deg,
-        red,
-        yellow,
-        red
-    );
-    border-radius: 8px;
-    color: black !important; /* Asegura que el color sea negro */
-    font-size: 18px;
-    padding: 4px;
-    cursor: pointer;
-    transition: .3s;
-    margin: 0 8px; /* Ajusta el espacio entre los botones según sea necesario */
-    text-decoration: none !important; /* Elimina cualquier subrayado */
-}
+
 button:hover {
     transform: scale(1.1); /* Cambia el valor según sea necesario para el tamaño de crecimiento */
+}
+button img {
+    width: auto; /* Ajusta el ancho según sea necesario */
+    height: 10%; /* Mantiene la proporción de la imagen */
+    border: none;
+    border-radius: 1px;
 }
