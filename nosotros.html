@@ -1,64 +1,91 @@
-<html>
-    <head>
-        <link rel="shortcut icon" href="/Menu/LogoPF.png">
-        <link rel="stylesheet" href="estilo.css">
-        <style>
-            .img-center{
-                text-align: center;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="img-center" >
-            <H1>NOSOTROS</H1>
-            <button><a href="index.html">INICIO</a></button>
-            <button><a href="carta.html">NUESTRA CARTA</a></button>
-            <button><a href="comentarios.html">COMENTARIOS</a></button>
-            <hr>
-        </div>
-        
-        <div>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollo Feliz GDL</title>
+    <link rel="shortcut icon" href="/Menu/LogoPF.png">
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        .img-center {
+            text-align: center;
+        }
 
-            <h2> "Pollo Feliz" se remonta a 1975, cuando el empresario mexicano 
-                José L. Sánchez Barroso decidió abrir un restaurante de pollo 
-                asado en la ciudad de Ciudad Obregón, Sonora, México. 
-                El nombre "Pollo Feliz" fue elegido para transmitir la idea de 
-                que la comida era deliciosa y que los clientes se sentirían
-                felices al disfrutarla. 
-            </h2>
-            <h2>
-                La propuesta de Pollo Feliz se centraba en ofrecer pollo asado 
-                de alta calidad con un sabor único, utilizando recetas y métodos 
-                de cocción especiales. El concepto fue bien recibido por los 
-                consumidores, y el restaurante comenzó a ganar popularidad en 
-                la región.
-            </h2>
-            <h2>
-                La expansión de Pollo Feliz continuó a lo largo de los años, 
-                y la cadena abrió más sucursales en diferentes partes de México. 
-                La empresa se destacó por su compromiso con la calidad de los 
-                ingredientes y el proceso de preparación, lo que contribuyó a 
-                consolidar su posición en el mercado de comida rápida en México.
-            </h2>
-            <h2>
-                A medida que la marca creció, Pollo Feliz se convirtió en una 
-                opción popular para aquellos que buscaban una alternativa sabrosa 
-                y accesible en el ámbito de la comida rápida. La cadena se centró 
-                en mantener la frescura y la autenticidad en sus productos, 
-                destacando el pollo asado como su especialidad.
-            </h2>
-            <div class="img-center">
-                <img src="Menu/icono PF.webp" width="25%" alt="Pollo Feliz GDL">
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px; /* Ajusta el margen entre las filas según sea necesario */
+        }
+
+        .button-container {
+            margin: 0 8px; /* Ajusta el espacio entre los botones según sea necesario */
+        }
+
+        button img {
+            width: 100%; /* Ajusta el ancho de la imagen al 100% del botón */
+            height: auto;
+            border: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="img-center">
+            <img src="Menu/INICIO.JPG" width="25%" alt="INICIO">
+            <hr>
+
+            <div class="row">
+                <div class="button-container">
+                    <button><a href="index.html"><img src="Menu/INICIO BOTON.JPG" alt="INICIO"></a></button>
+                </div>
+                <div class="button-container">
+                    <button><a href="nosotros.html"><img src="Menu/NOSOTROS BOTON.JPG" alt="NOSOTROS"></a></button>
+                </div>
+                <div class="button-container">
+                    <button><a href="carta.html"><img src="Menu/MENU BOTON.JPG" alt="MENÚ"></a></button>
+                </div>
+                <div class="button-container">
+                    <button><a href="comentarios.html"><img src="Menu/COMENTARIOS BOTON.JPG" alt="COMENTARIOS"></a></button>
+                </div>
             </div>
 
+            <hr>
         </div>
 
-    </body>
+    <div>
+        <h2>
+            "Pollo Feliz" se remonta a 1975, cuando el empresario mexicano 
+            José L. Sánchez Barroso decidió abrir un restaurante de pollo 
+            asado en la ciudad de Ciudad Obregón, Sonora, México. 
+            El nombre "Pollo Feliz" fue elegido para transmitir la idea de 
+            que la comida era deliciosa y que los clientes se sentirían
+            felices al disfrutarla. 
+        </h2>
+        <!-- Agrega el resto de tu contenido -->
+        <div class="img-center">
+            <img src="Menu/icono PF.webp" width="25%" alt="Pollo Feliz GDL">
+        </div>
+    </div>
+
     <div class="img-center">
         <hr>
-        <button><a href="trabajo.html">BOLSA DE TRABAJO</a></button>
-        <button><a href="encuentranos.html">ENCUENTRANOS</a></button>
-        <button><a href="empleado.html">EMPLEADO DEL MES</a></button>
-        <button><a target="_blank" href="https://autofactura-mx.toteat.com/">FACTURACION</a></button>
+        <div class="row">
+            <div class="button-container">
+                <button><a href="trabajo.html"><img src="Menu/BOLSA DE TRABAJO BOTON.JPG" alt="BOLSA DE TRABAJO"></a></button>
+            </div>
+            <div class="button-container">
+                <button><a href="encuentranos.html"><img src="Menu/SUCURSALES BOTON.JPG" alt="SUCURSALES"></a></button>
+            </div>
+            <div class="button-container">
+                <button><a href="empleado.html"><img src="Menu/EMPLEADO DEL MES BOTON.JPG" alt="EMPLEADO DEL MES"></a></button>
+            </div>
+            <div class="button-container">
+                <button><a target="_blank" href="https://autofactura-mx.toteat.com/"><img src="Menu/facturacion boton.JPG" alt="FACTURACION"></a></button>
+            </div>
+        </div>
+        <hr>
     </div>
+</body>
 </html>

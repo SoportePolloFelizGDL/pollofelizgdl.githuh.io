@@ -1,24 +1,58 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollo Feliz GDL</title>
+    <link rel="shortcut icon" href="/Menu/LogoPF.png">
     <link rel="stylesheet" href="estilo.css">
     <style>
         .img-center {
             text-align: center;
         }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px; /* Ajusta el margen entre las filas según sea necesario */
+        }
+
+        .button-container {
+            margin: 0 8px; /* Ajusta el espacio entre los botones según sea necesario */
+        }
+
+        button img {
+            width: 100%; /* Ajusta el ancho de la imagen al 100% del botón */
+            height: auto;
+            border: none;
+            border-radius: 8px;
+        }
     </style>
 </head>
-
 <body>
-    <div class="img-center">
-        <H1>BOLSA DE TRABAJO</H1>
-        <button><a href="index.html">INICIO</a></button>
-        <button><a href="nosotros.html">NOSOTROS</a></button>
-        <button><a href="carta.html">NUESTRA CARTA</a></button>
-        <button><a href="comentarios.html">COMENTARIOS</a></button>
-        <hr>
-    </div>
+    <div>
+        <div class="img-center">
+            <img src="Menu/INICIO.JPG" width="25%" alt="INICIO">
+            <hr>
+
+            <div class="row">
+                <div class="button-container">
+                    <button><a href="index.html"><img src="Menu/INICIO BOTON.JPG" alt="INICIO"></a></button>
+                </div>
+                <div class="button-container">
+                    <button><a href="nosotros.html"><img src="Menu/NOSOTROS BOTON.JPG" alt="NOSOTROS"></a></button>
+                </div>
+                <div class="button-container">
+                    <button><a href="carta.html"><img src="Menu/MENU BOTON.JPG" alt="MENÚ"></a></button>
+                </div>
+                <div class="button-container">
+                    <button><a href="comentarios.html"><img src="Menu/COMENTARIOS BOTON.JPG" alt="COMENTARIOS"></a></button>
+                </div>
+            </div>
+
+            <hr>
+        </div>
 
     <div class="img-center">
         <h1>Bolsa de Trabajo</h1>
@@ -102,12 +136,23 @@
     <hr>
         <img src="Menu/Empleo.png" width="75%" alt="Pollo Feliz GDL">
     </div>
+    <div class="img-center">
+        <hr>
+        <div class="row">
+            <div class="button-container">
+                <button><a href="trabajo.html"><img src="Menu/BOLSA DE TRABAJO BOTON.JPG" alt="BOLSA DE TRABAJO"></a></button>
+            </div>
+            <div class="button-container">
+                <button><a href="encuentranos.html"><img src="Menu/SUCURSALES BOTON.JPG" alt="SUCURSALES"></a></button>
+            </div>
+            <div class="button-container">
+                <button><a href="empleado.html"><img src="Menu/EMPLEADO DEL MES BOTON.JPG" alt="EMPLEADO DEL MES"></a></button>
+            </div>
+            <div class="button-container">
+                <button><a target="_blank" href="https://autofactura-mx.toteat.com/"><img src="Menu/facturacion boton.JPG" alt="FACTURACION"></a></button>
+            </div>
+        </div>
+        <hr>
+    </div>
 </body>
-
-<div class="img-center">
-    <hr>
-    <button><a href="encuentranos.html">ENCUENTRANOS</a></button>
-    <button><a href="empleado.html">EMPLEADO DEL MES</a></button>
-</div>
-
 </html>
