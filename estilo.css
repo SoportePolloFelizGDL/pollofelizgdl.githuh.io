@@ -8,3 +8,8 @@ button img {
     border: none;
     border-radius: 1px;
 }
+
+button {
+    border: none;
+    outline: none;
+}
