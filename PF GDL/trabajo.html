@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pollo Feliz GDL</title>
+    <link rel="shortcut icon" href="/Menu/LogoPF.png">
+    <link rel="stylesheet" href="estilo.css">
+    <style>
+        .img-center {
+            text-align: center;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px; /* Ajusta el margen entre las filas según sea necesario */
+        }
+
+        .button-container {
+            margin: 0 8px; /* Ajusta el espacio entre los botones según sea necesario */
+        }
+
+        button img {
+            width: 100%; /* Ajusta el ancho de la imagen al 100% del botón */
+            height: auto;
+            border: none;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="img-center">
+            <img src="Menu/BOLSA DE TRABAJO.JPG" width="50%" alt="INICIO">
+            <div class="row">
+                <div class="button-container">
+                    <button><a href="index.html"><img src="Menu/INICIO BOTON.png" alt="INICIO"></a></button>
+                </div>
+                <div class="button-container">
+                    <button><a href="nosotros.html"><img src="Menu/NOSOTROS BOTON.png" alt="NOSOTROS"></a></button>
+                </div>
+                <div class="button-container">
+                    <button><a href="carta.html"><img src="Menu/MENU BOTON.png" alt="MENÚ"></a></button>
+                </div>
+                <div class="button-container">
+                    <button><a href="encuentranos.html"><img src="Menu/SUCURSALES BOTON.png" alt="SUCURSALES"></a></button>
+                </div>
+                <div class="button-container">
+                    <button><a href="https://res4.toteat.com/#/"><img src="Menu/TotEat.png" alt="TotEat"></a></button>
+                </div>
+            </div>
+
+            <hr>
+        </div>
+
+    <div class="img-center">
+        <h1>Bolsa de Trabajo</h1>
+
+        <h2>Te interesa trabajar con nosotros?</h2>
+
+        <form id="trabajoForm" onsubmit="enviarSolicitud(); return false;">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <br>
+
+            <label for="sucursal">Sucursal en la que te gustaría trabajar:</label>
+            <select id="sucursal" required>
+                <option value="" disabled selected>Selecciona una sucursal</option>
+                <option value="Aguilas">Aguilas</option>
+                <option value="Tapatío">Tapatío</option>
+                <option value="Tlaquepaque">Tlaquepaque</option>
+                <option value="Revolucion">Revolucion</option>
+                <option value="Loma Dorada">Loma Dorada</option>
+                <option value="Santa Margarita">Santa Margarita</option>
+                <option value="Patria">Patria</option>
+                <option value="Independencia">Independencia</option>
+                <option value="Punto Oriente">Punto Oriente</option>
+                <option value="Tesistan">Tesistan</option>
+                <option value="Oblatos">Oblatos</option>
+                <option value="Guadalupe">Guadalupe</option>
+                <option value="Tetlan">Tetlan</option>
+                <option value="Sauz">Sauz</option>
+                <option value="Santa Fe">Santa Fe</option>
+                <option value="Tuzania">Tuzania</option>
+                <option value="La Cruz">La Cruz</option>
+                <option value="Juan Pablo 2do">Juan Pablo 2do</option>
+                <option value="Box Market">Box Market</option>
+                <option value="Plan de San Luis">Plan de San Luis</option>
+                <option value="Autodromo">Autodromo</option>
+                <option value="Monumental">Monumental</option>
+                <option value="16 de Septiembre">16 de Septiembre</option>
+                <option value="El Rosario">El Rosario</option>
+                <option value="Condoplaza">Condoplaza</option>
+                <option value="Ávila Camacho">Ávila Camacho</option>
+                <option value="Magnolias">Magnolias</option>
+                <option value="El Castillo">El Castillo</option>
+                <option value="Lomas del Gallo">Lomas del Gallo</option>
+                <option value="Torre Trimera">Torre Trimera</option>
+                <!-- Agrega el resto de las sucursales aquí -->
+            </select>
+            <br>
+
+            <button type="submit">
+                <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+            </button>
+        </form>
+    </div>
+
+    <script>
+        function enviarSolicitud() {
+            var nombre = document.getElementById("nombre").value;
+            var sucursal = document.getElementById("sucursal").value;
+
+            if (nombre && sucursal) {
+                var mensaje = "Hola vi un anuncio en https://pollofelizgdl.netlify.app/trabajo, soy " + nombre +
+                              ", y estoy interesad@ en trabajar en la sucursal " + sucursal;
+
+                var numero1 = "523337010877";
+                var numero2 = "523319641074";
+                var numero3 = "523337010866";
+
+                var enlaceWhatsApp1 = "https://wa.me/" + numero1 + "/?text=" + encodeURIComponent(mensaje);
+                var enlaceWhatsApp2 = "https://wa.me/" + numero2 + "/?text=" + encodeURIComponent(mensaje);
+                var enlaceWhatsApp3 = "https://wa.me/" + numero2 + "/?text=" + encodeURIComponent(mensaje);
+
+                window.open(enlaceWhatsApp1, '_blank');
+                window.open(enlaceWhatsApp2, '_blank');
+            } else {
+                alert("Por favor, completa todos los campos antes de enviar el formulario.");
+            }
+        }
+    </script>
+    
+    <div class="img-center">
+    <hr>
+        <img src="Menu/Empleo.png" width="75%" alt="Pollo Feliz GDL">
+    </div>
+    <div class="img-center">
+        <hr>
+        <div class="row">
+            <div class="button-container">
+                <button><a href="comentarios.html"><img src="Menu/COMENTARIOS BOTON.png" alt="COMENTARIOS"></a></button>
+            </div>
+            <div class="button-container">
+                <button><a href="trabajo.html"><img src="Menu/BOLSA DE TRABAJO BOTON.png" alt="BOLSA DE TRABAJO"></a></button>
+            </div>
+            <div class="button-container">
+                <button><a href="empleado.html"><img src="Menu/EMPLEADO DEL MES BOTON.png" alt="EMPLEADO DEL MES"></a></button>
+            </div>
+            <div class="button-container">
+                <button><a target="_blank" href="https://autofactura-mx.toteat.com/"><img src="Menu/facturacion boton.png" alt="FACTURACION"></a></button>
+            </div>
+        </div>
+        <hr>
+    </div>
+</body>
+</html>
