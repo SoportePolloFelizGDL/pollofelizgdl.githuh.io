@@ -431,7 +431,7 @@
             const now = new Date();
             const fecha = now.getFullYear().toString().slice(-2) + (now.getMonth() + 1).toString().padStart(2, '0') + now.getDate().toString().padStart(2, '0');
             const hora = now.getHours().toString().padStart(2, '0') + now.getMinutes().toString().padStart(2, '0') + now.getSeconds().toString().padStart(2, '0');
-            const codigo = sucursal + fecha + hora + total;
+            const codigo = sucursal + fecha + hora + '-' + total;
             document.getElementById('barcode').src = `https://barcode.tec-it.com/barcode.ashx?data=${codigo}&code=Code128&translate-esc=true`;
             document.getElementById('ticketNumber').innerText = codigo; // Muestra el número de ticket en el párrafo
         }
