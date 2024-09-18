@@ -1,325 +1,361 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pollo Feliz GDL</title>
-    <title>Ticket</title>
-    <link rel="shortcut icon" href="/Menu/LogoPF.png">
-    <link rel="stylesheet" href="estilo.css">
-    <style>
-        /* Estilos básicos */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .ticket {
-            width: 300px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        .ticket h2 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .ticket table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        .ticket table, .ticket th, .ticket td {
-            border: 1px solid #ddd;
-        }
-        .ticket th, .ticket td {
-            padding: 8px;
-            text-align: left;
-        }
-        .ticket th {
-            background-color: #f2f2f2;
-        }
-        .ticket p {
-            margin: 5px 0;
-        }
-        .ticket input[type="number"], .ticket input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            box-sizing: border-box;
-        }
-        .ticket select {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            box-sizing: border-box;
-        }
-        .ticket button {
-            width: 100%;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .ticket button:hover {
-            background-color: #45a049;
-        }
-        .buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px; /* Espacio entre botones */
-            margin-top: 20px;
-        }
-        .buttons button {
-            width: calc(33% - 10px); /* Ajusta el ancho para caber en 3 columnas con espacio entre botones */
-            padding: 10px;
-            background-color: #008CBA;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        .buttons button:hover {
-            background-color: #007B9E;
-        }
-        .barcode {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        .barcode img {
-            height: 1cm;
-            width: 100%;
-        }
-        .ticket img {
-            max-width: 50%; /* Asegura que la imagen no esté aplastada */
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
-        .ticket .delete-btn {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 12px;
-            padding: 5px;
-            margin: 0;
-        }
-        .ticket .delete-btn:hover {
-            background-color: #d32f2f;
-        }
-        @media print {
-            body * {
-                visibility: hidden;
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pollo Feliz GDL</title>
+        <link rel="shortcut icon" href="/Menu/LogoPF.png">
+        <link rel="stylesheet" href="estilo.css">
+        <style>
+            /* Estilos básicos */
+            html, body {
+                margin: 0;
+                padding: 0;
+                height: 100%; /* Asegura que el html y body ocupen toda la altura de la pantalla */
             }
-            .ticket, .ticket * {
-                visibility: visible;
+            #container {
+                display: flex;
+                flex-direction: column;
+                height: 100%; /* Ajusta la altura del contenedor al 100% de la vista */
+                overflow: auto; /* Permite el desplazamiento si el contenido excede la altura del contenedor */
             }
             .ticket {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 80mm;
+                width: 300px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+                text-align: center;
             }
-            .buttons, .buttons button {
-                display: none;
+            .ticket h2 {
+                text-align: center;
+                margin-bottom: 20px;
             }
-        }
-    </style>
-</head>
+            .ticket table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            .ticket table, .ticket th, .ticket td {
+                border: 1px solid #ddd;
+            }
+            .ticket th, .ticket td {
+                padding: 8px;
+                text-align: left;
+            }
+            .ticket th {
+                background-color: #f2f2f2;
+            }
+            .ticket p {
+                margin: 5px 0;
+            }
+            .ticket input[type="number"], .ticket input[type="text"] {
+                width: 100%;
+                padding: 8px;
+                margin-top: 5px;
+                box-sizing: border-box;
+            }
+            .ticket select {
+                width: 100%;
+                padding: 8px;
+                margin-top: 5px;
+                box-sizing: border-box;
+            }
+            .ticket button {
+                width: 100%;
+                padding: 10px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            .ticket button:hover {
+                background-color: #45a049;
+            }
+            .buttons {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px; /* Espacio entre botones */
+                margin-top: 20px;
+            }
+            .buttons button {
+                width: calc(33% - 10px); /* Ajusta el ancho para caber en 3 columnas con espacio entre botones */
+                padding: 10px;
+                background-color: #ff0202;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 14px;
+                box-sizing: border-box;
+            }
+            .buttons button:hover {
+                background-color: #007B9E;
+            }
+            .barcode {
+                display: flex;
+                justify-content: center;
+                margin-top: 10px;
+            }
+            .barcode img {
+                height: 1cm;
+                width: 100%;
+            }
+            .ticket img {
+                max-width: 50%; /* Asegura que la imagen no esté aplastada */
+                height: auto;
+                display: block;
+                margin: 0 auto;
+            }
+            .ticket .delete-btn {
+                background-color: #f44336;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 12px;
+                padding: 5px;
+                margin: 0;
+            }
+            .ticket .delete-btn:hover {
+                background-color: #d32f2f;
+            }
+            @media print {
+                body * {
+                    visibility: hidden;
+                }
+                .ticket, .ticket * {
+                    visibility: visible;
+                }
+                .ticket {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 80mm;
+                }
+                .buttons, .buttons button {
+                    display: none;
+                }
+                button {
+                    display: none;
+                }
+                select, input {
+                    border: none;
+                    background: transparent;
+                    outline: none;
+                }
+            }
+        </style>
+    </head>
 <body>
-    
-    <div class="ticket" id="ticket">
-        <!-- Aquí va el logo, después de "Ticket" y antes de la información -->
-        <img src="/Menu/LogoPF.png" alt="Logo Restaurante">
+    <div class="main-container">
+        <div class="ticket" id="ticket">
+            <!-- Aquí va el logo, después de "Ticket" y antes de la información -->
+            <img src="/Menu/LogoPF.png" alt="Logo Restaurante">
         
-        <p>PROMOTORA DE ALIMENTOS LA GRANJA SA DE CV</p>
-        <p>Río de La Loza 1976, El Rosario, 44870 Guadalajara, Jal.</p>
-        <p>Fecha: <span id="fecha"></span> Hora: <span id="hora"></span></p>
-        <div>
-            <label for="sucursalSelect">Sucursal:</label>
-            <select id="sucursalSelect">
-                <option value="01">Águilas</option>
-                <option value="02">Tapatio</option>
-                <option value="03">Tlaquepaque</option>
-                <option value="04">Loma Dorada</option>
-                <option value="06">Santa Margarita</option>
-                <option value="07">Patria</option>
-                <option value="08">Independencia</option>
-                <option value="10">Tesistan</option>
-                <option value="11">Oblatos</option>
-                <option value="12">Guadalupe</option>
-                <option value="13">Tetlan</option>
-                <option value="14">Sauz</option>
-                <option value="15">Santa Fe</option>
-                <option value="16">Tuzania</option>
-                <option value="17">La Cruz</option>
-                <option value="18">Juan Pablo II</option>
-                <option value="19">Box Market</option>
-                <option value="20">Plan de San Luis</option>
-                <option value="21">Autodromo</option>
-                <option value="22">Monumental</option>
-                <option value="24">CEDIS</option>
-                <option value="25">Condo Plaza</option>
-                <option value="26">Avila Camacho</option>
-                <option value="27">Magnolias</option>
-                <option value="28">El Castillo</option>
-                <option value="29">Lomas del Gallo</option>
-                <option value="30">Torre Trimera</option>
-                <!-- Aquí se agregarán las demás sucursales -->
-            </select>
-        </div>
-        <p>Atendió: <input type="text" id="atendio"></p>
-        <p>Servicio: 
-            <select id="servicio">
-                <option value="comedor">Comedor</option>
-                <option value="paraLlevar">Para llevar</option>
-            </select>
-        </p>
-        <table id="ticketTable">
-            <thead>
-                <tr>
-                    <th>Cant</th>
-                    <th>Platillo</th>
-                    <th>Subtotal</th>
-                    <th>X</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Las filas se añadirán aquí -->
-            </tbody>
-        </table>
-        <p>Total: $<span id="total">0.00</span></p>
-        <p>Pago: $<input type="number" id="pago" step="0.01"></p>
-        <p>Cambio: $<span id="cambio">0.00</span></p>
-        <div class="barcode">
-            <img id="barcode" src="" alt="Número de Ticket">
-        </div>
-        <p>************************************************</p>
-        <p>Facturación: facturacionpf.gdl@gmail.com</p>
-        <p>Enviándonos tu número de ticket, el costo total, metodo de pago y tus datos de facturacion:</p>
-        <p id="ticketNumber">(Número de Ticket)</p>
-        <p>************************************************</p>
-        <button onclick="calcularCambio()">Pagar</button>
-        <button onclick="imprimirTicket()">Imprimir Ticket</button>
-        <button onclick="nuevaCuenta()">Nueva Cuenta</button>
-    </div>
+                <p>PROMOTORA DE ALIMENTOS LA GRANJA SA DE CV</p>
+                <p>Río de La Loza 1976, El Rosario, 44870 Guadalajara, Jal.</p>
+                <p>Fecha: <span id="fecha"></span> Hora: <span id="hora"></span></p>
+                <div>
+                    <label for="sucursalSelect">Sucursal:</label>
+                    <select id="sucursalSelect">
+                        <option value="01">Águilas</option>
+                        <option value="02">Tapatio</option>
+                        <option value="03">Tlaquepaque</option>
+                        <option value="04">Loma Dorada</option>
+                        <option value="06">Santa Margarita</option>
+                        <option value="07">Patria</option>
+                        <option value="08">Independencia</option>
+                        <option value="10">Tesistan</option>
+                        <option value="11">Oblatos</option>
+                        <option value="12">Guadalupe</option>
+                        <option value="13">Tetlan</option>
+                        <option value="14">Sauz</option>
+                        <option value="15">Santa Fe</option>
+                        <option value="16">Tuzania</option>
+                        <option value="17">La Cruz</option>
+                        <option value="18">Juan Pablo II</option>
+                        <option value="19">Box Market</option>
+                        <option value="20">Plan de San Luis</option>
+                        <option value="21">Autodromo</option>
+                        <option value="22">Monumental</option>
+                        <option value="24">CEDIS</option>
+                        <option value="25">Condo Plaza</option>
+                        <option value="26">Avila Camacho</option>
+                        <option value="27">Magnolias</option>
+                        <option value="28">El Castillo</option>
+                        <option value="29">Lomas del Gallo</option>
+                        <option value="30">Torre Trimera</option>
+                        <!-- Aquí se agregarán las demás sucursales -->
+                    </select>
+                </div>
+                <p>Atendió: <input type="text" id="atendio"></p>
+                <p>Servicio: 
+                    <select id="servicio">
+                        <option value="comedor">Comedor</option>
+                        <option value="paraLlevar">Para llevar</option>
+                    </select>
+                </p>
+                <table id="ticketTable">
+                    <thead>
+                        <tr>
+                            <th>Cant</th>
+                            <th>Platillo</th>
+                            <th>Subtotal</th>
+                            <th>X</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Las filas se añadirán aquí -->
+                    </tbody>
+                </table>
+                <p>Total: $<span id="total">0.00</span></p>
+                <p>Pago: $<input type="number" id="pago" step="0.01"></p>
+                <p>Cambio: $<span id="cambio">0.00</span></p>
+                <label for="payment-method">Seleccionar Método de Pago:</label>
+                    <select id="payment-method">
+                        <option value="efectivo">Efectivo</option>
+                        <option value="credito">Tarjeta de Crédito</option>
+                        <option value="debito">Tarjeta de Débito</option>
+                        <option value="vale">Vale de Despensa</option>
+                    </select>
 
-    <div class="container">
-    <div class="buttons">
-        <!-- Categoría: Paquetes Familiares -->
-        <div class="button-group">
-            <h3>Paquetes Familiares</h3>
-            <button onclick="agregarPlatillo('PKT FELIZ 1/2', '1/2 pollo, 1 salsa, 2 tortillas, 1 chile toreado', 159)">PKT FELIZ 1/2</button>
-            <button onclick="agregarPlatillo('PKT FELIZ 1', '1 pollo, 1 salsa, 4 tortillas, 1 chile toreado', 189)">PKT FELIZ 1</button>
-            <button onclick="agregarPlatillo('PKT FELIZ 1&1/2', '1 y 1/2 pollos, 2 salsas, 6 tortillas, 2 chiles toreados', 269)">PKT FELIZ 1&1/2</button>
-            <button onclick="agregarPlatillo('PKT FFAMILIAR 6', '3 piernas, 3 muslos, 1 salsa, 3 tortillas, 1 chile toreado', 149)">PKT FFAMILIAR 6</button>
-            <button onclick="agregarPlatillo('PKT FFAMILIAR 12', '6 piernas, 6 muslos, 2 salsa, 6 tortillas, 2 chiles toreados', 209)">PKT FFAMILIAR 12</button>
-            <button onclick="agregarPlatillo('PKTFELIZ 2', '2 pollos, 2 salsas, 8 tortillas, 2 chiles toreados', 329)">PKTFELIZ 2</button>
+                <div class="barcode">
+                    <img id="barcode" src="" alt="Número de Ticket">
+                </div>
+                <p>**************************************</p>
+                <p>Facturación: facturacionpf.gdl@gmail.com</p>
+                <p>Enviándonos tu número de ticket, el costo total, metodo de pago y tus datos de facturacion:</p>
+                <p id="ticketNumber">(Número de Ticket)</p>
+                <p>**************************************</p>
+                <button onclick="calcularCambio()">Pagar</button>
+                <button onclick="imprimirTicket()">Imprimir Ticket</button>
+                <button onclick="nuevaCuenta()">Nueva Cuenta</button>
         </div>
-        
-        <!-- Categoría: Individuales -->
-        <div class="button-group">
-            <h3>Individuales</h3>
-            <button onclick="agregarPlatillo('PKT FELIZ 1/4', '1/4 de pollo, 1 complemento, 1 salsa, 2 tortillas, 1 chile toreado', 89)">PKT FELIZ 1/4</button>
-            <button onclick="agregarPlatillo('PKT HAMBUR GUESA', 'hambur guesa, papas a la francesa y bebida', 89)">PKTHAMBURGUESA</button>
-            <button onclick="agregarPlatillo('PKT NUGGETS', 'nuggets y papas a la francesa', 69)">PKTNUGGETS</button>
+
+        <div class="buttons-container">
+            <div class="buttons">
+                <!-- Categoría: Paquetes Familiares -->
+                <div class="button-group">
+                    <h3>Paquetes Familiares</h3>
+                    <button onclick="agregarPlatillo('', '1/2 pollo, 1 salsa, 2 tortillas, 1 chile toreado', 159)">PKT FELIZ 1/2</button>
+                    <button onclick="agregarPlatillo('', '1 pollo, 1 salsa, 4 tortillas, 1 chile toreado', 189)">PKT FELIZ 1</button>
+                    <button onclick="agregarPlatillo('', '1 y 1/2 pollos, 2 salsas, 6 tortillas, 2 chiles toreados', 269)">PKT FELIZ 1&1/2</button>
+                    <button onclick="agregarPlatillo('', '3 piernas, 3 muslos, 1 salsa, 3 tortillas, 1 chile toreado', 149)">PKT FFAMILIAR 6</button>
+                    <button onclick="agregarPlatillo('', '6 piernas, 6 muslos, 2 salsa, 6 tortillas, 2 chiles toreados', 209)">PKT FFAMILIAR 12</button>
+                    <button onclick="agregarPlatillo('', '2 pollos, 2 salsas, 8 tortillas, 2 chiles toreados', 329)">PKTFELIZ 2</button>
+                </div>
+                <!-- Categoría: Promocion del Mes -->
+                <div class="button-group">
+                    <h3>Promocion del Mes</h3>
+                    <button onclick="agregarPlatillo('', '1 y 1/2 pollos, 2 complementos, 2 salsas, 6 tortillas, 2 chiles toreados', 299)">PROMO 1 1/2</button>
+                </div>
+                <!-- Categoría: Individuales -->
+                <div class="button-group">
+                    <h3>Individuales</h3>
+                    <button onclick="agregarPlatillo('', '1/4 de pollo, 1 complemento, 1 salsa, 2 tortillas, 1 chile toreado', 89)">PKT FELIZ 1/4</button>
+                    <button onclick="agregarPlatillo('', 'Hambur guesa, papas a la francesa y bebida', 89)">PKTHAMBURGUESA</button>
+                    <button onclick="agregarPlatillo('', 'Nuggets y papas a la francesa', 69)">PKTNUGGETS</button>
+                </div>
+                <!-- Categoría: PromoFlautas -->
+                <div class="button-group">
+                    <h3>PromoFlautas</h3>
+                    <button onclick="agregarPlatillo('', '3 Flautas gratis', 0)">3 FLAUTAS GRATIS</button>
+                    <button onclick="agregarPlatillo('', '5 Flautas gratis', 0)">5 FLAUTAS GRATIS</button>
+                    <button onclick="agregarPlatillo('', '10 Flautas gratis', 0)">10 FLAUTAS GRATIS</button>
+                </div>
+                <!-- Categoría: Antojos -->
+                <div class="button-group">
+                    <h3>Antojos</h3>
+                    <button onclick="agregarPlatillo('', '1 flauta de pollo', 10)">FLAUTA</button>
+                    <button onclick="agregarPlatillo('', '5 flautas de pollo, 1 salsa', 49)">PKTFLAUTAS</button>
+                    <button onclick="agregarPlatillo('', '5 flautas de pollo, 1 guacamole', 79)">PROMOFLAUTAS</button>
+                    <button onclick="agregarPlatillo('', 'Papas a la francesa', 49)">PAPASFRANCESA</button>
+                    <button onclick="agregarPlatillo('', 'Quesa dilla de 26 cm, 1 salsa', 49)">QUESABROSA</button>
+                    <button onclick="agregarPlatillo('', 'Papa asada', 55)">PATATA</button>
+                    <button onclick="agregarPlatillo('', 'Palo mitas de pollo', 49)">PALOMITAS</button>
+                </div>
+                <!-- Categoría: Complementos -->
+                <div class="button-group">
+                    <h3>Complementos</h3>
+                    <button onclick="agregarPlatillo('', '3 Complementos a elegir', 85)">PROMO 3 COMPLE MENTOS</button>
+                    <button onclick="agregarPlatillo('', '1/4 de arroz rojo', 35)">ARROZ ROJO</button>
+                    <button onclick="agregarPlatillo('', '1/4 de frijoles charros', 35)">FRIJOLES CHARROS</button>
+                    <button onclick="agregarPlatillo('', '1/4 de ensalada de col', 35)">ENSALADA COL</button>
+                    <button onclick="agregarPlatillo('', '1/4 de sopa de coditos', 35)">SOPAFRIA</button>
+                    <button onclick="agregarPlatillo('', '1/4 de Guacamole fresco', 49)">GUACAMOLE</button>
+                </div>
+                <!-- Categoría: Postres -->
+                <div class="button-group">
+                    <h3>Postres</h3>
+                    <button onclick="agregarPlatillo('', 'FLAN NAPOLITANO', 'Porción de Flan Napolitano', 25)">FLAN NAPOLITANO</button>
+                    <button onclick="agregarPlatillo('', 'ARROZ CON LECHE', 'Porción de Arroz con Leche', 25)">ARROZ CON LECHE</button>
+                    <button onclick="agregarPlatillo('', 'JERICALLA', 'Porción de Jericalla', 25)">JERICALLA</button>
+                </div>
+                <!-- Categoría: Extras -->
+                <div class="button-group">
+                    <h3>Extras</h3>
+                    <button onclick="agregarPlatillo('', 'TOR TILLAS', '4 tortillas', 12)">TORTILLAS</button>
+                    <button onclick="agregarPlatillo('', 'SALSA', '1 salsa', 12)">SALSA</button>
+                    <button onclick="agregarPlatillo('', 'TOTO POS', 'cruji entes y sala ditos', 12)">TOTOPOS</button>
+                    <button onclick="agregarPlatillo('', 'CHILE ASADO', 'Chile asado', 10)">CHILE ASADO</button>
+                </div>
+                <!-- Categoría: Bebidas -->
+                <div class="button-group">
+                    <h3>Bebidas</h3>
+                    <button onclick="agregarPlatillo('', 'Agua de limon 500ml', 22)">LIMON</button>
+                    <button onclick="agregarPlatillo('', 'Agua de pepino 500ml', 22)">PEPINO</button>
+                    <button onclick="agregarPlatillo('', 'Agua de horcha ta 500ml', 22)">HORCHATA</button>
+                    <button onclick="agregarPlatillo('', 'Agua de horcha ta fresa 500ml', 22)">FRESA</button>
+                    <button onclick="agregarPlatillo('', 'Agua de jamaica 500ml', 22)">JAMAICA</button>
+                    <button onclick="agregarPlatillo('', 'EPURA 600ml', 22)">EPURA600</button>
+                    <button onclick="agregarPlatillo('', '7UP 600ml', 25)">7UP600</button>
+                    <button onclick="agregarPlatillo('', 'Manza nita 600ml', 25)">MANZANA600</button>
+                    <button onclick="agregarPlatillo('', 'PEPSI 600ml', 25)">PEPSI600</button>
+                    <button onclick="agregarPlatillo('', 'Mirinda 600ml', 25)">MIRINDA600</button>
+                    <button onclick="agregarPlatillo('', 'Sangria 600ml', 25)">SANGRIA600</button>
+                    <button onclick="agregarPlatillo('', '7UP 1.5lt', 35)">7UP1.5</button>
+                    <button onclick="agregarPlatillo('', 'Manza nita 1.5lt', 35)">MANZANA1.5</button>
+                    <button onclick="agregarPlatillo('', 'PEPSI 1.5lt', 35)">PEPSI1.5</button>
+                    <button onclick="agregarPlatillo('', 'Mirinda 1.5lt', 35)">MIRINDA1.5</button>
+                    <button onclick="agregarPlatillo('', 'Sangria 1.5lt', 25)">SANGRIA1.5</button>
+                </div>
+                <!-- Categoría: Complementos incluidos en paquetes -->
+                <div class="button-group">
+                    <h3>Complementos incluidos en paquetes</h3>
+                    <button onclick="agregarPlatillo('', 'COMPLE MENTO ARROZ', '1/4 de arroz rojo', 0)">COMPLE MENTO ARROZ</button>
+                    <button onclick="agregarPlatillo('', 'COMPLE MENTO FRIJOLES', '1/4 de frijoles charros', 0)">COMPLE MENTO FRIJOLES</button>
+                    <button onclick="agregarPlatillo('', 'COMPLE MENTO ENSALADA COL', '1/4 de ensalada de col', 0)">COMPLE MENTO ENSALADA COL</button>
+                    <button onclick="agregarPlatillo('', 'COMPLE MENTO SOPAFRIA', '1/4 de sopa de coditos', 0)">COMPLE MENTO SOPAFRIA</button>
+                </div>                
+                <!-- Categoría: Bebidas incluidas en paquetes -->
+                <div class="button-group">
+                    <h3>Bebidas incluidas en paquetes</h3>
+                    <button onclick="agregarPlatillo('', 'Agua de limon 500ml', 0)">LIMON</button>
+                    <button onclick="agregarPlatillo('', 'Agua de pepino 500ml', 0)">PEPINO</button>
+                    <button onclick="agregarPlatillo('', 'Agua de horcha ta 500ml', 0)">HORCHATA</button>
+                    <button onclick="agregarPlatillo('', 'Agua de horcha ta fresa 500ml', 0)">FRESA</button>
+                    <button onclick="agregarPlatillo('', 'Agua de jamaica 500ml', 0)">JAMAICA</button>
+                    <button onclick="agregarPlatillo('', 'EPURA 600ml', 0)">EPURA600</button>
+                    <button onclick="agregarPlatillo('', '7UP 600ml', 0)">7UP600</button>
+                    <button onclick="agregarPlatillo('', 'Manza nita 600ml', 0)">MANZANA600</button>
+                    <button onclick="agregarPlatillo('', 'PEPSI 600ml', 0)">PEPSI600</button>
+                    <button onclick="agregarPlatillo('', 'Mirinda 600ml', 0)">MIRINDA600</button>
+                    <button onclick="agregarPlatillo('', 'Sangria 600ml', 0)">SANGRIA600</button>
+                </div>        
+                <!-- Categoría: Regalias -->
+                <div class="button-group">
+                    <h3>Regalias</h3>
+                    <button onclick="agregarPlatillo('PKT RH', '1 pollo, 1 salsa, 4 tortillas, 1 chile toreado', 189)">PKT RH</button>
+                    <button onclick="agregarPlatillo('EMPLEADO FLAUTAS', '5 flautas de pollo, 1 salsa', 0)">EMPLEADO FLAUTAS</button>
+                    <button onclick="agregarPlatillo('EMPLEADO 1/4 POLLO', '1/4 de pollo, 1 salsa, 2 tortillas, 1 chile toreado', 0)">EMPLEADO 1/4 POLLO</button>
+                </div>
+            </div>
         </div>
-        
-        <!-- Categoría: Antojos -->
-        <div class="button-group">
-            <h3>Antojos</h3>
-            <button onclick="agregarPlatillo('FLAUTA', '5 flautas de pollo, 1 salsa', 10)">FLAUTA</button>
-            <button onclick="agregarPlatillo('PKT FLAUTAS', '5 flautas de pollo, 1 salsa', 49)">PKTFLAUTAS</button>
-            <button onclick="agregarPlatillo('PROMO FLAUTAS', '5 flautas de pollo, 1 guacamole', 79)">PROMOFLAUTAS</button>
-            <button onclick="agregarPlatillo('PAPAS FRAN CESA', '300g de papas a la francesa', 49)">PAPASFRANCESA</button>
-            <button onclick="agregarPlatillo('QUESA BROSA', 'quesa dilla de 26 cm, 1 salsa', 49)">QUESABROSA</button>
-            <button onclick="agregarPlatillo('PAPA ASADA', 'Papa asada lenta mente al carbon con mante quilla', 55)">PATATA</button>
-            <button onclick="agregarPlatillo('PALO MITAS', '30 palomitas de pollo', 49)">PALOMITAS</button>
-        </div>
-        
-        <!-- Categoría: Complementos -->
-        <div class="button-group">
-            <h3>Complementos</h3>
-            <button onclick="agregarPlatillo('PROMO 3 COMPLE MENTOS', '3 Complementos a elegir', -20)">PROMO 3 COMPLE MENTOS</button>
-            <button onclick="agregarPlatillo('COMPLE MENTO ARROZ', '1/4 de arroz rojo', 35)">COMPLE MENTO ARROZ</button>
-            <button onclick="agregarPlatillo('COMPLE MENTO FRIJOLES', '1/4 de frijoles charros', 35)">COMPLE MENTO FRIJOLES</button>
-            <button onclick="agregarPlatillo('COMPLE MENTO ENSALADA COL', '1/4 de ensalada de col', 35)">COMPLE MENTO ENSALADA COL</button>
-            <button onclick="agregarPlatillo('COMPLE MENTO SOPAFRIA', '1/4 de sopa de coditos', 35)">COMPLE MENTO SOPAFRIA</button>
-            <button onclick="agregarPlatillo('GUACA MOLE', '1/4 de guacamole fresco', 49)">GUACAMOLE</button>
-        </div>
-        
-        <!-- Categoría: Postres -->
-        <div class="button-group">
-            <h3>Postres</h3>
-            <button onclick="agregarPlatillo('FLAN NAPOLITANO', 'Porción de Flan Napolitano', 25)">FLAN NAPOLITANO</button>
-            <button onclick="agregarPlatillo('ARROZ CON LECHE', 'Porción de Arroz con Leche', 25)">ARROZ CON LECHE</button>
-            <button onclick="agregarPlatillo('JERICALLA', 'Porción de Jericalla', 25)">JERICALLA</button>
-        </div>
-        
-        <!-- Categoría: Extras -->
-        <div class="button-group">
-            <h3>Extras</h3>
-            <button onclick="agregarPlatillo('TOR TILLAS', '4 tortillas', 12)">TORTILLAS</button>
-            <button onclick="agregarPlatillo('SALSA', '1 salsa', 12)">SALSA</button>
-            <button onclick="agregarPlatillo('TOTO POS', 'cruji entes y sala ditos', 12)">TOTOPOS</button>
-            <button onclick="agregarPlatillo('CHILE ASADO', 'Chile asado', 10)">CHILE ASADO</button>
-        </div>
-        
-        <!-- Categoría: Especiales -->
-        <div class="button-group">
-            <h3>Especiales</h3>
-            <button onclick="agregarPlatillo('PKT RH', '1 pollo, 1 salsa, 4 tortillas, 1 chile toreado', 189)">PKT RH</button>
-            <button onclick="agregarPlatillo('EMPLEADO FLAUTAS', '5 flautas de pollo, 1 salsa', 0)">EMPLEADO FLAUTAS</button>
-            <button onclick="agregarPlatillo('EMPLEADO 1/4 POLLO', '1/4 de pollo, 1 salsa, 2 tortillas, 1 chile toreado', 0)">EMPLEADO 1/4 POLLO</button>
-        </div>
-        
-        <!-- Categoría: Bebidas -->
-        <div class="button-group">
-            <h3>Bebidas</h3>
-            <button onclick="agregarPlatillo('LIMON', '500ml de agua fresca', 22)">LIMON</button>
-            <button onclick="agregarPlatillo('PEPINO', '500ml de agua fresca', 22)">PEPINO</button>
-            <button onclick="agregarPlatillo('HORCHA TA', '500ml de agua fresca', 22)">HORCHATA</button>
-            <button onclick="agregarPlatillo('FRESA', '500ml de agua fresca', 22)">FRESA</button>
-            <button onclick="agregarPlatillo('JAMAICA', '500ml de agua fresca', 22)">JAMAICA</button>
-            <button onclick="agregarPlatillo('EPURA 600', 'Refresco de 600ml', 22)">EPURA600</button>
-            <button onclick="agregarPlatillo('7UP 600', 'Refresco de 600ml', 25)">7UP600</button>
-            <button onclick="agregarPlatillo('MANZA 600', 'Refresco de 600ml', 25)">MANZANA600</button>
-            <button onclick="agregarPlatillo('PEPSI 600', 'Refresco de 600ml', 25)">PEPSI600</button>
-            <button onclick="agregarPlatillo('MIRIN 600', 'Refresco de 600ml', 25)">MIRINDA600</button>
-            <button onclick="agregarPlatillo('SANGR 600', 'Refresco de 600ml', 25)">SANGRIA600</button>
-            <button onclick="agregarPlatillo('7UP 1.5', 'Refresco de 600ml', 35)">7UP1.5</button>
-            <button onclick="agregarPlatillo('MANZ 1.5', 'Refresco de 600ml', 35)">MANZANA1.5</button>
-            <button onclick="agregarPlatillo('PEPSI 1.5', 'Refresco de 600ml', 35)">PEPSI1.5</button>
-            <button onclick="agregarPlatillo('MIRIN 1.5', 'Refresco de 600ml', 35)">MIRINDA1.5</button>
-        </div>
-        
-        <!-- Categoría: Bebidas de paquetes -->
-        <div class="button-group">
-            <h3>Bebidas de paquetes</h3>
-            <button onclick="agregarPlatillo('LIMON', '500ml de agua fresca', 0)">LIMÓN</button>
-            <button onclick="agregarPlatillo('PEPINO', '500ml de agua fresca', 0)">PEPINO</button>
-            <button onclick="agregarPlatillo('HORCHA TA', '500ml de agua fresca', 0)">HORCHATA</button>
-            <button onclick="agregarPlatillo('FRESA', '500ml de agua fresca', 0)">FRESA</button>
-            <button onclick="agregarPlatillo('JAMAICA', '500ml de agua fresca', 0)">JAMAICA</button>
-            <button onclick="agregarPlatillo('EPURA 600', 'Refresco de 600ml', 0)">EPURA600</button>
-        </div>
-    </div>
     </div>
 
     <script>
@@ -365,29 +401,29 @@
             document.getElementById('ticketNumber').innerText = codigo; // Muestra el número de ticket en el párrafo
         }
 
-        function imprimirTicket() {
-            window.print();
-        }
+                    function imprimirTicket() {
+                        window.print();
+                    }
 
-        function nuevaCuenta() {
-            // Resetea los campos del ticket
-            document.getElementById('ticketTable').getElementsByTagName('tbody')[0].innerHTML = "";
-            total = 0;
-            document.getElementById('total').innerText = "0.00";
-            document.getElementById('cambio').innerText = "0.00";
-            document.getElementById('pago').value = "";
-        }
+                    function nuevaCuenta() {
+                    // Resetea los campos del ticket
+                    document.getElementById('ticketTable').getElementsByTagName('tbody')[0].innerHTML = "";
+                    total = 0;
+                    document.getElementById('total').innerText = "0.00";
+                    document.getElementById('cambio').innerText = "0.00";
+                    document.getElementById('pago').value = "";
+                    }
 
-        function actualizarHora() {
-            const now = new Date();
-            const fecha = now.toLocaleDateString();
-            const hora = now.toLocaleTimeString();
-            document.getElementById('fecha').innerText = fecha;
-            document.getElementById('hora').innerText = hora;
-        }
+                    function actualizarHora() {
+                    const now = new Date();
+                    const fecha = now.toLocaleDateString();
+                    const hora = now.toLocaleTimeString();
+                    document.getElementById('fecha').innerText = fecha;
+                    document.getElementById('hora').innerText = hora;
+                    }
 
-        setInterval(actualizarHora, 1000);
-        window.onload = actualizarHora;
-    </script>
+                setInterval(actualizarHora, 1000);
+                window.onload = actualizarHora;
+            </script>
 </body>
 </html>

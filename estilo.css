@@ -14,3 +14,36 @@ button {
     outline: none;
     background: none;
 }
+#container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto; /* Asegura que el contenedor permita el desplazamiento */
+}
+.main-container {
+    display: flex;
+    align-items: flex-start; /* Alinea los elementos al inicio verticalmente */
+    height: 100%;
+    overflow: auto; /* Evita el desbordamiento del contenedor principal */
+}
+.buttons-container {
+    width: 100%; /* Ajusta el ancho según sea necesario */
+    padding: 20px;
+    overflow-y: auto; /* Permite el desplazamiento vertical si es necesario */
+}
+/* Asegúrate de que los botones tengan el mismo estilo que antes */
+.buttons button {
+    width: calc(33% - 10px); /* Ajusta el ancho para caber en 3 columnas con espacio entre botones */
+    padding: 10px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.buttons button:hover {
+    background-color: #007B9E;
+}
