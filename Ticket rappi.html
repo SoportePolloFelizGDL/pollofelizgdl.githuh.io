@@ -381,6 +381,14 @@
     </div>
 
     <script>
+        function setTotalAsPayment() {
+         // Obtiene el valor del total
+         var total = parseFloat(document.getElementById("total").textContent);
+        // Asigna el total al campo de pago
+         document.getElementById("pago").value = total.toFixed(2);
+          // Calcula el cambio automáticamente
+          calcularCambio();
+         }
         
         let total = 0;
 

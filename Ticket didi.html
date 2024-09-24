@@ -217,7 +217,7 @@
                     </tbody>
                 </table>
                 <p>Total: $<span id="total">0.00</span></p>
-                <p>Pago: $<input type="number" id="pago" step="0.01"></p>
+                <p>Pago: $<input type="number" id="pago" step="0.01" ondblclick="setTotalAsPayment()"></p>
                 <p>Cambio: $<span id="cambio">0.00</span></p>
                 <label for="payment-method">Seleccionar Método de Pago:</label>
                     <select id="payment-method">
@@ -226,7 +226,8 @@
                         <option value="debito">Tarjeta de Débito</option>
                         <option value="vale">Vale de Despensa</option>
                     </select>
-
+                
+                <button onclick="calcularCambio()">Pagar</button>
                 <div class="barcode">
                     <img id="barcode" src="" alt="Número de Ticket">
                 </div>
@@ -235,7 +236,6 @@
                 <p>Enviándonos tu número de ticket, el costo total, metodo de pago y tus datos de facturacion:</p>
                 <p id="ticketNumber">(Número de Ticket)</p>
                 <p>**************************************</p>
-                <button onclick="calcularCambio()">Pagar</button>
                 <button onclick="imprimirTicket()">Imprimir Ticket</button>
                 <button onclick="nuevaCuenta()">Nueva Cuenta</button>
         </div>
@@ -375,6 +375,14 @@
     </div>
 
     <script>
+        function setTotalAsPayment() {
+         // Obtiene el valor del total
+         var total = parseFloat(document.getElementById("total").textContent);
+        // Asigna el total al campo de pago
+         document.getElementById("pago").value = total.toFixed(2);
+          // Calcula el cambio automáticamente
+          calcularCambio();
+         }
         
         let total = 0;
 
