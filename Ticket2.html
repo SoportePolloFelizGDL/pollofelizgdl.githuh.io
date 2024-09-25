@@ -92,8 +92,8 @@
           33% - 10px
         ); /* Ajusta el ancho para caber en 3 columnas con espacio entre botones */
         padding: 5px;
-        background-color: #f13f3f;
-        color: rgb(255, 255, 255);
+        background-color: #ffe602;
+        color: black;
         border: black;
         border-radius: 5px;
         cursor: pointer;
@@ -168,7 +168,6 @@
       <div class="ticket" id="ticket">
         <!-- Aquí va el logo, después de "Ticket" y antes de la información -->
         <img src="/Menu/LogoPF.png" alt="Logo Restaurante" />
-        <img src="LOGO RAPPI.jpg" alt="Logo Restaurante" />
 
         <p>PROMOTORA DE ALIMENTOS LA GRANJA SA DE CV</p>
         <p>Río de La Loza 1976, El Rosario, 44870 Guadalajara, Jal.</p>
@@ -206,7 +205,7 @@
             <!-- Aquí se agregarán las demás sucursales -->
           </select>
         </div>
-        <p>Ticket #: <input type="text" id="atendio" /></p>
+        <p>Atendió: <input type="text" id="atendio" /></p>
         <p>
           Servicio:
           <select id="servicio">
@@ -303,319 +302,500 @@
           <div class="button-group">
             <h3>Paquetes Familiares</h3>
             <button
-              onclick="agregarPlatillo('', '1/2 pollo, 1 salsa, 2 tortillas, 1 chile toreado', 231)"
+              onclick="agregarPlatillo('', '1/2 pollo, 1 salsa, 2 tortillas, 1 chile toreado', 159)"
             >
-              PKT FELIZ 1/2
+              PKT FELIZ 1/2<img
+                src="Ticket/medio pollo.jpg"
+                width="10%"
+                alt="PKT FELIZ 1/2"
+              />
             </button>
             <button
-              onclick="agregarPlatillo('', '1 pollo, 1 salsa, 4 tortillas, 1 chile toreado', 274)"
+              onclick="agregarPlatillo('', '1 pollo, 1 salsa, 4 tortillas, 1 chile toreado', 189)"
             >
-              PKT FELIZ 1
+              PKT FELIZ 1<img
+                src="Ticket/1 pollo.jpg"
+                width="10%"
+                alt="PKT FELIZ 1"
+              />
             </button>
             <button
-              onclick="agregarPlatillo('', '1 pollo, 1 complemento, 1 salsa, 4 tortillas, 1 chile toreado', 324)"
+              onclick="agregarPlatillo('', '1 y 1/2 pollos, 2 salsas, 6 tortillas, 2 chiles toreados', 269)"
             >
-              PROMO FELIZ 1
+              PKT FELIZ 1&1/2<img
+                src="Ticket/pollo y medio.jpg"
+                width="10%"
+                alt="PKT FELIZ 1&1/2"
+              />
             </button>
             <button
-              onclick="agregarPlatillo('', '1 y 1/2 pollos, 2 salsas, 6 tortillas, 2 chiles toreados', 390)"
+              onclick="agregarPlatillo('', '3 piernas, 3 muslos, 1 salsa, 3 tortillas, 1 chile toreado', 149)"
             >
-              PKT FELIZ 1&1/2
+              PKT FFAMILIAR 6<img
+                src="Ticket/6 piezas.jpg"
+                width="10%"
+                alt="PKT FFAMILIAR 6"
+              />
             </button>
             <button
-              onclick="agregarPlatillo('', '3 piernas, 3 muslos, 1 salsa, 3 tortillas, 1 chile toreado', 216)"
+              onclick="agregarPlatillo('', '6 piernas, 6 muslos, 2 salsa, 6 tortillas, 2 chiles toreados', 209)"
             >
-              PKT FFAMILIAR 6
+              PKT FFAMILIAR 12<img
+                src="Ticket/12 piezas.jpg"
+                width="10%"
+                alt="PKT FFAMILIAR 12"
+              />
             </button>
             <button
-              onclick="agregarPlatillo('', '6 piernas, 6 muslos, 2 salsa, 6 tortillas, 2 chiles toreados', 303)"
+              onclick="agregarPlatillo('', '2 pollos, 2 salsas, 8 tortillas, 2 chiles toreados', 329)"
             >
-              PKT FFAMILIAR 12
-            </button>
-            <button
-              onclick="agregarPlatillo('', '2 pollos, 2 salsas, 8 tortillas, 2 chiles toreados', 477)"
-            >
-              PKTFELIZ 2
-            </button>
-          </div>
-          <!-- Categoría: Paquetes Familiares con flautas -->
-          <div class="button-group">
-            <h3>Paquetes Familiares con flautas</h3>
-            <button
-              onclick="agregarPlatillo('', '1 pollo, 10 flautas, 1 salsa, 4 tortillas, 1 chile toreado', 416)"
-            >
-              POLLO FLAUTAS 1
-            </button>
-            <button
-              onclick="agregarPlatillo('', '1 y 1/2 pollos, 10 flautas, 2 salsas, 6 tortillas, 2 chiles toreados', 532)"
-            >
-              POLLO FLAUTAS 1&1/2
-            </button>
-            <button
-              onclick="agregarPlatillo('', '6 piernas, 6 muslos, 5 flautas, 2 salsa, 6 tortillas, 2 chiles toreados', 374)"
-            >
-              POLLO FLAUTAS 12
-            </button>
-            <button
-              onclick="agregarPlatillo('', '2 pollos, 10 flautas, 2 salsas, 8 tortillas, 2 chiles toreados', 619)"
-            >
-              POLLO 10FLAUTAS 2
-            </button>
-            <button
-              onclick="agregarPlatillo('', '2 pollos, 1 comple mento, 5 flautas, 2 salsas, 8 tortillas, 2 chiles toreados', 598)"
-            >
-              POLLO 5FLAUTAS 2
+              PKTFELIZ 2<img
+                src="Ticket/2 pollos.jpg"
+                width="10%"
+                alt="PKTFELIZ 2"
+              />
             </button>
           </div>
           <!-- Categoría: Promocion del Mes -->
           <div class="button-group">
             <h3>Promocion del Mes</h3>
             <button
-              onclick="agregarPlatillo('', '1 pollo, 1 complemento, 1 salsa, 4 tortillas, 1 chile toreado', 243)"
-            >
-              PKT FELIZ 1
-            </button>
-            <button
               onclick="agregarPlatillo('', '1 y 1/2 pollos, 2 complementos, 2 salsas, 6 tortillas, 2 chiles toreados', 299)"
             >
-              PROMO 1 1/2
+              PROMO 1 1/2<img
+                src="Ticket/pollo y medio 2 complementos.jpg"
+                width="10%"
+                alt="PROMO 1 1/2"
+              />
             </button>
           </div>
           <!-- Categoría: Individuales -->
           <div class="button-group">
             <h3>Individuales</h3>
             <button
-              onclick="agregarPlatillo('', '1/4 de pollo, 1 complemento, 1 salsa, 2 tortillas, 1 chile toreado', 129)"
+              onclick="agregarPlatillo('', '1/4 de pollo, 1 complemento, 1 salsa, 2 tortillas, 1 chile toreado', 89)"
             >
-              PKT FELIZ 1/4
+              PKT FELIZ 1/4<img
+                src="Ticket/PKTINDIVIDUAL.png"
+                width="10%"
+                alt="PKT FELIZ 1/4"
+              />
             </button>
             <button
-              onclick="agregarPlatillo('', 'Hambur guesa, papas a la francesa y bebida', 129)"
+              onclick="agregarPlatillo('', 'Hambur guesa, papas a la francesa y bebida', 89)"
             >
-              PKTHAMBURGUESA
+              PKTHAMBURGUESA<img
+                src="Ticket/hamburguesa.png"
+                width="10%"
+                alt="PKTHAMBURGUESA"
+              />
             </button>
             <button
-              onclick="agregarPlatillo('', 'Nuggets y papas a la francesa', 100)"
+              onclick="agregarPlatillo('', 'Nuggets y papas a la francesa', 69)"
             >
-              PKTNUGGETS
+              PKTNUGGETS<img
+                src="Ticket/nuggets.jpg"
+                width="10%"
+                alt="PKTNUGGETS"
+              />
             </button>
           </div>
           <!-- Categoría: PromoFlautas -->
           <div class="button-group">
             <h3>PromoFlautas</h3>
             <button onclick="agregarPlatillo('', '3 Flautas gratis', 0)">
-              3 FLAUTAS GRATIS
+              3 FLAUTAS GRATIS<img
+                src="Ticket/flautas.jpg"
+                width="10%"
+                alt="3 FLAUTAS GRATIS"
+              />
             </button>
             <button onclick="agregarPlatillo('', '5 Flautas gratis', 0)">
-              5 FLAUTAS GRATIS
+              5 FLAUTAS GRATIS<img
+                src="Ticket/flautas.jpg"
+                width="10%"
+                alt="5 FLAUTAS GRATIS"
+              />
             </button>
             <button onclick="agregarPlatillo('', '10 Flautas gratis', 0)">
-              10 FLAUTAS GRATIS
+              10 FLAUTAS GRATIS<img
+                src="Ticket/flautas.jpg"
+                width="10%"
+                alt="10 FLAUTAS GRATIS"
+              />
             </button>
           </div>
           <!-- Categoría: Antojos -->
           <div class="button-group">
             <h3>Antojos</h3>
-            <button onclick="agregarPlatillo('', '1 flauta de pollo', 14)">
-              FLAUTA
+            <button onclick="agregarPlatillo('', '1 flauta de pollo', 10)">
+              FLAUTA<img src="Ticket/flauta.jpg" width="10%" alt="FLAUTA" />
             </button>
             <button
-              onclick="agregarPlatillo('', '5 flautas de pollo asado', 71)"
+              onclick="agregarPlatillo('', '5 flautas de pollo, 1 salsa', 49)"
             >
-              PKTFLAUTAS
+              PKTFLAUTAS<img
+                src="Ticket/flautas.jpg"
+                width="10%"
+                alt="PKTFLAUTAS"
+              />
             </button>
             <button
-              onclick="agregarPlatillo('', '5 flautas de pollo, 1 guacamole', 114)"
+              onclick="agregarPlatillo('', '5 flautas de pollo, 1 guacamole', 79)"
             >
-              PROMOFLAUTAS
+              PROMOFLAUTAS<img
+                src="Ticket/flautas guacamole.jpg"
+                width="10%"
+                alt="PROMOFLAUTAS"
+              />
             </button>
-            <button onclick="agregarPlatillo('', 'Papas a la francesa', 71)">
-              PAPASFRANCESA
+            <button onclick="agregarPlatillo('', 'Papas a la francesa', 49)">
+              PAPASFRANCESA<img
+                src="Ticket/PAPAS.jpg"
+                width="10%"
+                alt="PAPASFRANCESA"
+              />
             </button>
             <button
-              onclick="agregarPlatillo('', 'Quesa dilla de 26 cm, 1 salsa', 71)"
+              onclick="agregarPlatillo('', 'Quesa dilla de 26 cm, 1 salsa', 49)"
             >
-              QUESABROSA
+              QUESABROSA<img
+                src="Ticket/quesabrosa.jpg"
+                width="10%"
+                alt="QUESABROSA"
+              />
             </button>
-            <button onclick="agregarPlatillo('', 'Papa asada', 79)">
-              PAPA ASADA
+            <button onclick="agregarPlatillo('', 'Papa asada', 55)">
+              PAPA ASADA<img
+                src="Ticket/patata.jpg"
+                width="10%"
+                alt="PAPA ASADA"
+              />
             </button>
-            <button onclick="agregarPlatillo('', 'Palo mitas de pollo', 71)">
-              PALOMITAS
+            <button onclick="agregarPlatillo('', 'Palo mitas de pollo', 49)">
+              PALOMITAS<img
+                src="Ticket/palomitas.jpg"
+                width="10%"
+                alt="PALOMITAS"
+              />
             </button>
           </div>
           <!-- Categoría: Complementos -->
           <div class="button-group">
             <h3>Complementos</h3>
             <button
-              onclick="agregarPlatillo('', '3 Complementos a elegir', 123)"
+              onclick="agregarPlatillo('', '3 Complementos a elegir', 85)"
             >
-              PROMO 3 COMPLE MENTOS
+              PROMO 3 COMPLE MENTOS<img
+                src="Ticket/3complementos.jpg"
+                width="10%"
+                alt="PROMO 3 COMPLE MENTOS"
+              />
             </button>
-            <button onclick="agregarPlatillo('', '1/4 de arroz rojo', 50)">
-              ARROZ ROJO
+            <button onclick="agregarPlatillo('', '1/4 de arroz rojo', 35)">
+              ARROZ ROJO<img
+                src="Ticket/arroz rojo.jpg"
+                width="10%"
+                alt="ARROZ ROJO"
+              />
             </button>
             <button
-              onclick="agregarPlatillo('', '1/4 de frijoles charros', 50)"
+              onclick="agregarPlatillo('', '1/4 de frijoles charros', 35)"
             >
-              FRIJOLES CHARROS
+              FRIJOLES CHARROS<img
+                src="Ticket/frijoles charros.jpg"
+                width="10%"
+                alt="FRIJOLES CHARROS"
+              />
             </button>
-            <button onclick="agregarPlatillo('', '1/4 de ensalada de col', 50)">
-              ENSALADA COL
+            <button onclick="agregarPlatillo('', '1/4 de ensalada de col', 35)">
+              ENSALADA COL<img
+                src="Ticket/ensalada col.png"
+                width="10%"
+                alt="ENSALADA COL"
+              />
             </button>
-            <button onclick="agregarPlatillo('', '1/4 de sopa de coditos', 50)">
-              SOPAFRIA
+            <button onclick="agregarPlatillo('', '1/4 de sopa de coditos', 35)">
+              SOPAFRIA<img
+                src="Ticket/sopa fria.jpg"
+                width="10%"
+                alt="SOPAFRIA"
+              />
             </button>
             <button
-              onclick="agregarPlatillo('', '1/4 de Guacamole fresco', 71)"
+              onclick="agregarPlatillo('', '1/4 de Guacamole fresco', 49)"
             >
-              GUACAMOLE
+              GUACAMOLE<img
+                src="Ticket/guacamole.jpg"
+                width="10%"
+                alt="GUACAMOLE"
+              />
             </button>
           </div>
           <!-- Categoría: Postres -->
           <div class="button-group">
             <h3>Postres</h3>
             <button
-              onclick="agregarPlatillo('', 'Porción de Flan Napolitano', 36)"
+              onclick="agregarPlatillo('', 'Porción de Flan Napolitano', 25)"
             >
-              FLAN NAPOLITANO
+              FLAN NAPOLITANO<img
+                src="Ticket/flan napolitano.jpg"
+                width="10%"
+                alt="FLAN NAPOLITANO"
+              />
             </button>
             <button
-              onclick="agregarPlatillo('', 'Porción de Arroz con Leche', 36)"
+              onclick="agregarPlatillo('', 'Porción de Arroz con Leche', 25)"
             >
-              ARROZ CON LECHE
+              ARROZ CON LECHE<img
+                src="Ticket/arroz con leche.jpg"
+                width="10%"
+                alt="ARROZ CON LECHE"
+              />
             </button>
-            <button onclick="agregarPlatillo('', 'Porción de Jericalla', 36)">
-              JERICALLA
+            <button onclick="agregarPlatillo('', 'Porción de Jericalla', 25)">
+              JERICALLA<img
+                src="Ticket/jericalla.jpg"
+                width="10%"
+                alt="JERICALLA"
+              />
             </button>
           </div>
           <!-- Categoría: Extras -->
           <div class="button-group">
             <h3>Extras</h3>
-            <button onclick="agregarPlatillo('', 'Chile asado extra', 14)">
-              CHILE ASADO
+            <button onclick="agregarPlatillo('', 'Chile asado extra', 10)">
+              CHILE ASADO<img
+                src="Ticket/CHILE.jpg"
+                width="10%"
+                alt="CHILE ASADO"
+              />
             </button>
-            <button onclick="agregarPlatillo('', '8 tortillas extras', 17)">
-              TORTILLAS
+            <button onclick="agregarPlatillo('', '8 tortillas extras', 12)">
+              TORTILLAS<img
+                src="Ticket/Tortillas.png"
+                width="10%"
+                alt="TORTILLAS"
+              />
             </button>
-            <button onclick="agregarPlatillo('', '1 salsa extra', 17)">
-              SALSA
+            <button onclick="agregarPlatillo('', '1 salsa extra', 12)">
+              SALSA<img src="Ticket/SALSA.jpg" width="10%" alt="SALSA" />
             </button>
             <button
-              onclick="agregarPlatillo('', 'cruji entes y sala ditos', 16)"
+              onclick="agregarPlatillo('', 'cruji entes y sala ditos', 12)"
             >
-              TOTOPOS
+              TOTOPOS<img src="Ticket/Totopos.png" width="10%" alt="TOTOPOS" />
             </button>
           </div>
           <!-- Categoría: Bebidas -->
           <div class="button-group">
             <h3>Bebidas</h3>
-            <button onclick="agregarPlatillo('', 'Agua de limon 500ml', 32)">
-              LIMON
+            <button onclick="agregarPlatillo('', 'Agua de limon 500ml', 22)">
+              LIMON<img src="Ticket/Limon.jpg" width="10%" alt="LIMON" />
             </button>
-            <button onclick="agregarPlatillo('', 'Agua de pepino 500ml', 32)">
-              PEPINO
-            </button>
-            <button
-              onclick="agregarPlatillo('', 'Agua de horcha ta 500ml', 32)"
-            >
-              HORCHATA
+            <button onclick="agregarPlatillo('', 'Agua de pepino 500ml', 22)">
+              PEPINO<img src="Ticket/Pepino.jpg" width="10%" alt="PEPINO" />
             </button>
             <button
-              onclick="agregarPlatillo('', 'Agua de horcha ta fresa 500ml', 32)"
+              onclick="agregarPlatillo('', 'Agua de horcha ta 500ml', 22)"
             >
-              FRESA
+              HORCHATA<img
+                src="Ticket/horchata.jpg"
+                width="10%"
+                alt="HORCHATA"
+              />
             </button>
-            <button onclick="agregarPlatillo('', 'Agua de jamaica 500ml', 32)">
-              JAMAICA
+            <button
+              onclick="agregarPlatillo('', 'Agua de horcha ta fresa 500ml', 22)"
+            >
+              FRESA<img src="Ticket/fresa.jpg" width="10%" alt="FRESA" />
             </button>
-            <button onclick="agregarPlatillo('', 'EPURA 600ml', 32)">
-              EPURA600
+            <button onclick="agregarPlatillo('', 'Agua de jamaica 500ml', 22)">
+              JAMAICA<img src="Ticket/Jamaica.jpg" width="10%" alt="JAMAICA" />
             </button>
-            <button onclick="agregarPlatillo('', '7UP 600ml', 32)">
-              7UP600
+            <button onclick="agregarPlatillo('', 'EPURA 600ml', 22)">
+              EPURA600<img
+                src="Ticket/agua 600.jpg"
+                width="10%"
+                alt="EPURA600"
+              />
             </button>
-            <button onclick="agregarPlatillo('', 'Manza nita 600ml', 36)">
-              MANZANA600
+            <button onclick="agregarPlatillo('', '7UP 600ml', 25)">
+              7UP600<img src="Ticket/limon 600.jpg" width="10%" alt="7UP600" />
             </button>
-            <button onclick="agregarPlatillo('', 'PEPSI 600ml', 36)">
-              PEPSI600
+            <button onclick="agregarPlatillo('', 'Manza nita 600ml', 25)">
+              MANZANA600<img
+                src="Ticket/manzana 600.jpg"
+                width="10%"
+                alt="MANZANA600"
+              />
             </button>
-            <button onclick="agregarPlatillo('', 'Mirinda 600ml', 36)">
-              MIRINDA600
+            <button onclick="agregarPlatillo('', 'PEPSI 600ml', 25)">
+              PEPSI600<img
+                src="Ticket/cola 600.jpg"
+                width="10%"
+                alt="PEPSI600"
+              />
             </button>
-            <button onclick="agregarPlatillo('', 'Sangria 600ml', 36)">
-              SANGRIA600
+            <button onclick="agregarPlatillo('', 'Mirinda 600ml', 25)">
+              MIRINDA600<img
+                src="Ticket/naranja 600.jpg"
+                width="10%"
+                alt="MIRINDA600"
+              />
             </button>
-            <button onclick="agregarPlatillo('', '7UP 1.5lt', 50)">
-              7UP1.5
+            <button onclick="agregarPlatillo('', 'Sangria 600ml', 25)">
+              SANGRIA600<img
+                src="Ticket/sangria 600.jpg"
+                width="10%"
+                alt="SANGRIA600"
+              />
             </button>
-            <button onclick="agregarPlatillo('', 'Manza nita 1.5lt', 50)">
-              MANZANA1.5
+            <button onclick="agregarPlatillo('', '7UP 1.5lt', 35)">
+              7UP1.5<img src="Ticket/limon 1.5.jpg" width="10%" alt="7UP1.5" />
             </button>
-            <button onclick="agregarPlatillo('', 'PEPSI 1.5lt', 50)">
-              PEPSI1.5
+            <button onclick="agregarPlatillo('', 'Manza nita 1.5lt', 35)">
+              MANZANA1.5<img
+                src="Ticket/manzana 1.5.jpg"
+                width="10%"
+                alt="MANZANA1.5"
+              />
             </button>
-            <button onclick="agregarPlatillo('', 'Mirinda 1.5lt', 50)">
-              MIRINDA1.5
+            <button onclick="agregarPlatillo('', 'PEPSI 1.5lt', 35)">
+              PEPSI1.5<img
+                src="Ticket/cola 1.5.jpg"
+                width="10%"
+                alt="PEPSI1.5"
+              />
             </button>
-            <button onclick="agregarPlatillo('', 'Sangria 1.5lt', 50)">
-              SANGRIA1.5
+            <button onclick="agregarPlatillo('', 'Mirinda 1.5lt', 35)">
+              MIRINDA1.5<img
+                src="Ticket/naranja 1.5.jpg"
+                width="10%"
+                alt="MIRINDA1.5"
+              />
             </button>
           </div>
           <!-- Categoría: Complementos Incluidos en paquetes -->
           <div class="button-group">
             <h3>Complementos Incluidos en paquetes</h3>
             <button onclick="agregarPlatillo('', '1/4 de arroz rojo', 0)">
-              ARROZ ROJO
+              ARROZ ROJO<img
+                src="Ticket/arroz rojo.jpg"
+                width="10%"
+                alt="ARROZ ROJO"
+              />
             </button>
             <button onclick="agregarPlatillo('', '1/4 de frijoles charros', 0)">
-              FRIJOLES CHARROS
+              FRIJOLES CHARROS<img
+                src="Ticket/frijoles charros.jpg"
+                width="10%"
+                alt="FRIJOLES CHARROS"
+              />
             </button>
             <button onclick="agregarPlatillo('', '1/4 de ensalada de col', 0)">
-              ENSALADA COL
+              ENSALADA COL<img
+                src="Ticket/ensalada col.png"
+                width="10%"
+                alt="ENSALADA COL"
+              />
             </button>
             <button onclick="agregarPlatillo('', '1/4 de sopa de coditos', 0)">
-              SOPAFRIA
+              SOPAFRIA<img
+                src="Ticket/sopa fria.jpg"
+                width="10%"
+                alt="SOPAFRIA"
+              />
             </button>
           </div>
           <!-- Categoría: Bebidas incluidas en paquetes -->
           <div class="button-group">
             <h3>Bebidas incluidas en paquetes</h3>
             <button onclick="agregarPlatillo('', 'Agua de limon 500ml', 0)">
-              LIMON
+              LIMON<img src="Ticket/Limon.jpg" width="10%" alt="LIMON" />
             </button>
             <button onclick="agregarPlatillo('', 'Agua de pepino 500ml', 0)">
-              PEPINO
+              PEPINO<img src="Ticket/Pepino.jpg" width="10%" alt="PEPINO" />
             </button>
             <button onclick="agregarPlatillo('', 'Agua de horcha ta 500ml', 0)">
-              HORCHATA
+              HORCHATA<img
+                src="Ticket/horchata.jpg"
+                width="10%"
+                alt="HORCHATA"
+              />
             </button>
             <button
               onclick="agregarPlatillo('', 'Agua de horcha ta fresa 500ml', 0)"
             >
-              FRESA
+              FRESA<img src="Ticket/fresa.jpg" width="10%" alt="FRESA" />
             </button>
             <button onclick="agregarPlatillo('', 'Agua de jamaica 500ml', 0)">
-              JAMAICA
+              JAMAICA<img src="Ticket/Jamaica.jpg" width="10%" alt="JAMAICA" />
             </button>
             <button onclick="agregarPlatillo('', 'EPURA 600ml', 0)">
-              EPURA600
+              EPURA600<img
+                src="Ticket/agua 600.jpg"
+                width="10%"
+                alt="EPURA600"
+              />
             </button>
             <button onclick="agregarPlatillo('', '7UP 600ml', 0)">
-              7UP600
+              7UP600<img src="Ticket/limon 600.jpg" width="10%" alt="7UP600" />
             </button>
             <button onclick="agregarPlatillo('', 'Manza nita 600ml', 0)">
-              MANZANA600
+              MANZANA600<img
+                src="Ticket/manzana 600.jpg"
+                width="10%"
+                alt="MANZANA600"
+              />
             </button>
             <button onclick="agregarPlatillo('', 'PEPSI 600ml', 0)">
-              PEPSI600
+              PEPSI600<img
+                src="Ticket/cola 600.jpg"
+                width="10%"
+                alt="PEPSI600"
+              />
             </button>
             <button onclick="agregarPlatillo('', 'Mirinda 600ml', 0)">
-              MIRINDA600
+              MIRINDA600<img
+                src="Ticket/naranja 600.jpg"
+                width="10%"
+                alt="MIRINDA600"
+              />
             </button>
             <button onclick="agregarPlatillo('', 'Sangria 600ml', 0)">
-              SANGRIA600
+              SANGRIA600<img
+                src="Ticket/sangria 600.jpg"
+                width="10%"
+                alt="SANGRIA600"
+              />
+            </button>
+          </div>
+          <!-- Categoría: Regalias -->
+          <div class="button-group">
+            <h3>Regalias</h3>
+            <button
+              onclick="agregarPlatillo('PKT RH', '1 pollo, 1 salsa, 4 tortillas, 1 chile toreado', 189)"
+            >
+              PKT RH<img src="Ticket/1 pollo.jpg" width="10%" alt="PKT RH" />
+            </button>
+            <button
+              onclick="agregarPlatillo('EMPLEADO FLAUTAS', '5 flautas de pollo, 1 salsa', 0)"
+            >
+              EMPLEADO FLAUTAS<img
+                src="Ticket/flautas.jpg"
+                width="10%"
+                alt="EMPLEADO FLAUTAS"
+              />
+            </button>
+            <button
+              onclick="agregarPlatillo('EMPLEADO 1/4 POLLO', '1/4 de pollo, 1 salsa, 2 tortillas, 1 chile toreado', 0)"
+            >
+              EMPLEADO 1/4 POLLO<img
+                src="Ticket/PKTINDIVIDUAL.png"
+                width="10%"
+                alt="EMPLEADO 1/4 POLLO"
+              />
             </button>
           </div>
         </div>
