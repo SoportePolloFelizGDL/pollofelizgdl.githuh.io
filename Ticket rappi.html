@@ -206,7 +206,7 @@
             <!-- Aquí se agregarán las demás sucursales -->
           </select>
         </div>
-        <p>Ticket #: <input type="text" id="atendio" /></p>
+        <p>Atendió: <input type="text" id="atendio" /></p>
         <p>
           Servicio:
           <select id="servicio">
@@ -214,6 +214,7 @@
             <option value="paraLlevar">Para llevar</option>
           </select>
         </p>
+        <button onclick="nuevaCuenta()">Nueva Cuenta</button>
         <table id="ticketTable">
           <thead>
             <tr>
@@ -228,15 +229,6 @@
           </tbody>
         </table>
         <p>Total: $<span id="total">0.00</span></p>
-        <p>
-          Pago: $<input
-            type="number"
-            id="pago"
-            step="0.01"
-            ondblclick="setTotalAsPayment()"
-          />
-        </p>
-        <p>Cambio: $<span id="cambio">0.00</span></p>
         <label for="payment-method">Seleccionar Método de Pago:</label>
         <select id="payment-method">
           <option value="efectivo">Efectivo</option>
@@ -244,24 +236,34 @@
           <option value="debito">Tarjeta de Débito</option>
           <option value="vale">Vale de Despensa</option>
         </select>
-
+        <p>
+          Tu pago: $<input
+            type="number"
+            id="pago"
+            step="0.01"
+            ondblclick="setTotalAsPayment()"
+          />
+        </p>
         <button onclick="calcularCambio()">Pagar</button>
+        <p>Cambio: $<span id="cambio">0.00</span></p>
         <div class="barcode">
           <img id="barcode" src="" alt="Número de Ticket" />
         </div>
+        <button onclick="imprimirTicket()">Imprimir Ticket</button>
         <p>Facturación: facturacionpf.gdl@gmail.com</p>
         <p>
           Enviándonos tu número de ticket, el costo total, metodo de pago y tus
           datos de facturacion:
         </p>
         <p id="ticketNumber">(Número de Ticket)</p>
+        <img src="QR.png" alt="QR MENÚ" />
+        <p>NUESTRO MENÚ</p>
         <p>🍗🍗🍗🍗🍗🍗🍗🍗🍗🍗</p>
-        <button onclick="imprimirTicket()">Imprimir Ticket</button>
-        <button onclick="nuevaCuenta()">Nueva Cuenta</button>
       </div>
 
       <div class="buttons-container">
         <div class="buttons">
+          <p>🍗🍗</p>
           <div class="button-container">
             <button>
               <a href="Ticket.html"
@@ -269,6 +271,7 @@
               /></a>
             </button>
           </div>
+          <p>🍗🍗</p>
           <div class="button-container">
             <button>
               <a href="Ticket didi.html"
@@ -276,6 +279,7 @@
               /></a>
             </button>
           </div>
+          <p>🍗🍗</p>
           <div class="button-container">
             <button>
               <a href="Ticket rappi.html"
@@ -283,6 +287,7 @@
               /></a>
             </button>
           </div>
+          <p>🍗🍗</p>
           <div class="button-container">
             <button>
               <a href="Ticket uber.html"
@@ -290,6 +295,7 @@
               /></a>
             </button>
           </div>
+          <p>🍗🍗</p>
           <div class="button-container">
             <button>
               <a href="Ticket.html"
@@ -297,7 +303,7 @@
               /></a>
             </button>
           </div>
-          <p>🍗🍗🍗🍗🍗🍗🍗🍗🍗🍗</p>
+          <p>🍗🍗</p>
 
           <!-- Categoría: Paquetes Familiares -->
           <div class="button-group">
