@@ -590,7 +590,7 @@
     function agregarPlatillo(nombre, descripcion, precio) {
       const table = document.getElementById("ticketTable").getElementsByTagName("tbody")[0];
       let found = false;
-  
+      // Recorre todas las filas para ver si el platillo ya está en la tabla
       for (let row of table.rows) {
         const cellDescription = row.cells[1].innerText;
         if (cellDescription.includes(descripcion)) {
@@ -598,13 +598,13 @@
           const subtotalCell = row.cells[2];
           const currentQuantity = parseInt(quantityCell.innerText);
           const currentSubtotal = parseFloat(subtotalCell.innerText.replace("$", ""));
-  
+          // Incrementa la cantidad
           const newQuantity = currentQuantity + 1;
           quantityCell.innerText = newQuantity;
-  
+          // Actualiza el subtotal
           const newSubtotal = currentSubtotal + precio;
           subtotalCell.innerText = `$${newSubtotal.toFixed(2)}`;
-  
+          // Actualiza el total
           total += precio;
           updateTotals();
   
@@ -612,7 +612,7 @@
           break;
         }
       }
-  
+      // Si el platillo no se encontró, agrega una nueva fila
       if (!found) {
         const newRow = table.insertRow();
         const cellQuantity = newRow.insertCell(0);
@@ -640,6 +640,7 @@
     }
   
     function calcularCambio() {
+      generarCodigoBarras();
       const pago = parseFloat(document.getElementById("pago").value) || 0;
       const cambio = pago - total;
       document.getElementById("cambio").innerText = cambio >= 0 ? cambio.toFixed(2) : "0.00";
