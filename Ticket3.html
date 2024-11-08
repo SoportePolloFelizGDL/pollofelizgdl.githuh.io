@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punto de Venta</title>
+    <link rel="stylesheet" href="styles3.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Menú Desplegable -->
+        <div class="menu">
+            <h2>Menú</h2>
+            <div class="section">
+                <button onclick="toggleMenu('promociones')">Promociones</button>
+                <div id="promociones" class="submenu">
+                    <button onclick="addProduct('Promo 1 & 1/2', 100)">Promo 1 & 1/2</button>
+                    <button onclick="addProduct('Promo 2', 150)">Promo 2</button>
+                </div>
+            </div>
+            <div class="section">
+                <button onclick="toggleMenu('familiares')">Familiares</button>
+                <div id="familiares" class="submenu">
+                    <button onclick="addProduct('1/2 Pollo', 80)">1/2 Pollo</button>
+                    <button onclick="addProduct('1 Pollo', 150)">1 Pollo</button>
+                    <!-- Agregar más opciones -->
+                </div>
+            </div>
+            <div class="section">
+                <button onclick="toggleMenu('individuales')">Individuales</button>
+                <div id="individuales" class="submenu">
+                    <button onclick="addProduct('1/4 de Pollo', 40)">1/4 de Pollo</button>
+                    <button onclick="addProduct('Hamburguesa', 50)">Hamburguesa</button>
+                    <!-- Agregar más opciones -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Detalles del Pedido -->
+        <div class="details">
+            <h2>Detalles del Pedido</h2>
+            <label>Atiende:</label>
+            <input type="text" id="attendantName">
+
+            <label>Sucursal:</label>
+            <select id="branch">
+                <option value="01">Águilas</option>
+                <option value="02">Tapatio</option>
+                <option value="03">Tlaquepaque</option>
+                <option value="05">Loma Dorada</option>
+                <option value="06">Santa Margarita</option>
+                <option value="07">Patria</option>
+                <option value="08">Independencia</option>
+                <option value="10">Tesistan</option>
+                <option value="11">Oblatos</option>
+                <option value="12">Guadalupe</option>
+                <option value="13">Tetlan</option>
+                <option value="14">Sauz</option>
+                <option value="15">Santa Fe</option>
+                <option value="16">Tuzania</option>
+                <option value="17">La Cruz</option>
+                <option value="18">Juan Pablo II</option>
+                <option value="19">Box Market</option>
+                <option value="20">Plan de San Luis</option>
+                <option value="21">Autodromo</option>
+                <option value="22">Monumental</option>
+                <option value="23">16 de septiembre</option>
+                <option value="24">CEDIS</option>
+                <option value="25">Condo Plaza</option>
+                <option value="26">Avila Camacho</option>
+                <option value="27">Magnolias</option>
+                <option value="28">El Castillo</option>
+                <option value="29">Lomas del Gallo</option>
+                <option value="30">Torre Trimera</option>
+            </select>
+
+            <label>Para:</label>
+            <select id="serviceType">
+                <option value="comedor">Comedor</option>
+                <option value="llevar">Para Llevar</option>
+            </select>
+
+            <h3>Resumen de Venta</h3>
+            <div id="saleSummary">
+                <!-- Aquí se mostrarán los platillos agregados -->
+            </div>
+            <p>Total: $<span id="totalPrice">0</span></p>
+
+            <!-- Botones de acción -->
+            <button onclick="clearOrder()">Borrar Todo</button>
+            <button onclick="checkout()">Cobrar</button>
+            <button onclick="printTicket()">Imprimir Ticket</button>
+        </div>
+    </div>
+
+    <script src="scripts3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+</body>
+
+</html>

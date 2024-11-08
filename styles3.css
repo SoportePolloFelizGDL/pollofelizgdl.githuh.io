@@ -1,0 +1,175 @@
+/* Configuración básica */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.container {
+    display: flex;
+    width: 90%;
+    max-width: 1200px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+/* Estilos para el Menú */
+.menu {
+    width: 30%;
+    background-color: #0044cc;
+    color: #fff;
+    padding: 20px;
+    border-right: 2px solid #ddd;
+}
+
+.menu h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.section {
+    margin-bottom: 15px;
+}
+
+.section button {
+    width: 100%;
+    background-color: #0066ff;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.section button:hover {
+    background-color: #0052cc;
+}
+
+.submenu {
+    display: none;
+    margin-top: 5px;
+}
+
+.submenu button {
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px;
+    border: none;
+    font-size: 16px;
+    text-align: left;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.submenu button:hover {
+    background-color: #0062cc;
+}
+
+/* Estilos para los Detalles del Pedido */
+.details {
+    width: 70%;
+    padding: 20px;
+}
+
+.details h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.details label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+.details input, .details select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.details h3 {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#saleSummary {
+    border: 1px solid #ddd;
+    padding: 10px;
+    height: 200px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+}
+
+#saleSummary p {
+    font-size: 16px;
+    padding: 5px 0;
+}
+
+p span {
+    font-weight: bold;
+}
+
+/* Estilo para los botones de acción */
+button {
+    padding: 10px 15px;
+    margin-top: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button:active {
+    opacity: 0.8;
+}
+
+button:nth-of-type(1) { /* Botón Borrar Todo */
+    background-color: #ff4d4d;
+    color: #fff;
+    margin-right: 10px;
+}
+
+button:nth-of-type(2) { /* Botón Cobrar */
+    background-color: #4CAF50;
+    color: #fff;
+    margin-right: 10px;
+}
+
+button:nth-of-type(3) { /* Botón Imprimir Ticket */
+    background-color: #333;
+    color: #fff;
+}
+
+/* Estilos Responsivos */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .menu, .details {
+        width: 100%;
+    }
+}
