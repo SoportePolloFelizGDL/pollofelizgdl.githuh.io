@@ -320,9 +320,7 @@
                         <p>Total Pagado: ${totalPagado.toFixed(2)} MXN</p>
                         <p>Cambio: ${(totalPagado - parseFloat(document.getElementById('total').innerText)).toFixed(2)} MXN</p>
                         <p>Facturación: facturacionpf.gdl@gmail.com</p>
-                        <div class="barcode">
-                            <img id="barcode" src="" alt="${folio}" />
-                        </div>
+                        <img id="barcode" src="" alt="Código de barras del ticket" />
                         <p>GRACIAS POR TU COMPRA</p>
                     </div>
                 </center>
@@ -371,7 +369,7 @@
         }
 
         function generarCodigoBarras() {
-            const sucursal = document.getElementById("sucursalSelect").value;
+            const sucursal = document.getElementById("sucursal").value;
             const now = new Date();
             const fecha =
                 now.getFullYear().toString().slice(-2) +
@@ -381,11 +379,10 @@
                 now.getHours().toString().padStart(2, "0") +
                 now.getMinutes().toString().padStart(2, "0") +
                 now.getSeconds().toString().padStart(2, "0");
-            const codigo = sucursal + fecha + hora + "-" + total;
-            document.getElementById(
-                "barcode"
-            ).src = `https://barcode.tec-it.com/barcode.ashx?data=${codigo}&code=Code128&translate-esc=true`;
-            document.getElementById("ticketNumber").innerText = codigo; // Muestra el número de ticket en el párrafo
+            const total = parseFloat(document.getElementById('total').innerText).toFixed(0);
+
+            const codigo = `${sucursal}${fecha}${hora}-${total}`;
+            document.getElementById("barcode").src = `https://barcode.tec-it.com/barcode.ashx?data=${codigo}&code=Code128&translate-esc=true`;
         }
     </script>
 </body>
