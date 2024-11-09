@@ -465,8 +465,8 @@
                 total += precio;
             });
 
-            const iva = total * (16 / 116);
-            const subtotal = total - iva;
+            const iva = total - subtotal;
+            const subtotal = total / 1.16;
 
             document.getElementById('subtotal').innerText = subtotal.toFixed(2);
             document.getElementById('iva').innerText = iva.toFixed(2);
