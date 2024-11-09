@@ -300,8 +300,8 @@
 
             let contenidoTicket = `
                 <center>
-                    <div style="width: 60mm; margin: auto;">
-                        <img src="/LogoPFo.png" alt="POLLO FELIZ" style="width: 60mm;"/>
+                    <div style="width: 80mm; margin: auto;">
+                        <img src="/LogoPFo.png" alt="POLLO FELIZ" style="width: 50mm;"/>
                         <p>${nombreFiscal}</p>
                         <p>${domicilio}</p>
                         <p>Sucursal: ${sucursal}</p>
@@ -320,7 +320,9 @@
                         <p>Total Pagado: ${totalPagado.toFixed(2)} MXN</p>
                         <p>Cambio: ${(totalPagado - parseFloat(document.getElementById('total').innerText)).toFixed(2)} MXN</p>
                         <p>Facturación: facturacionpf.gdl@gmail.com</p>
-                        <img id="barcode" src="" alt="Código de barras del ticket" />
+                        <img src="QR.png" alt="QR MENÚ" style="width: 60mm;"/>
+                        <p>NUESTRO MENÚ</p>
+                        // <img id="barcode" src="" alt="Código de barras del ticket" />
                         <p>GRACIAS POR TU COMPRA</p>
                     </div>
                 </center>
