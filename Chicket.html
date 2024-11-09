@@ -102,8 +102,17 @@
             </select><br><br>
 
             <h3>Menú de Platillos</h3>
-            <button onclick="mostrarPlatillos('familiares')">Paquetes Familiares</button>
-            <button onclick="mostrarPlatillos('individuales')">Paquetes Individuales</button>
+            <button onclick="mostrarPlatillos('Familiares')">Paquetes Familiares</button>
+            <button onclick="mostrarPlatillos('Promociones')">Promociones</button>
+            <button onclick="mostrarPlatillos('Individuales')">Paquetes Individuales</button>
+            <button onclick="mostrarPlatillos('Antojos')">Antojos</button>
+            <button onclick="mostrarPlatillos('Complementos')">Complementos</button>
+            <button onclick="mostrarPlatillos('Postres')">Postres</button>
+            <button onclick="mostrarPlatillos('Extras')">Extras</button>
+            <button onclick="mostrarPlatillos('Bebidas')">Bebidas</button>
+            <button onclick="mostrarPlatillos('Complementos Incluidos en Paquetes')">Complementos Incluidos en Paquetes</button>
+            <button onclick="mostrarPlatillos('Bebidas Incluidas en Paquetes')">Bebidas Incluidas en Paquetes</button>
+            <button onclick="mostrarPlatillos('Regalias')">Regalias</button>
         </div>
 
         <!-- Resumen de la orden -->
@@ -173,7 +182,7 @@
             const platillosDiv = document.getElementById('platillos');
             document.getElementById('ventanaPlatillos').style.display = 'block';
 
-            if (categoria === 'familiares') {
+            if (categoria === 'Familiares') {
                 platillosDiv.innerHTML = `
                     <button onclick="agregarPlatillo('PKT FELIZ 1/2', '1/2 pollo, 1 salsita, 2 tortillas, 1 chile toreado', 159)">
                         PKT FELIZ 1/2
@@ -181,12 +190,231 @@
                     <button onclick="agregarPlatillo('PKT FELIZ 1', '1 pollo, 1 salsita, 4 tortillas, 1 chile toreado', 189)">
                         PKT FELIZ 1
                     </button>
+                    <button onclick="agregarPlatillo('', '1 y 1/2 pollos, 2 salsitas, 6 tortillas, 2 chiles toreados', 269)">
+                        PKT FELIZ 1&1/2
+                    </button>
+                    <button onclick="agregarPlatillo('', '3 piernas, 3 muslos, 1 salsita, 3 tortillas, 1 chile toreado', 149)">
+                        PKT FFAMILIAR 6
+                    </button>
+                    <button onclick="agregarPlatillo('', '6 piernas, 6 muslos, 2 salsitas, 6 tortillas, 2 chiles toreados', 209)">
+                        PKT FFAMILIAR 12
+                    </button>
+                    <button onclick="agregarPlatillo('', '2 pollos, 2 salsitas, 8 tortillas, 2 chiles toreados', 329)">
+                        PKTFELIZ 2
+                    </button>
                 `;
-            } else if (categoria === 'individuales') {
+            } else if (categoria === 'Promociones') {
+                platillosDiv.innerHTML = `
+                    <button onclick="agregarPlatillo('', 'pollo & 1/2, 2 salsita, 6 tortillas, 2 chile toreado, 10 flautas', 269)">
+                        PROMO POP 1&1/2
+                    </button>
+                    <button onclick="agregarPlatillo('', '2 pollos, 2 complementos, 2 salsitas, 8 tortillas, 2 chiles toreados, 10 flautas', 399)">
+                        PROMO POP 2
+                    </button>
+                    <button onclick="agregarPlatillo('', '1 pollo, 1 salsita, 4 tortillas, 1 chile toreado, 1 papa asada, 10 flautas de pollo', 293)">
+                        SUPER PKT FELIZ 1
+                    </button>
+                `;
+            } else if (categoria === 'Individuales') {
                 platillosDiv.innerHTML = `
                     <button onclick="agregarPlatillo('PKT FELIZ 1/4', '1/4 de pollo, 1 complemento, 1 salsita, 2 tortillas, 1 chile toreado', 89)">
                         PKT FELIZ 1/4
                     </button>
+                    <button onclick="agregarPlatillo('', 'Hambur guesa, papas a la francesa y bebida', 89)">
+                        PKTHAMBURGUESA
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Nuggets y papas a la francesa', 69)">
+                        PKTNUGGETS
+                    </button>
+                `;
+            } else if (categoria === 'Antojos') {
+                platillosDiv.innerHTML = `
+                    <button onclick="agregarPlatillo('', '1 flauta de pollo', 10)">
+                        FLAUTA
+                    </button>
+                    <button onclick="agregarPlatillo('', '5 flautas de pollo, + 5 flautas de pollo gratis', 49)">
+                        DELI5FLAUTAS
+                    </button>
+                    <button onclick="agregarPlatillo('', '10 flautas de pollo, + 10 flautas de pollo gratis', 98)">
+                        DELI10FLAUTAS
+                    </button>
+                    <button onclick="agregarPlatillo('', '5 flautas de pollo, 1 guacamole', 79)">
+                        PROMOFLAUTAS
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Papas a la francesa', 49)">
+                        PAPASFRANCESA
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Quesa dilla de 26 cm, 1 salsita', 49)">
+                        QUESABROSA
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Papa asada', 55)">
+                        PAPA ASADA
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Palo mitas de pollo', 49)">
+                        PALOMITAS
+                    </button>
+                `;
+            } else if (categoria === 'Complementos') {
+                platillosDiv.innerHTML = `
+                    <button onclick="agregarPlatillo('', '3 Complementos a elegir', 85)">
+                        PROMO 3 COMPLE MENTOS
+                    </button>
+                    <button onclick="agregarPlatillo('', '1/4 de arroz rojo', 35)">
+                        ARROZ ROJO
+                    </button>
+                    <button onclick="agregarPlatillo('', '1/4 de frijoles charros', 35)">
+                        FRIJOLES CHARROS
+                    </button>
+                    <button onclick="agregarPlatillo('', '1/4 de ensalada de col', 35)">
+                        ENSALADA COL
+                    </button>
+                    <button onclick="agregarPlatillo('', '1/4 de sopa de coditos', 35)">
+                        SOPAFRIA
+                    </button>
+                    <button onclick="agregarPlatillo('', '1/4 de Guacamole fresco', 49)">
+                        GUACAMOLE
+                    </button>
+                `;
+            } else if (categoria === 'Postres') {
+                platillosDiv.innerHTML = `
+                    <button onclick="agregarPlatillo('', 'Porción de Flan Napolitano', 25)">
+                        FLAN NAPOLITANO
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Porción de Arroz con Leche', 25)">
+                        ARROZ CON LECHE
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Porción de Jericalla', 25)">
+                        JERICALLA
+                    </button>
+                `;
+            } else if (categoria === 'Extras') {
+                platillosDiv.innerHTML = `
+                    <button onclick="agregarPlatillo('', 'Chile asado extra', 10)">
+                        CHILE ASADO
+                    </button>
+                    <button onclick="agregarPlatillo('', '1 pkt de tortillas extras', 12)">
+                        TORTILLAS
+                    </button>
+                    <button onclick="agregarPlatillo('', '1 salsita extra', 12)">
+                        SALSA
+                    </button>
+                    <button onclick="agregarPlatillo('', 'cruji entes y sala ditos', 12)">
+                        TOTOPOS
+                    </button>
+                `;
+            } else if (categoria === 'Bebidas') {
+                platillosDiv.innerHTML = `
+                    <button onclick="agregarPlatillo('', 'Agua de limon 500ml', 22)">
+                        LIMON
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Agua de pepino 500ml', 22)">
+                        PEPINO
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Agua de horcha ta 500ml', 22)">
+                        HORCHATA
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Agua de horcha ta fresa 500ml', 22)">
+                        FRESA
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Agua de jamaica 500ml', 22)">
+                        JAMAICA
+                    </button>
+                    <button onclick="agregarPlatillo('', 'EPURA 600ml', 22)">
+                        EPURA600
+                    </button>
+                    <button onclick="agregarPlatillo('', '7UP 600ml', 25)">
+                        7UP600
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Manza nita 600ml', 25)">
+                        MANZANA600
+                    </button>
+                    <button onclick="agregarPlatillo('', 'PEPSI 600ml', 25)">
+                        PEPSI600
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Mirinda 600ml', 25)">
+                        MIRINDA600
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Sangria 600ml', 25)">
+                        SANGRIA600
+                    </button>
+                    <button onclick="agregarPlatillo('', '7UP 1.5lt', 35)">
+                        7UP1.5
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Manza nita 1.5lt', 35)">
+                        MANZANA1.5
+                    </button>
+                    <button onclick="agregarPlatillo('', 'PEPSI 1.5lt', 35)">
+                        PEPSI1.5
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Mirinda 1.5lt', 35)">
+                        MIRINDA1.5
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Sangria 1.5lt', 35)">
+                        SANGRIA1.5
+                    </button>
+                `;
+            } else if (categoria === 'Complementos Incluidos en Paquetes') {
+                platillosDiv.innerHTML = `
+                    <button onclick="agregarPlatillo('', '1/4 de arroz rojo', 0)">
+                        ARROZ ROJO
+                    </button>
+                    <button onclick="agregarPlatillo('', '1/4 de frijoles charros', 0)">
+                        FRIJOLES CHARROS
+                    </button>
+                    <button onclick="agregarPlatillo('', '1/4 de ensalada de col', 0)">
+                        ENSALADA COL
+                    </button>
+                    <button onclick="agregarPlatillo('', '1/4 de sopa de coditos', 0)">
+                        SOPAFRIA
+                    </button>
+                `;
+            } else if (categoria === 'Bebidas Incluidas en Paquetes') {
+                platillosDiv.innerHTML = `
+                    <button onclick="agregarPlatillo('', 'Agua de limon 500ml', 0)">
+                        LIMON
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Agua de pepino 500ml', 0)">
+                        PEPINO
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Agua de horcha ta 500ml', 0)">
+                        HORCHATA
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Agua de horcha ta fresa 500ml', 0)">
+                        FRESA
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Agua de jamaica 500ml', 0)">
+                        JAMAICA
+                    </button>
+                    <button onclick="agregarPlatillo('', 'EPURA 600ml', 0)">
+                        EPURA600
+                    </button>
+                    <button onclick="agregarPlatillo('', '7UP 600ml', 0)">
+                        7UP600
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Manza nita 600ml', 0)">
+                        MANZANA600
+                    </button>
+                    <button onclick="agregarPlatillo('', 'PEPSI 600ml', 0)">
+                        PEPSI600
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Mirinda 600ml', 0)">
+                        MIRINDA600
+                    </button>
+                    <button onclick="agregarPlatillo('', 'Sangria 600ml', 0)">
+                        SANGRIA600
+                    </button>
+                `;
+            } else if (categoria === 'Regalias') {
+                platillosDiv.innerHTML = `
+                    <button onclick="agregarPlatillo('PKT RH', '1 pollo, 1 salsa, 4 tortillas, 1 chile toreado', 0)">
+                        PKT RH
+                      </button>
+                      <button onclick="agregarPlatillo('EMPLEADO FLAUTAS', '5 flautas de pollo, 1 salsa', 0)">
+                        EMPLEADO FLAUTAS
+                      </button>
+                      <button onclick="agregarPlatillo('EMPLEADO 1/4 POLLO', '1/4 de pollo, 1 salsa, 2 tortillas, 1 chile toreado', 0)">
+                        EMPLEADO 1/4 POLLO
+                      </button>
                 `;
             }
         }
@@ -384,6 +612,37 @@
 
             const codigo = `${sucursal}${fecha}${hora}-${total}`;
             document.getElementById("barcode").src = `https://barcode.tec-it.com/barcode.ashx?data=${codigo}&code=Code128&translate-esc=true`;
+        }
+
+        function finalizarVenta() {
+            // Obtener los datos de la venta
+            const sucursal = document.getElementById("sucursal").options[document.getElementById("sucursal").selectedIndex].text;
+            const atendidoPor = document.getElementById("atendio").value;
+            const servicio = document.getElementById("servicio").options[document.getElementById("servicio").selectedIndex].text;
+            const fechaHora = new Date().toLocaleString();
+            const folio = generarFolio();
+            const total = document.getElementById("total").innerText;
+            const items = obtenerDetallePlatillos();
+
+            // Crear el objeto de la venta
+            const venta = {
+                sucursal,
+                atendidoPor,
+                servicio,
+                fechaHora,
+                folio,
+                total,
+                items
+            };
+
+            // Guardar la venta en el localStorage
+            let historialVentas = JSON.parse(localStorage.getItem("historialVentas")) || [];
+            historialVentas.push(venta);
+            localStorage.setItem("historialVentas", JSON.stringify(historialVentas));
+
+            // Ocultar la ventana del ticket y reiniciar la cuenta
+            document.getElementById('ventanaTicket').style.display = 'none';
+            nuevaCuenta();
         }
     </script>
 </body>
