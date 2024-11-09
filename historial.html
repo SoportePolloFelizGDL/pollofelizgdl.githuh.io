@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Ventas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Historial de Ventas</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Folio</th>
+                <th>Fecha y Hora</th>
+                <th>Sucursal</th>
+                <th>Atendido Por</th>
+                <th>Servicio</th>
+                <th>Total</th>
+                <th>Detalles</th>
+            </tr>
+        </thead>
+        <tbody id="ventas-table-body">
+            <!-- Las ventas se agregarán aquí -->
+        </tbody>
+    </table>
+
+    <script>
+        // Cargar las ventas del localStorage
+        function cargarVentas() {
+            const historialVentas = JSON.parse(localStorage.getItem("historialVentas")) || [];
+            const ventasTableBody = document.getElementById("ventas-table-body");
+
+            // Limpiar la tabla antes de cargar las ventas
+            ventasTableBody.innerHTML = "";
+
+            // Agregar cada venta a la tabla
+            historialVentas.forEach(venta => {
+                const row = document.createElement("tr");
+                
+                row.innerHTML = `
+                    <td>${venta.folio}</td>
+                    <td>${venta.fechaHora}</td>
+                    <td>${venta.sucursal}</td>
+                    <td>${venta.atendidoPor}</td>
+                    <td>${venta.servicio}</td>
+                    <td>${venta.total} MXN</td>
+                    <td>
+                        <button onclick="mostrarDetalles('${venta.folio}')">Ver Detalles</button>
+                    </td>
+                `;
+                
+                ventasTableBody.appendChild(row);
+            });
+        }
+
+        // Mostrar los detalles de una venta en una alerta
+        function mostrarDetalles(folio) {
+            const historialVentas = JSON.parse(localStorage.getItem("historialVentas")) || [];
+            const venta = historialVentas.find(v => v.folio === folio);
+
+            if (venta) {
+                let detalleItems = venta.items;
+                alert(`Detalles de la venta ${folio}:\n${detalleItems}`);
+            } else {
+                alert("Venta no encontrada.");
+            }
+        }
+
+        // Llamar a la función de carga de ventas al cargar la página
+        cargarVentas();
+    </script>
+</body>
+</html>
