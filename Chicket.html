@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Pedidos</title>
+    <style>
+        /* Estilos básicos */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+        }
+
+        .menu,
+        .order-summary {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .menu {
+            width: 30%;
+        }
+
+        .order-summary {
+            width: 70%;
+        }
+
+        .order-table,
+        .order-table th,
+        .order-table td {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            padding: 8px;
+        }
+
+        .total-summary {
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Menú de selección de platillos -->
+        <div class="menu">
+            <h3>Informacion de la Sucursal</h3>
+            <label for="sucursal">Sucursal:</label>
+            <select id="sucursal">
+                <option value="01">Águilas</option>
+                <option value="02">Tapatio</option>
+                <option value="03">Tlaquepaque</option>
+                <option value="05">Loma Dorada</option>
+                <option value="06">Santa Margarita</option>
+                <option value="07">Patria</option>
+                <option value="08">Independencia</option>
+                <option value="10">Tesistan</option>
+                <option value="11">Oblatos</option>
+                <option value="12">Guadalupe</option>
+                <option value="13">Tetlan</option>
+                <option value="14">Sauz</option>
+                <option value="15">Santa Fe</option>
+                <option value="16">Tuzania</option>
+                <option value="17">La Cruz</option>
+                <option value="18">Juan Pablo II</option>
+                <option value="19">Box Market</option>
+                <option value="20">Plan de San Luis</option>
+                <option value="21">Autodromo</option>
+                <option value="22">Monumental</option>
+                <option value="23">16 de septiembre</option>
+                <option value="24">CEDIS</option>
+                <option value="25">Condo Plaza</option>
+                <option value="26">Avila Camacho</option>
+                <option value="27">Magnolias</option>
+                <option value="28">El Castillo</option>
+                <option value="29">Lomas del Gallo</option>
+                <option value="30">Torre Trimera</option>
+            </select><br><br>
+
+            <label for="atendio">Atiende:</label>
+            <input type="text" id="atendio" placeholder="Nombre del empleado"><br><br>
+
+            <label for="servicio">Servicio:</label>
+            <select id="servicio">
+                <option value="comedor">Comedor</option>
+                <option value="llevar">Para llevar</option>
+            </select><br><br>
+
+            <h3>Menú de Platillos</h3>
+            <button onclick="mostrarPlatillos('familiares')">Paquetes Familiares</button>
+            <button onclick="mostrarPlatillos('individuales')">Paquetes Individuales</button>
+        </div>
+
+        <!-- Resumen de la orden -->
+        <div class="order-summary">
+            <img src="/LogoPFo.png" alt="POLLO FELIZ" />
+            <h3>Resumen de Orden</h3>
+            <table class="order-table">
+                <thead>
+                    <tr>
+                        <th>Cantidad</th>
+                        <th>Descripción</th>
+                        <th>Total</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="order-items"></tbody>
+            </table>
+
+            <div class="total-summary">
+                <p>Subtotal: <span id="subtotal">0.00</span> MXN</p>
+                <p>IVA 16%: <span id="iva">0.00</span> MXN</p>
+                <p>Total a pagar: <span id="total">0.00</span> MXN</p>
+                <div id="pagosRealizados"></div>
+                <p>Total pagado: <span id="totalPagado">0.00</span> MXN</p>
+                <button onclick="nuevaCuenta()">Nueva Cuenta</button>
+                <button onclick="mostrarPago()">Pagar</button>
+                <button id="btnImprimir" onclick="mostrarTicket()" disabled>Imprimir Ticket</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para mostrar los platillos -->
+    <div id="ventanaPlatillos">
+        <h4>Selecciona un platillo</h4>
+        <div id="platillos"></div>
+        <button onclick="cerrarVentanaPlatillos()">Cerrar</button>
+    </div>
+
+    <!-- Modal de pago -->
+    <div id="ventanaPago"
+        style="display: none; position: fixed; background: #fff; border: 1px solid #ccc; padding: 20px;">
+        <h4>Selecciona el método de pago</h4>
+        <select id="metodoPago">
+            <option value="efectivo">Efectivo</option>
+            <option value="credito">Crédito</option>
+            <option value="debito">Débito</option>
+            <option value="vale">Vale de Despensa</option>
+        </select>
+        <label for="cantidadPago">Monto a pagar:</label>
+        <input type="number" id="cantidadPago" min="0" step="0.01">
+        <button onclick="procesarPago()">Siguiente</button>
+    </div>
+
+    <!-- Modal del ticket -->
+    <div id="ventanaTicket" style="display: none; width: 80mm; padding: 10px; border: 1px solid #000;">
+        <div id="ticketContent">
+            <!-- Aquí se generará el contenido del ticket -->
+        </div>
+        <button onclick="imprimirTicket()">Imprimir</button>
+        <button onclick="finalizarVenta()">Finalizar Venta</button>
+    </div>
+
+    <script>
+        let totalPagado = 0;
+
+        function mostrarPlatillos(categoria) {
+            const platillosDiv = document.getElementById('platillos');
+            document.getElementById('ventanaPlatillos').style.display = 'block';
+
+            if (categoria === 'familiares') {
+                platillosDiv.innerHTML = `
+                    <button onclick="agregarPlatillo('PKT FELIZ 1/2', '1/2 pollo, 1 salsita, 2 tortillas, 1 chile toreado', 159)">
+                        PKT FELIZ 1/2
+                    </button>
+                    <button onclick="agregarPlatillo('PKT FELIZ 1', '1 pollo, 1 salsita, 4 tortillas, 1 chile toreado', 189)">
+                        PKT FELIZ 1
+                    </button>
+                `;
+            } else if (categoria === 'individuales') {
+                platillosDiv.innerHTML = `
+                    <button onclick="agregarPlatillo('PKT FELIZ 1/4', '1/4 de pollo, 1 complemento, 1 salsita, 2 tortillas, 1 chile toreado', 89)">
+                        PKT FELIZ 1/4
+                    </button>
+                `;
+            }
+        }
+
+        function cerrarVentanaPlatillos() {
+            document.getElementById('ventanaPlatillos').style.display = 'none';
+        }
+
+        function agregarPlatillo(nombre, descripcion, precio) {
+            const orderItems = document.getElementById('order-items');
+            let found = false;
+
+            orderItems.querySelectorAll('tr').forEach(row => {
+                if (row.children[1].innerText.includes(descripcion)) {
+                    let cantidadCell = row.children[0];
+                    let totalCell = row.children[2];
+                    let cantidad = parseInt(cantidadCell.innerText) + 1;
+                    cantidadCell.innerText = cantidad;
+                    totalCell.innerText = (cantidad * precio).toFixed(2);
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>1</td>
+                    <td>${nombre}: ${descripcion}</td>
+                    <td>${precio.toFixed(2)}</td>
+                    <td><button onclick="eliminarPlatillo(this)">X</button></td>
+                `;
+                orderItems.appendChild(newRow);
+            }
+
+            actualizarTotales();
+        }
+
+        function eliminarPlatillo(button) {
+            const row = button.parentNode.parentNode;
+            row.remove();
+            actualizarTotales();
+        }
+
+        function actualizarTotales() {
+            let total = 0;
+            document.querySelectorAll('#order-items tr').forEach(row => {
+                const precio = parseFloat(row.children[2].innerText);
+                total += precio;
+            });
+
+            const iva = total * (16 / 116);
+            const subtotal = total - iva;
+
+            document.getElementById('subtotal').innerText = subtotal.toFixed(2);
+            document.getElementById('iva').innerText = iva.toFixed(2);
+            document.getElementById('total').innerText = total.toFixed(2);
+            validarPago();
+        }
+
+        function nuevaCuenta() {
+            document.getElementById('order-items').innerHTML = '';
+            document.getElementById('subtotal').innerText = '0.00';
+            document.getElementById('iva').innerText = '0.00';
+            document.getElementById('total').innerText = '0.00';
+            document.getElementById('pagosRealizados').innerHTML = '';
+            document.getElementById('totalPagado').innerText = '0.00';
+            totalPagado = 0;
+            document.getElementById('btnImprimir').disabled = true;
+        }
+
+        function mostrarPago() {
+            document.getElementById('ventanaPago').style.display = 'block';
+        }
+
+        function procesarPago() {
+            const metodo = document.getElementById('metodoPago').value;
+            const cantidad = parseFloat(document.getElementById('cantidadPago').value);
+            totalPagado += cantidad;
+
+            const pagoDiv = document.getElementById('pagosRealizados');
+            pagoDiv.innerHTML += `<p>${metodo}: ${cantidad.toFixed(2)} MXN</p>`;
+            document.getElementById('totalPagado').innerText = totalPagado.toFixed(2);
+
+            document.getElementById('ventanaPago').style.display = 'none';
+            validarPago();
+        }
+
+        function validarPago() {
+            const total = parseFloat(document.getElementById('total').innerText);
+            if (totalPagado >= total) {
+                document.getElementById('btnImprimir').disabled = false;
+            }
+        }
+
+        function mostrarTicket() {
+            document.getElementById('ventanaTicket').style.display = 'block';
+            generarTicket();
+        }
+
+        function generarTicket() {
+            const logo = "LOGO DEL RESTAURANTE";  // Placeholder para el logo
+            const nombreFiscal = "PROMOTORA DE ALIMENTOS LA GRANJA SA DE CV";
+            const domicilio = "Río de La Loza 1976, El Rosario, 44870 Guadalajara, Jal.";
+            // Obtener valores seleccionados del formulario
+            const sucursal = document.getElementById("sucursal").options[document.getElementById("sucursal").selectedIndex].text;
+            const atendidoPor = document.getElementById("atendio").value;
+            const servicio = document.getElementById("servicio").options[document.getElementById("servicio").selectedIndex].text;
+
+            const fechaHora = new Date().toLocaleString();
+            const folio = generarFolio();
+
+            let contenidoTicket = `
+                <center>
+                    <div style="width: 60mm; margin: auto;">
+                        <img src="/LogoPFo.png" alt="POLLO FELIZ" style="width: 60mm;"/>
+                        <p>${nombreFiscal}</p>
+                        <p>${domicilio}</p>
+                        <p>Sucursal: ${sucursal}</p>
+                        <p>Atiende: ${atendidoPor}</p>
+                        <p>Servicio: ${servicio}</p>
+                        <p>${fechaHora}</p>
+                        <p>Folio: ${folio}</p>
+                        <table>
+                            <tr><th>Cant.</th><th>Desc.</th><th>Precio</th></tr>
+                            ${obtenerDetallePlatillos()}
+                        </table>
+                        <p>Subtotal: ${document.getElementById('subtotal').innerText} MXN</p>
+                        <p>IVA 16%: ${document.getElementById('iva').innerText} MXN</p>
+                        <p>Total a pagar: ${document.getElementById('total').innerText} MXN</p>
+                        ${document.getElementById('pagosRealizados').innerHTML}
+                        <p>Total Pagado: ${totalPagado.toFixed(2)} MXN</p>
+                        <p>Cambio: ${(totalPagado - parseFloat(document.getElementById('total').innerText)).toFixed(2)} MXN</p>
+                        <p>Facturación: facturacionpf.gdl@gmail.com</p>
+                        <div class="barcode">
+                            <img id="barcode" src="" alt="${folio}" />
+                        </div>
+                        <p>GRACIAS POR TU COMPRA</p>
+                    </div>
+                </center>
+            `;
+            document.getElementById('ticketContent').innerHTML = contenidoTicket;
+        }
+
+        function imprimirTicket() {
+            const contenido = document.getElementById('ticketContent').innerHTML;
+            const ventana = window.open('', 'PRINT', 'height=400,width=300');
+            ventana.document.write('<html><body >');
+            ventana.document.write(contenido);
+            ventana.document.write('</body></html>');
+            ventana.document.close();
+            ventana.print();
+        }
+
+        function finalizarVenta() {
+            // Guardar la venta en la base de datos (lógica pendiente de implementación)
+            document.getElementById('ventanaTicket').style.display = 'none';
+            nuevaCuenta();
+        }
+
+        function generarFolio() {
+            const fecha = new Date();
+            const sucursal = "01";  // Ejemplo para el código de sucursal
+            const año = fecha.getFullYear();
+            const mes = (fecha.getMonth() + 1).toString().padStart(2, '0');
+            const dia = fecha.getDate().toString().padStart(2, '0');
+            const hora = fecha.getHours().toString().padStart(2, '0');
+            const minuto = fecha.getMinutes().toString().padStart(2, '0');
+            const segundo = fecha.getSeconds().toString().padStart(2, '0');
+            const total = parseFloat(document.getElementById('total').innerText).toFixed(0).padStart(4, '0');
+            return `${sucursal}${año}${mes}${dia}${hora}${minuto}${segundo}${total}`;
+        }
+
+        function obtenerDetallePlatillos() {
+            let detalle = '';
+            document.querySelectorAll('#order-items tr').forEach(row => {
+                const cantidad = row.children[0].innerText;
+                const descripcion = row.children[1].innerText;
+                const precio = row.children[2].innerText;
+                detalle += `<tr><td>${cantidad}</td><td>${descripcion}</td><td>${precio}</td></tr>`;
+            });
+            return detalle;
+        }
+
+        function generarCodigoBarras() {
+            const sucursal = document.getElementById("sucursalSelect").value;
+            const now = new Date();
+            const fecha =
+                now.getFullYear().toString().slice(-2) +
+                (now.getMonth() + 1).toString().padStart(2, "0") +
+                now.getDate().toString().padStart(2, "0");
+            const hora =
+                now.getHours().toString().padStart(2, "0") +
+                now.getMinutes().toString().padStart(2, "0") +
+                now.getSeconds().toString().padStart(2, "0");
+            const codigo = sucursal + fecha + hora + "-" + total;
+            document.getElementById(
+                "barcode"
+            ).src = `https://barcode.tec-it.com/barcode.ashx?data=${codigo}&code=Code128&translate-esc=true`;
+            document.getElementById("ticketNumber").innerText = codigo; // Muestra el número de ticket en el párrafo
+        }
+    </script>
+</body>
+
+</html>

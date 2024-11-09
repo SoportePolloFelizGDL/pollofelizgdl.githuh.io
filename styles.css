@@ -1,0 +1,187 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* Asegura que el html y body ocupen toda la altura de la pantalla */
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* Ajusta la altura del contenedor al 100% de la vista */
+    overflow: auto;
+    /* Permite el desplazamiento si el contenido excede la altura del contenedor */
+}
+
+.ticket {
+    width: 300px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 1px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 1px;
+    text-align: center;
+}
+
+.ticket h2 {
+    text-align: center;
+    margin-bottom: 1px;
+}
+
+.ticket table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1px;
+}
+
+.ticket table,
+.ticket th,
+.ticket td {
+    border: 1px solid #ddd;
+}
+
+.ticket th,
+.ticket td {
+    padding: 1px;
+    text-align: left;
+}
+
+.ticket th {
+    background-color: #f2f2f2;
+}
+
+.ticket p {
+    margin: 1px 0;
+}
+
+.ticket input[type="number"],
+.ticket input[type="text"] {
+    width: 100%;
+    padding: 1px;
+    margin-top: 1px;
+    box-sizing: border-box;
+}
+
+.ticket select {
+    width: 100%;
+    padding: 1px;
+    margin-top: 1px;
+    box-sizing: border-box;
+}
+
+.ticket button {
+    width: 100%;
+    padding: 1px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.ticket button:hover {
+    background-color: red;
+}
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    /* Espacio entre botones */
+    margin-top: 20px;
+}
+
+.buttons button {
+    width: calc(33% - 10px);
+    /* Ajusta el ancho para caber en 3 columnas con espacio entre botones */
+    padding: 5px;
+    background-color: #ffe602;
+    color: black;
+    border: black;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.buttons button:hover {
+    background-color: #ff0000;
+    color: white;
+    border: black;
+}
+
+.barcode {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.barcode img {
+    height: 2cm;
+    width: 100%;
+}
+
+.ticket img {
+    max-width: 70%;
+    /* Asegura que la imagen no esté aplastada */
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.ticket .delete-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 5px;
+    margin: 0;
+}
+
+.ticket .delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .ticket,
+    .ticket * {
+        visibility: visible;
+    }
+
+    .ticket {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 80mm;
+    }
+
+    .buttons,
+    .buttons button {
+        display: none;
+    }
+
+    button {
+        display: none;
+    }
+
+    select,
+    input {
+        border: none;
+        background: transparent;
+        outline: none;
+    }
+}
