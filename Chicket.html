@@ -110,7 +110,8 @@
             <button onclick="mostrarPlatillos('Postres')">Postres</button>
             <button onclick="mostrarPlatillos('Extras')">Extras</button>
             <button onclick="mostrarPlatillos('Bebidas')">Bebidas</button>
-            <button onclick="mostrarPlatillos('Complementos Incluidos en Paquetes')">Complementos Incluidos en Paquetes</button>
+            <button onclick="mostrarPlatillos('Complementos Incluidos en Paquetes')">Complementos Incluidos en
+                Paquetes</button>
             <button onclick="mostrarPlatillos('Bebidas Incluidas en Paquetes')">Bebidas Incluidas en Paquetes</button>
             <button onclick="mostrarPlatillos('Regalias')">Regalias</button>
         </div>
@@ -441,14 +442,15 @@
             if (!found) {
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
-                    <td>1</td>
-                    <td>${nombre}: ${descripcion}</td>
-                    <td>${precio.toFixed(2)}</td>
-                    <td><button onclick="eliminarPlatillo(this)">X</button></td>
-                `;
+            <td>1</td>
+            <td>${nombre}: ${descripcion}</td>
+            <td>${precio.toFixed(2)}</td>
+            <td><button onclick="eliminarPlatillo(this)">X</button></td>
+        `;
                 orderItems.appendChild(newRow);
             }
 
+            // Asegúrate de que actualizarTotales se llame después de agregar el platillo
             actualizarTotales();
         }
 
@@ -461,12 +463,12 @@
         function actualizarTotales() {
             let total = 0;
             document.querySelectorAll('#order-items tr').forEach(row => {
-                const precio = parseFloat(row.children[2].innerText);
+                const precio = parseFloat(row.children[2].innerText); // Obtener el precio de cada platillo
                 total += precio;
             });
 
-            const iva = total - subtotal;
-            const subtotal = total / 1.16;
+            const iva = total * 0.16; // Calcular el IVA del 16%
+            const subtotal = total - iva;
 
             document.getElementById('subtotal').innerText = subtotal.toFixed(2);
             document.getElementById('iva').innerText = iva.toFixed(2);
@@ -615,10 +617,9 @@
         }
 
         function finalizarVenta() {
-            // Obtener los datos de la venta
-            const sucursal = document.getElementById("sucursal").options[document.getElementById("sucursal").selectedIndex].text;
+            const sucursal = document.getElementById("sucursal").value;
             const atendidoPor = document.getElementById("atendio").value;
-            const servicio = document.getElementById("servicio").options[document.getElementById("servicio").selectedIndex].text;
+            const servicio = document.getElementById("servicio").value;
             const fechaHora = new Date().toLocaleString();
             const folio = generarFolio();
             const total = document.getElementById("total").innerText;
@@ -635,14 +636,24 @@
                 items
             };
 
-            // Guardar la venta en el localStorage
-            let historialVentas = JSON.parse(localStorage.getItem("historialVentas")) || [];
-            historialVentas.push(venta);
-            localStorage.setItem("historialVentas", JSON.stringify(historialVentas));
+            // Enviar la venta al servidor
+            fetch('http://localhost:3000/guardar-venta', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(venta)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    nuevaCuenta();
+                })
+                .catch(error => {
+                    console.error('Error al guardar la venta:', error);
+                });
 
-            // Ocultar la ventana del ticket y reiniciar la cuenta
             document.getElementById('ventanaTicket').style.display = 'none';
-            nuevaCuenta();
         }
     </script>
 </body>
