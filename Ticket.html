@@ -723,6 +723,37 @@
     }
 
     function imprimirTicket() {
+      // Obtener los datos del ticket
+      const sucursal = document.getElementById('sucursalSelect').value;
+      const atendio = document.getElementById('atendio').value;
+      const metodoPago = document.getElementById('payment-method').value;
+      const total = parseFloat(document.getElementById('total').textContent);
+      const detalleVenta = []; // Array para almacenar detalles individuales de los productos
+
+      // Recorrer los productos en el ticket
+      const filas = document.querySelectorAll("#ticketTable tbody tr");
+      filas.forEach(fila => {
+        const cantidad = fila.cells[0].textContent;
+        const platillo = fila.cells[1].textContent;
+        const subtotal = fila.cells[2].textContent;
+        detalleVenta.push(`${cantidad}x ${platillo} - $${subtotal}`);
+      });
+
+      // Crear un objeto para la venta
+      const venta = {
+        sucursal,
+        atendio,
+        metodoPago,
+        total,
+        detalle: detalleVenta.join(", "),
+        fecha: new Date().toISOString().split("T")[0], // Fecha en formato YYYY-MM-DD
+        ticket: Date.now() // Usar timestamp como identificador de ticket único
+      };
+
+      // Guardar la venta en localStorage
+      let ventasGuardadas = JSON.parse(localStorage.getItem("ventas")) || [];
+      ventasGuardadas.push(venta);
+      localStorage.setItem("ventas", JSON.stringify(ventasGuardadas));
       window.print();
     }
 
