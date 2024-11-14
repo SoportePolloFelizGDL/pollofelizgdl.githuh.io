@@ -259,7 +259,14 @@
           <!-- Las filas se añadirán aquí -->
         </tbody>
       </table>
+      <!-- Nuevos renglones para Subtotal y IVA -->
+      <p>Subtotal: $<span id="subtotal">0.00</span></p>
+      <p>IVA 16%: $<span id="iva">0.00</span></p>
+
+      <!-- Total -->
       <p>Total: $<span id="total">0.00</span></p>
+
+      <!-- Elementos adicionales para método de pago y cálculo de cambio -->
       <label for="payment-method">Seleccionar Método de Pago:</label>
       <select id="payment-method">
         <option value="efectivo">Efectivo</option>
@@ -267,19 +274,16 @@
         <option value="debito">Tarjeta de Débito</option>
         <option value="vale">Vale de Despensa</option>
       </select>
-      <p>
-        Tu pago: $<input type="number" id="pago" step="0.01" ondblclick="setTotalAsPayment()" />
-      </p>
+      <p>Tu pago: $<input type="number" id="pago" step="0.01" ondblclick="setTotalAsPayment()" /></p>
       <button onclick="calcularCambio()">Pagar</button>
       <p>Cambio: $<span id="cambio">0.00</span></p>
+
       <div class="barcode">
         <img id="barcode" src="" alt="Número de Ticket" />
       </div>
       <button onclick="imprimirTicket()">Imprimir Ticket</button>
       <p>Facturación: facturacionpf.gdl@gmail.com</p>
-      <p>
-        Enviándonos tu número de ticket, el costo total, metodo de pago y tus
-        datos de facturacion:
+      <p>Enviándonos tu número de ticket, el costo total, metodo de pago y tus datos de facturacion:
       </p>
       <p id="ticketNumber">(Número de Ticket)</p>
       <img src="QR.png" alt="QR MENÚ" />
@@ -598,6 +602,8 @@
     // Elementos
     const sucursalSelect = document.getElementById('sucursalSelect');
     const atendioInput = document.getElementById('atendio');
+    const totalElement = document.getElementById("total"); // Elemento total
+    const pagoInput = document.getElementById("pago"); // Campo de pago
 
     // Función para cargar los valores guardados en localStorage
     function cargarValoresGuardados() {
@@ -625,15 +631,6 @@
 
     // Cargar los valores al iniciar la página
     window.addEventListener('DOMContentLoaded', cargarValoresGuardados);
-
-    function setTotalAsPayment() {
-      // Obtiene el valor del total
-      var total = parseFloat(document.getElementById("total").textContent);
-      // Asigna el total al campo de pago
-      document.getElementById("pago").value = total.toFixed(2);
-      // Calcula el cambio automáticamente
-      calcularCambio();
-    }
 
     let total = 0;
 
@@ -665,7 +662,7 @@
 
           // Actualiza el total
           total += precio;
-          document.getElementById("total").innerText = total.toFixed(2);
+          actualizarTotal(total);
 
           found = true;
           break;
@@ -685,7 +682,7 @@
         cell4.innerHTML =
           '<button class="delete-btn" onclick="eliminarPlatillo(this)">X</button>';
         total += precio;
-        document.getElementById("total").innerText = total.toFixed(2);
+        actualizarTotal(total);
       }
     }
 
@@ -693,7 +690,7 @@
       const row = button.parentElement.parentElement;
       const subtotal = parseFloat(row.cells[2].innerText.replace("$", ""));
       total -= subtotal;
-      document.getElementById("total").innerText = total.toFixed(2);
+      actualizarTotal(total);
       row.remove();
     }
 
@@ -702,6 +699,31 @@
       const pago = parseFloat(document.getElementById("pago").value);
       const cambio = pago - total;
       document.getElementById("cambio").innerText = cambio.toFixed(2);
+    }
+
+    function calcularSubtotalYIVA() {
+      const total = parseFloat(document.getElementById("total").innerText) || 0;
+      const subtotal = total / 1.16;
+      const iva = subtotal * 0.16;
+
+      document.getElementById("subtotal").innerText = subtotal.toFixed(2);
+      document.getElementById("iva").innerText = iva.toFixed(2);
+    }
+
+    function actualizarTotal(nuevoTotal) {
+      document.getElementById("total").innerText = nuevoTotal.toFixed(2);
+      calcularSubtotalYIVA(); // Calcula Subtotal e IVA después de actualizar el total
+    }
+
+    function nuevaCuenta() {
+      // Resetea los campos del ticket
+      document
+        .getElementById("ticketTable")
+        .getElementsByTagName("tbody")[0].innerHTML = "";
+      total = 0;
+      actualizarTotal(total); // Resetea el total y calcula Subtotal e IVA
+      document.getElementById("cambio").innerText = "0.00";
+      document.getElementById("pago").value = "";
     }
 
     function generarCodigoBarras() {
@@ -762,17 +784,6 @@
       window.print();
     }
 
-    function nuevaCuenta() {
-      // Resetea los campos del ticket
-      document
-        .getElementById("ticketTable")
-        .getElementsByTagName("tbody")[0].innerHTML = "";
-      total = 0;
-      document.getElementById("total").innerText = "0.00";
-      document.getElementById("cambio").innerText = "0.00";
-      document.getElementById("pago").value = "";
-    }
-
     function actualizarHora() {
       const now = new Date();
       const fecha = now.toLocaleDateString();
@@ -781,9 +792,17 @@
       document.getElementById("hora").innerText = hora;
     }
 
+    // Evento para hacer doble clic en el total y copiarlo al campo de pago
+    totalElement.addEventListener('dblclick', function () {
+      pagoInput.value = totalElement.innerText; // Copiar total al campo de pago
+      calcularCambio(); // Calcular cambio automáticamente
+    });
+
     setInterval(actualizarHora, 1000);
     window.onload = actualizarHora;
   </script>
+
+
 </body>
 
 </html>
