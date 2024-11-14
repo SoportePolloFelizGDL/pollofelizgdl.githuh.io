@@ -61,6 +61,16 @@
             width: 100%;
             /* Asegura que las imágenes se ajusten al ancho de los botones */
         }
+
+        /* Estilo para el logo */
+        .logo-container {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .logo-container img {
+            width: 150px;
+        }
     </style>
 </head>
 
@@ -118,6 +128,8 @@
             </tr>
         </tbody>
     </table>
+
+    <button onclick="imprimirResumen()">Imprimir Resumen del Día</button>
 
     <h2>Todas las Ventas</h2>
 
@@ -196,8 +208,75 @@
             document.getElementById("fechaSelect").value = new Date().toISOString().split("T")[0];
             filtrarVentasPorFecha();
         };
+
+        function imprimirResumen() {
+            // Obtener la fecha seleccionada del campo correcto
+            const fechaSeleccionada = document.getElementById('fechaSelect').value;
+            const ventasDelDia = obtenerVentasDelDia(fechaSeleccionada);
+
+            if (ventasDelDia.length === 0) {
+                alert('No hay ventas registradas para este día.');
+                return;
+            }
+
+            // Generar el resumen
+            let resumen = 'Resumen de Ventas del Día\n';
+            resumen += `Sucursal: ${ventasDelDia[0].sucursal}\n`;
+            resumen += `Fecha: ${fechaSeleccionada}\n\n`;
+
+            let totalEfectivo = 0, totalCredito = 0, totalDebito = 0, totalVale = 0;
+            ventasDelDia.forEach(venta => {
+                switch (venta.metodoPago) {
+                    case 'efectivo':
+                        totalEfectivo += venta.total;
+                        break;
+                    case 'credito':
+                        totalCredito += venta.total;
+                        break;
+                    case 'debito':
+                        totalDebito += venta.total;
+                        break;
+                    case 'vale':
+                        totalVale += venta.total;
+                        break;
+                }
+            });
+
+            resumen += `Efectivo: $${totalEfectivo.toFixed(2)}\n`;
+            resumen += `Tarjeta de Crédito: $${totalCredito.toFixed(2)}\n`;
+            resumen += `Tarjeta de Débito: $${totalDebito.toFixed(2)}\n`;
+            resumen += `Vale de Despensa: $${totalVale.toFixed(2)}\n`;
+
+            const totalGeneral = totalEfectivo + totalCredito + totalDebito + totalVale;
+            resumen += `\nTotal General: $${totalGeneral.toFixed(2)}\n`;
+
+            // Crear la ventana de impresión con el logo y los detalles
+            const ventanaImpresion = window.open('', '_blank', 'width=300,height=400');
+            ventanaImpresion.document.write('<html><head><title>Resumen de Ventas</title>');
+            ventanaImpresion.document.write('<style>body { font-family: Arial, sans-serif; font-size: 14px; }</style></head><body>');
+            
+            // Añadir el logo y el nombre de la sucursal
+            ventanaImpresion.document.write('<div class="logo-container"><img src="/LogoPFo.png" alt="Pollo Feliz" /></div>'); // Agregar ruta al logo
+            ventanaImpresion.document.write('<h3>' + ventasDelDia[0].sucursal + '</h3>');
+
+            // Escribir el resumen
+            ventanaImpresion.document.write('<pre>' + resumen + '</pre>');
+            ventanaImpresion.document.write('</body></html>');
+            ventanaImpresion.document.close();
+
+            ventanaImpresion.onload = function () {
+                ventanaImpresion.print();
+                ventanaImpresion.close();
+            };
+        }
+
+        function obtenerVentasDelDia(fecha) {
+            let ventasGuardadas = JSON.parse(localStorage.getItem("ventas")) || [];
+            return ventasGuardadas.filter(venta => venta.fecha === fecha);
+        }
     </script>
 
 </body>
 
 </html>
+
