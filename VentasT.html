@@ -39,120 +39,156 @@
 </head>
 
 <body>
+    <div class="buttons-container">
+        <div class="buttons">
+            <p>🍗🍗</p>
+            <div class="button-container">
+                <button>
+                    <a href="Ticket.html"><img src="LOGO POLLO O.png" width="10%" alt="TICKET" /></a>
+                </button>
+            </div>
+            <p>🍗🍗</p>
+            <div class="button-container">
+                <button>
+                    <a href="Ticket didi.html"><img src="LOGO DIDI.png" width="10%" alt="DIDI" /></a>
+                </button>
+            </div>
+            <p>🍗🍗</p>
+            <div class="button-container">
+                <button>
+                    <a href="Ticket rappi.html"><img src="LOGO RAPPI.jpg" width="10%" alt="RAPPI" /></a>
+                </button>
+            </div>
+            <p>🍗🍗</p>
+            <div class="button-container">
+                <button>
+                    <a href="Ticket uber.html"><img src="LOGO UBER.png" width="10%" alt="UBER" /></a>
+                </button>
+            </div>
+            <p>🍗🍗</p>
+            <div class="button-container">
+                <button>
+                    <a href="VentasT.html"><img src="LOGO CAJA.png" width="10%" alt="CAJA" /></a>
+                </button>
+            </div>
+            <p>🍗🍗</p>
+            <!-- Campo de selección de fecha -->
+            <label for="fechaSelect">Seleccionar Fecha:</label>
+            <input type="date" id="fechaSelect" onchange="filtrarVentasPorFecha()" />
 
-    <h2>Resumen de Ventas Diarias</h2>
+            <h2>Resumen de Ventas Diarias</h2>
 
-    <!-- Tabla Resumida de Ventas del Día -->
-    <table id="resumenVentas">
-        <thead>
-            <tr>
-                <th>Tipo de Pago</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Efectivo</td>
-                <td id="totalEfectivo">$0.00</td>
-            </tr>
-            <tr>
-                <td>Débito</td>
-                <td id="totalDebito">$0.00</td>
-            </tr>
-            <tr>
-                <td>Crédito</td>
-                <td id="totalCredito">$0.00</td>
-            </tr>
-            <tr>
-                <td>Vale de Despensa</td>
-                <td id="totalVale">$0.00</td>
-            </tr>
-            <tr>
-                <th>Total del Día</th>
-                <th id="totalDia">$0.00</th>
-            </tr>
-        </tbody>
-    </table>
+            <!-- Tabla Resumida de Ventas del Día -->
+            <table id="resumenVentas">
+                <thead>
+                    <tr>
+                        <th>Tipo de Pago</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Efectivo</td>
+                        <td id="totalEfectivo">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Débito</td>
+                        <td id="totalDebito">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Crédito</td>
+                        <td id="totalCredito">$0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Vale de Despensa</td>
+                        <td id="totalVale">$0.00</td>
+                    </tr>
+                    <tr>
+                        <th>Total del Día</th>
+                        <th id="totalDia">$0.00</th>
+                    </tr>
+                </tbody>
+            </table>
 
-    <button onclick="elegirFecha()">Ver Ventas de Otro Día</button>
+            <button onclick="elegirFecha()">Ver Ventas de Otro Día</button>
 
-    <h2>Todas las Ventas</h2>
+            <h2>Todas las Ventas</h2>
 
-    <!-- Tabla de Ventas Detalladas -->
-    <table id="todasVentas">
-        <thead>
-            <tr>
-                <th>Sucursal</th>
-                <th>Número de Ticket</th>
-                <th>Atendió</th>
-                <th>Método de Pago</th>
-                <th>Total de Venta</th>
-                <th>Detalle</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Aquí se agregarán las ventas -->
-        </tbody>
-    </table>
+            <!-- Tabla de Ventas Detalladas -->
+            <table id="todasVentas">
+                <thead>
+                    <tr>
+                        <th>Sucursal</th>
+                        <th>Número de Ticket</th>
+                        <th>Atendió</th>
+                        <th>Método de Pago</th>
+                        <th>Total de Venta</th>
+                        <th>Detalle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí se agregarán las ventas -->
+                </tbody>
+            </table>
 
-    <script>
-        function cargarVentas() {
-            // Obtener las ventas guardadas desde localStorage
-            const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+            <script>
+                function cargarVentas() {
+                    // Obtener las ventas guardadas desde localStorage
+                    const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
 
-            const resumen = {
-                efectivo: 0,
-                debito: 0,
-                credito: 0,
-                vale: 0,
-                total: 0
-            };
+                    const resumen = {
+                        efectivo: 0,
+                        debito: 0,
+                        credito: 0,
+                        vale: 0,
+                        total: 0
+                    };
 
-            ventas.forEach(venta => {
-                switch (venta.metodoPago) {
-                    case 'efectivo':
-                        resumen.efectivo += venta.total;
-                        break;
-                    case 'debito':
-                        resumen.debito += venta.total;
-                        break;
-                    case 'credito':
-                        resumen.credito += venta.total;
-                        break;
-                    case 'vale':
-                        resumen.vale += venta.total;
-                        break;
+                    ventas.forEach(venta => {
+                        switch (venta.metodoPago) {
+                            case 'efectivo':
+                                resumen.efectivo += venta.total;
+                                break;
+                            case 'debito':
+                                resumen.debito += venta.total;
+                                break;
+                            case 'credito':
+                                resumen.credito += venta.total;
+                                break;
+                            case 'vale':
+                                resumen.vale += venta.total;
+                                break;
+                        }
+                        resumen.total += venta.total;
+                    });
+
+                    // Actualizar la tabla resumida
+                    document.getElementById('totalEfectivo').textContent = `$${resumen.efectivo.toFixed(2)}`;
+                    document.getElementById('totalDebito').textContent = `$${resumen.debito.toFixed(2)}`;
+                    document.getElementById('totalCredito').textContent = `$${resumen.credito.toFixed(2)}`;
+                    document.getElementById('totalVale').textContent = `$${resumen.vale.toFixed(2)}`;
+                    document.getElementById('totalDia').textContent = `$${resumen.total.toFixed(2)}`;
+
+                    // Agregar las ventas a la tabla detallada
+                    const todasVentas = document.getElementById('todasVentas').getElementsByTagName('tbody')[0];
+                    todasVentas.innerHTML = ''; // Limpiar las filas existentes
+                    ventas.forEach(venta => {
+                        const row = todasVentas.insertRow();
+                        row.insertCell(0).textContent = venta.sucursal;
+                        row.insertCell(1).textContent = venta.ticket;
+                        row.insertCell(2).textContent = venta.atendio;
+                        row.insertCell(3).textContent = venta.metodoPago;
+                        row.insertCell(4).textContent = `$${venta.total.toFixed(2)}`;
+                        const detalleCell = row.insertCell(5);
+                        const detalleBtn = document.createElement('button');
+                        detalleBtn.textContent = 'Ver Detalle';
+                        detalleBtn.onclick = () => alert(`Detalle de Venta: ${venta.detalle}`);
+                        detalleCell.appendChild(detalleBtn);
+                    });
                 }
-                resumen.total += venta.total;
-            });
 
-            // Actualizar la tabla resumida
-            document.getElementById('totalEfectivo').textContent = `$${resumen.efectivo.toFixed(2)}`;
-            document.getElementById('totalDebito').textContent = `$${resumen.debito.toFixed(2)}`;
-            document.getElementById('totalCredito').textContent = `$${resumen.credito.toFixed(2)}`;
-            document.getElementById('totalVale').textContent = `$${resumen.vale.toFixed(2)}`;
-            document.getElementById('totalDia').textContent = `$${resumen.total.toFixed(2)}`;
-
-            // Agregar las ventas a la tabla detallada
-            const todasVentas = document.getElementById('todasVentas').getElementsByTagName('tbody')[0];
-            todasVentas.innerHTML = ''; // Limpiar las filas existentes
-            ventas.forEach(venta => {
-                const row = todasVentas.insertRow();
-                row.insertCell(0).textContent = venta.sucursal;
-                row.insertCell(1).textContent = venta.ticket;
-                row.insertCell(2).textContent = venta.atendio;
-                row.insertCell(3).textContent = venta.metodoPago;
-                row.insertCell(4).textContent = `$${venta.total.toFixed(2)}`;
-                const detalleCell = row.insertCell(5);
-                const detalleBtn = document.createElement('button');
-                detalleBtn.textContent = 'Ver Detalle';
-                detalleBtn.onclick = () => alert(`Detalle de Venta: ${venta.detalle}`);
-                detalleCell.appendChild(detalleBtn);
-            });
-        }
-
-        window.onload = cargarVentas;
-    </script>
+                window.onload = cargarVentas;
+            </script>
 
 </body>
 
