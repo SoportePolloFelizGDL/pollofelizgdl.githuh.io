@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen de Ventas</title>
+    <link rel="stylesheet" href="VentasStyles.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Resumen de Ventas Diarias</h2>
+
+<!-- Tabla Resumida de Ventas del Día -->
+<table id="resumenVentas">
+    <thead>
+        <tr>
+            <th>Tipo de Pago</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Efectivo</td>
+            <td id="totalEfectivo">$0.00</td>
+        </tr>
+        <tr>
+            <td>Débito</td>
+            <td id="totalDebito">$0.00</td>
+        </tr>
+        <tr>
+            <td>Crédito</td>
+            <td id="totalCredito">$0.00</td>
+        </tr>
+        <tr>
+            <td>Vale de Despensa</td>
+            <td id="totalVale">$0.00</td>
+        </tr>
+        <tr>
+            <th>Total del Día</th>
+            <th id="totalDia">$0.00</th>
+        </tr>
+    </tbody>
+</table>
+
+<button onclick="elegirFecha()">Ver Ventas de Otro Día</button>
+
+<h2>Todas las Ventas</h2>
+
+<!-- Tabla de Ventas Detalladas -->
+<table id="todasVentas">
+    <thead>
+        <tr>
+            <th>Sucursal</th>
+            <th>Número de Ticket</th>
+            <th>Atendió</th>
+            <th>Método de Pago</th>
+            <th>Total de Venta</th>
+            <th>Detalle</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Aquí se agregarán las ventas -->
+    </tbody>
+</table>
+
+<script>
+    // Datos de ejemplo - en un sistema real, estos datos se cargarían desde una base de datos o localStorage.
+    const ventas = [
+        { sucursal: 'Águilas', ticket: '001', atendio: 'Ana', metodoPago: 'Efectivo', total: 150, detalle: 'Pollo Asado, Bebida' },
+        { sucursal: 'Tapatio', ticket: '002', atendio: 'Luis', metodoPago: 'Crédito', total: 200, detalle: 'Pollo a la Parrilla, Ensalada' },
+        { sucursal: 'Tlaquepaque', ticket: '003', atendio: 'Sara', metodoPago: 'Vale', total: 300, detalle: 'Costillas BBQ, Postre' },
+    ];
+
+    function cargarVentas() {
+        const resumen = {
+            efectivo: 0,
+            debito: 0,
+            credito: 0,
+            vale: 0,
+            total: 0
+        };
+
+        ventas.forEach(venta => {
+            switch (venta.metodoPago) {
+                case 'Efectivo':
+                    resumen.efectivo += venta.total;
+                    break;
+                case 'Débito':
+                    resumen.debito += venta.total;
+                    break;
+                case 'Crédito':
+                    resumen.credito += venta.total;
+                    break;
+                case 'Vale':
+                    resumen.vale += venta.total;
+                    break;
+            }
+            resumen.total += venta.total;
+        });
+
+        // Actualizar la tabla resumida
+        document.getElementById('totalEfectivo').textContent = `$${resumen.efectivo.toFixed(2)}`;
+        document.getElementById('totalDebito').textContent = `$${resumen.debito.toFixed(2)}`;
+        document.getElementById('totalCredito').textContent = `$${resumen.credito.toFixed(2)}`;
+        document.getElementById('totalVale').textContent = `$${resumen.vale.toFixed(2)}`;
+        document.getElementById('totalDia').textContent = `$${resumen.total.toFixed(2)}`;
+
+        // Agregar las ventas a la tabla detallada
+        const todasVentas = document.getElementById('todasVentas').getElementsByTagName('tbody')[0];
+        todasVentas.innerHTML = ''; // Limpiar las filas existentes
+        ventas.forEach(venta => {
+            const row = todasVentas.insertRow();
+            row.insertCell(0).textContent = venta.sucursal;
+            row.insertCell(1).textContent = venta.ticket;
+            row.insertCell(2).textContent = venta.atendio;
+            row.insertCell(3).textContent = venta.metodoPago;
+            row.insertCell(4).textContent = `$${venta.total.toFixed(2)}`;
+            const detalleCell = row.insertCell(5);
+            const detalleBtn = document.createElement('button');
+            detalleBtn.textContent = 'Ver Detalle';
+            detalleBtn.onclick = () => alert(`Detalle de Venta: ${venta.detalle}`);
+            detalleCell.appendChild(detalleBtn);
+        });
+    }
+
+    function elegirFecha() {
+        const fecha = prompt('Ingresa la fecha (YYYY-MM-DD):');
+        alert(`Mostrando ventas para la fecha: ${fecha}`);
+        // Aquí podrías implementar la lógica para cargar los datos de esa fecha específica.
+    }
+
+    window.onload = cargarVentas;
+</script>
+
+</body>
+</html>
