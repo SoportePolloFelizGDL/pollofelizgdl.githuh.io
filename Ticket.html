@@ -235,7 +235,6 @@
           <option value="28">El Castillo</option>
           <option value="29">Lomas del Gallo</option>
           <option value="30">Torre Trimera</option>
-          <!-- Aquí se agregarán las demás sucursales -->
         </select>
       </div>
       <p>Atendió: <input type="text" id="atendio" /></p>
@@ -378,10 +377,12 @@
         <!-- Categoría: Individuales -->
         <div class="button-group">
           <h3>Individuales</h3>
-          <button onclick="agregarPlatillo('', '1/4 de pollo, 1 complemento, 1 salsita, 2 tortillas, 1 chile toreado', 89)">
+          <button
+            onclick="agregarPlatillo('', '1/4 de pollo, 1 complemento, 1 salsita, 2 tortillas, 1 chile toreado', 89)">
             PKT FELIZ 1/4
           </button>
-          <button onclick="agregarPlatillo('', '1/4 de pollo, 1 complemento, 1 salsita, 2 tortillas, 1 chile toreado, 1 bebida a elegir', 114)">
+          <button
+            onclick="agregarPlatillo('', '1/4 de pollo, 1 complemento, 1 salsita, 2 tortillas, 1 chile toreado, 1 bebida a elegir', 114)">
             PKT FELIZ 1/4 + bebida
           </button>
           <button onclick="agregarPlatillo('', 'Hambur guesa, papas a la francesa y bebida', 89)">
@@ -594,6 +595,37 @@
   </div>
 
   <script>
+    // Elementos
+    const sucursalSelect = document.getElementById('sucursalSelect');
+    const atendioInput = document.getElementById('atendio');
+
+    // Función para cargar los valores guardados en localStorage
+    function cargarValoresGuardados() {
+      const sucursalGuardada = localStorage.getItem('sucursalSeleccionada');
+      const atendioGuardado = localStorage.getItem('nombreAtendio');
+
+      if (sucursalGuardada) {
+        sucursalSelect.value = sucursalGuardada;
+      }
+
+      if (atendioGuardado) {
+        atendioInput.value = atendioGuardado;
+      }
+    }
+
+    // Guardar la selección de sucursal en localStorage
+    sucursalSelect.addEventListener('change', () => {
+      localStorage.setItem('sucursalSeleccionada', sucursalSelect.value);
+    });
+
+    // Guardar el nombre de quien atendió en localStorage
+    atendioInput.addEventListener('input', () => {
+      localStorage.setItem('nombreAtendio', atendioInput.value);
+    });
+
+    // Cargar los valores al iniciar la página
+    window.addEventListener('DOMContentLoaded', cargarValoresGuardados);
+
     function setTotalAsPayment() {
       // Obtiene el valor del total
       var total = parseFloat(document.getElementById("total").textContent);
