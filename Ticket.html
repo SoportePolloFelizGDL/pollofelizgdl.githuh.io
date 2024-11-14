@@ -739,15 +739,20 @@
         detalleVenta.push(`${cantidad}x ${platillo} - $${subtotal}`);
       });
 
+      const fechaActual = new Date();
+      const fecha = fechaActual.toISOString().split("T")[0]; // Formato YYYY-MM-DD
+      const hora = fechaActual.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Formato HH:MM
+
       // Crear un objeto para la venta
       const venta = {
         sucursal,
+        fecha,
+        hora,
         atendio,
         metodoPago,
         total,
         detalle: detalleVenta.join(", "),
-        fecha: new Date().toISOString().split("T")[0], // Fecha en formato YYYY-MM-DD
-        ticket: Date.now() // Usar timestamp como identificador de ticket único
+        ticket: Date.now() // ID único de ticket
       };
 
       // Guardar la venta en localStorage

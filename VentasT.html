@@ -98,39 +98,26 @@
 
     <h2>Resumen de Ventas Diarias</h2>
 
-    <!-- Tabla Resumida de Ventas del Día -->
-    <table id="resumenVentas">
+    <table>
         <thead>
             <tr>
-                <th>Tipo de Pago</th>
-                <th>Total</th>
+                <th>Efectivo</th>
+                <th>Débito</th>
+                <th>Crédito</th>
+                <th>Vale</th>
+                <th>Total del Día</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Efectivo</td>
                 <td id="totalEfectivo">$0.00</td>
-            </tr>
-            <tr>
-                <td>Débito</td>
                 <td id="totalDebito">$0.00</td>
-            </tr>
-            <tr>
-                <td>Crédito</td>
                 <td id="totalCredito">$0.00</td>
-            </tr>
-            <tr>
-                <td>Vale de Despensa</td>
                 <td id="totalVale">$0.00</td>
-            </tr>
-            <tr>
-                <th>Total del Día</th>
-                <th id="totalDia">$0.00</th>
+                <td id="totalDia">$0.00</td>
             </tr>
         </tbody>
     </table>
-
-    <button onclick="elegirFecha()">Ver Ventas de Otro Día</button>
 
     <h2>Todas las Ventas</h2>
 
@@ -139,75 +126,76 @@
         <thead>
             <tr>
                 <th>Sucursal</th>
+                <th>Fecha y Hora de Venta</th>
                 <th>Número de Ticket</th>
-                <th>Atendió</th>
+                <th>Atendido por</th>
                 <th>Método de Pago</th>
-                <th>Total de Venta</th>
+                <th>Total</th>
                 <th>Detalle</th>
             </tr>
         </thead>
         <tbody>
-            <!-- Aquí se agregarán las ventas -->
+            <!-- Filas se añadirán aquí -->
         </tbody>
     </table>
 
     <script>
-        function cargarVentas() {
-            // Obtener las ventas guardadas desde localStorage
+        function filtrarVentasPorFecha() {
+            const fechaSeleccionada = document.getElementById("fechaSelect").value;
             const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
 
-            const resumen = {
-                efectivo: 0,
-                debito: 0,
-                credito: 0,
-                vale: 0,
-                total: 0
-            };
+            const resumen = { efectivo: 0, debito: 0, credito: 0, vale: 0, total: 0 };
+            const todasVentas = document.getElementById("todasVentas").getElementsByTagName("tbody")[0];
+            todasVentas.innerHTML = ""; // Limpiar la tabla
 
-            ventas.forEach(venta => {
+            // Filtrar ventas de la fecha seleccionada
+            const ventasFiltradas = ventas.filter(venta => venta.fecha === fechaSeleccionada);
+
+            ventasFiltradas.forEach(venta => {
                 switch (venta.metodoPago) {
-                    case 'efectivo':
+                    case "efectivo":
                         resumen.efectivo += venta.total;
                         break;
-                    case 'debito':
+                    case "debito":
                         resumen.debito += venta.total;
                         break;
-                    case 'credito':
+                    case "credito":
                         resumen.credito += venta.total;
                         break;
-                    case 'vale':
+                    case "vale":
                         resumen.vale += venta.total;
                         break;
                 }
                 resumen.total += venta.total;
-            });
 
-            // Actualizar la tabla resumida
-            document.getElementById('totalEfectivo').textContent = `$${resumen.efectivo.toFixed(2)}`;
-            document.getElementById('totalDebito').textContent = `$${resumen.debito.toFixed(2)}`;
-            document.getElementById('totalCredito').textContent = `$${resumen.credito.toFixed(2)}`;
-            document.getElementById('totalVale').textContent = `$${resumen.vale.toFixed(2)}`;
-            document.getElementById('totalDia').textContent = `$${resumen.total.toFixed(2)}`;
-
-            // Agregar las ventas a la tabla detallada
-            const todasVentas = document.getElementById('todasVentas').getElementsByTagName('tbody')[0];
-            todasVentas.innerHTML = ''; // Limpiar las filas existentes
-            ventas.forEach(venta => {
+                // Agregar fila a la tabla detallada
                 const row = todasVentas.insertRow();
                 row.insertCell(0).textContent = venta.sucursal;
-                row.insertCell(1).textContent = venta.ticket;
-                row.insertCell(2).textContent = venta.atendio;
-                row.insertCell(3).textContent = venta.metodoPago;
-                row.insertCell(4).textContent = `$${venta.total.toFixed(2)}`;
-                const detalleCell = row.insertCell(5);
-                const detalleBtn = document.createElement('button');
-                detalleBtn.textContent = 'Ver Detalle';
+                row.insertCell(1).textContent = `${venta.fecha} ${venta.hora}`;
+                row.insertCell(2).textContent = venta.ticket;
+                row.insertCell(3).textContent = venta.atendio;
+                row.insertCell(4).textContent = venta.metodoPago;
+                row.insertCell(5).textContent = `$${venta.total.toFixed(2)}`;
+                const detalleCell = row.insertCell(6);
+                const detalleBtn = document.createElement("button");
+                detalleBtn.textContent = "Ver Detalle";
                 detalleBtn.onclick = () => alert(`Detalle de Venta: ${venta.detalle}`);
                 detalleCell.appendChild(detalleBtn);
             });
+
+            // Actualizar la tabla resumen
+            document.getElementById("totalEfectivo").textContent = `$${resumen.efectivo.toFixed(2)}`;
+            document.getElementById("totalDebito").textContent = `$${resumen.debito.toFixed(2)}`;
+            document.getElementById("totalCredito").textContent = `$${resumen.credito.toFixed(2)}`;
+            document.getElementById("totalVale").textContent = `$${resumen.vale.toFixed(2)}`;
+            document.getElementById("totalDia").textContent = `$${resumen.total.toFixed(2)}`;
         }
 
-        window.onload = cargarVentas;
+        // Inicializar la fecha seleccionada con la actual y cargar ventas
+        window.onload = () => {
+            document.getElementById("fechaSelect").value = new Date().toISOString().split("T")[0];
+            filtrarVentasPorFecha();
+        };
     </script>
 
 </body>
