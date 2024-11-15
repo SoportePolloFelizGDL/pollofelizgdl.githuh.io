@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Resumen de Ventas</title>
     <link rel="stylesheet" href="VentasStyles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         table {
             width: 100%;
@@ -82,18 +83,8 @@
             </a>
         </div>
         <div class="button-container">
-            <a href="Ticket didi.html" class="button-link">
-                <img src="LOGO DIDI.png" width="80%" alt="DIDI" />
-            </a>
-        </div>
-        <div class="button-container">
-            <a href="Ticket rappi.html" class="button-link">
-                <img src="LOGO RAPPI.jpg" width="80%" alt="RAPPI" />
-            </a>
-        </div>
-        <div class="button-container">
-            <a href="Ticket uber.html" class="button-link">
-                <img src="LOGO UBER.png" width="80%" alt="UBER" />
+            <a href="Ticket Plataformas.html" class="button-link">
+                <img src="Logo Plataformas.png" width="80%" alt="PLATAFORMAS" />
             </a>
         </div>
         <div class="button-container">
@@ -115,6 +106,9 @@
                 <th>Débito</th>
                 <th>Crédito</th>
                 <th>Vale</th>
+                <th>DIDI</th> <!-- Nuevo método de pago -->
+                <th>RAPPI</th> <!-- Nuevo método de pago -->
+                <th>UBER</th> <!-- Nuevo método de pago -->
                 <th>Total del Día</th>
             </tr>
         </thead>
@@ -124,6 +118,9 @@
                 <td id="totalDebito">$0.00</td>
                 <td id="totalCredito">$0.00</td>
                 <td id="totalVale">$0.00</td>
+                <td id="DIDI">$0.00</td>
+                <td id="RAPPI">$0.00</td>
+                <td id="UBER">$0.00</td>
                 <td id="totalDia">$0.00</td>
             </tr>
         </tbody>
@@ -134,22 +131,27 @@
     <h2>Todas las Ventas</h2>
 
     <!-- Tabla de Ventas Detalladas -->
+
     <table id="todasVentas">
-        <thead>
-            <tr>
-                <th>Sucursal</th>
-                <th>Fecha y Hora de Venta</th>
-                <th>Número de Ticket</th>
-                <th>Atendido por</th>
-                <th>Método de Pago</th>
-                <th>Total</th>
-                <th>Detalle</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Filas se añadirán aquí -->
-        </tbody>
-    </table>
+    <thead>
+        <tr>
+            <th>Sucursal</th>
+            <th>Fecha</th> <!-- Columna para la fecha -->
+            <th>Hora</th> <!-- Columna para la hora -->
+            <th>Número de Ticket</th>
+            <th>Atendido por</th>
+            <th>Método de Pago</th>
+            <th>Total</th>
+            <th>Detalle</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Las filas se añadirán aquí -->
+    </tbody>
+</table>
+
+    <button onclick="exportarTablaAXLSX()">Exportar a Excel (.xlsx)</button>
+
 
     <script>
         function filtrarVentasPorFecha() {
@@ -160,9 +162,20 @@
             const todasVentas = document.getElementById("todasVentas").getElementsByTagName("tbody")[0];
             todasVentas.innerHTML = ""; // Limpiar la tabla
 
-            // Filtrar ventas de la fecha seleccionada
-            const ventasFiltradas = ventas.filter(venta => venta.fecha === fechaSeleccionada);
+            // Filtrar y ordenar ventas de la fecha seleccionada
+            const ventasFiltradas = ventas
+                .filter(venta => venta.fecha === fechaSeleccionada)
+                .sort((a, b) => {
+                    // Ordenar por fecha y hora descendente
+                    const fechaHoraA = new Date(`${a.fecha}T${a.hora}`);
+                    const fechaHoraB = new Date(`${b.fecha}T${b.hora}`);
+                    return fechaHoraB - fechaHoraA; // Más reciente primero
+                });
 
+            // Debug: Mostrar el orden en consola
+            console.log("Ventas ordenadas:", ventasFiltradas);
+
+            // Actualizar la tabla con las ventas filtradas y ordenadas
             ventasFiltradas.forEach(venta => {
                 switch (venta.metodoPago) {
                     case "efectivo":
@@ -225,6 +238,8 @@
             resumen += `Fecha: ${fechaSeleccionada}\n\n`;
 
             let totalEfectivo = 0, totalCredito = 0, totalDebito = 0, totalVale = 0;
+            let totalDIDI = 0, totalRAPPI = 0, totalUBER = 0; // Variables para los nuevos métodos de pago
+
             ventasDelDia.forEach(venta => {
                 switch (venta.metodoPago) {
                     case 'efectivo':
@@ -239,6 +254,15 @@
                     case 'vale':
                         totalVale += venta.total;
                         break;
+                    case 'DIDI': // Nuevo método de pago
+                        totalDIDI += venta.total;
+                        break;
+                    case 'RAPPI': // Nuevo método de pago
+                        totalRAPPI += venta.total;
+                        break;
+                    case 'UBER': // Nuevo método de pago
+                        totalUBER += venta.total;
+                        break;
                 }
             });
 
@@ -246,15 +270,18 @@
             resumen += `Tarjeta de Crédito: $${totalCredito.toFixed(2)}\n`;
             resumen += `Tarjeta de Débito: $${totalDebito.toFixed(2)}\n`;
             resumen += `Vale de Despensa: $${totalVale.toFixed(2)}\n`;
+            resumen += `DIDI: $${totalDIDI.toFixed(2)}\n`; // Añadir DIDI al resumen
+            resumen += `RAPPI: $${totalRAPPI.toFixed(2)}\n`; // Añadir RAPPI al resumen
+            resumen += `UBER: $${totalUBER.toFixed(2)}\n`; // Añadir UBER al resumen
 
-            const totalGeneral = totalEfectivo + totalCredito + totalDebito + totalVale;
+            const totalGeneral = totalEfectivo + totalCredito + totalDebito + totalVale + totalDIDI + totalRAPPI + totalUBER;
             resumen += `\nTotal General: $${totalGeneral.toFixed(2)}\n`;
 
             // Crear la ventana de impresión con el logo y los detalles
             const ventanaImpresion = window.open('', '_blank', 'width=300,height=400');
             ventanaImpresion.document.write('<html><head><title>Resumen de Ventas</title>');
             ventanaImpresion.document.write('<style>body { font-family: Arial, sans-serif; font-size: 14px; }</style></head><body>');
-            
+
             // Añadir el logo y el nombre de la sucursal
             ventanaImpresion.document.write('<div class="logo-container"><img src="/LogoPFo.png" alt="Pollo Feliz" /></div>'); // Agregar ruta al logo
             ventanaImpresion.document.write('<h3>' + ventasDelDia[0].sucursal + '</h3>');
@@ -274,9 +301,62 @@
             let ventasGuardadas = JSON.parse(localStorage.getItem("ventas")) || [];
             return ventasGuardadas.filter(venta => venta.fecha === fecha);
         }
+        function obtenerDatosPlataformas() {
+            const ventasPlataformas = JSON.parse(localStorage.getItem("ventasPlataformas")) || [];
+            const resumen = { DIDI: 0, RAPPI: 0, UBER: 0 };
+
+            ventasPlataformas.forEach(venta => {
+                switch (venta.metodoPago) {
+                    case "DIDI":
+                        resumen.DIDI += venta.total;
+                        break;
+                    case "RAPPI":
+                        resumen.RAPPI += venta.total;
+                        break;
+                    case "UBER":
+                        resumen.UBER += venta.total;
+                        break;
+                }
+            });
+
+            // Actualizar la tabla Resumen de Ventas Diarias
+            document.getElementById("totalDIDI").textContent = `$${resumen.DIDI.toFixed(2)}`;
+            document.getElementById("totalRAPPI").textContent = `$${resumen.RAPPI.toFixed(2)}`;
+            document.getElementById("totalUBER").textContent = `$${resumen.UBER.toFixed(2)}`;
+        }
+
+        // Llamar al cargar la página
+        window.onload = () => {
+            obtenerDatosPlataformas();
+        };
+
+        function exportarTablaAXLSX() {
+            const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+
+            // Crear los datos para la hoja de cálculo
+            const data = ventas.map(venta => ({
+                Sucursal: venta.sucursal,
+                Fecha: `${venta.fecha} ${venta.hora}`,
+                "Número de Ticket": venta.ticket,
+                "Atendido por": venta.atendio,
+                "Método de Pago": venta.metodoPago,
+                Total: venta.total.toFixed(2),
+                Detalle: venta.detalle || "No disponible",
+            }));
+
+            // Crear un libro de trabajo y una hoja
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(data);
+
+            // Agregar la hoja al libro
+            XLSX.utils.book_append_sheet(wb, ws, "Ventas");
+
+            // Exportar el libro a un archivo .xlsx
+            XLSX.writeFile(wb, "todas_ventas.xlsx");
+        }
+
     </script>
 
 </body>
 
 </html>
-

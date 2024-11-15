@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chickets</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Barra de navegación -->
+    <nav>
+        <button onclick="location.href='chickets.html'">Chickets</button>
+        <button onclick="location.href='didi.html'">Didi</button>
+        <button onclick="location.href='rappi.html'">Rappi</button>
+        <button onclick="location.href='uber.html'">Uber</button>
+        <button onclick="location.href='caja.html'">Caja</button>
+        <button onclick="location.href='ventas.html'">Ventas</button>
+    </nav>
+
+    <div class="container">
+        <!-- Panel izquierdo -->
+        <div class="left-panel">
+            <label>Sucursal:</label>
+            <select id="sucursalSelect">
+                <option value="Sucursal 1">Sucursal 1</option>
+                <option value="Sucursal 2">Sucursal 2</option>
+            </select>
+            <label>Atiende:</label>
+            <input type="text" id="nombreAtiende" placeholder="Nombre del empleado">
+            <label>Servicio:</label>
+            <select id="servicioSelect">
+                <option value="Comedor">Comedor</option>
+                <option value="Para llevar">Para llevar</option>
+            </select>
+            <button onclick="nuevaCuenta()">Nueva Cuenta</button>
+            <!-- Tabla de pedidos -->
+            <table id="orderTable">
+                <thead>
+                    <tr>
+                        <th>Cantidad</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Pedidos se agregarán aquí -->
+                </tbody>
+            </table>
+            <div id="totals">
+                <p>Subtotal: <span id="subtotal">0</span></p>
+                <p>IVA 16%: <span id="iva">0</span></p>
+                <p>Total a pagar: <span id="total">0</span></p>
+                <!-- Modal para agregar pagos parciales -->
+                <div id="pagoModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="cerrarPagoModal()">&times;</span>
+                        <h2>Agregar Pago</h2>
+                        <label for="metodoPago">Método de Pago:</label>
+                        <select id="metodoPago">
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Crédito">Crédito</option>
+                            <option value="Débito">Débito</option>
+                            <option value="Vales">Vales de Despensa</option>
+                        </select>
+
+                        <label for="cantidadPago">Cantidad:</label>
+                        <input type="number" id="cantidadPago" placeholder="Monto del pago" min="0">
+
+                        <button onclick="agregarPagoParcial()">Añadir Pago</button>
+                    </div>
+                </div>
+                <p id="totalPagado">Total Pagado: $0.00</p>
+                <p id="cambio">Cambio: $0.00</p>
+            </div>
+            <button onclick="cobrar()">Cobrar</button>
+        </div>
+        
+        <!-- Modal para mostrar el ticket -->
+        <div id="ticketModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="cerrarTicketModal()">&times;</span>
+                <h2>Ticket de Venta</h2>
+                <div id="ticketContenido"></div> <!-- Aquí se mostrará el contenido del ticket -->
+                <button onclick="imprimirTicket()">Imprimir Ticket</button>
+            </div>
+        </div>
+
+
+
+
+        <!-- Panel derecho -->
+        <div class="right-panel"><!-- Botones de categorías en el HTML principal -->
+            <button onclick="mostrarCategoria('Promociones')">Promociones</button>
+            <button onclick="mostrarCategoria('Familiares')">Familiares</button>
+            <button onclick="mostrarCategoria('Individuales')">Individuales</button>
+            <button onclick="mostrarCategoria('Complementos')">Complementos</button>
+            <button onclick="mostrarCategoria('Bebidas')">Bebidas</button>
+            <button onclick="mostrarCategoria('Extras')">Extras</button>
+            <!-- Agrega más botones según las categorías disponibles -->
+        </div>
+    </div>
+
+    <!-- Ventana emergente de categoría --><!-- Modal para mostrar platillos de la categoría seleccionada -->
+    <div id="categoriaModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <h2 id="categoriaTitulo">Categoría</h2>
+            <div id="platillos"></div> <!-- Aquí se mostrarán los platillos disponibles de la categoría -->
+        </div>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>

@@ -59,9 +59,25 @@
     <div class="container">
         <!-- Menú de selección de platillos -->
         <div class="menu">
+            <button>
+              <a href="Chicket.html"><img src="LOGO POLLO O.png" width="75%" alt="TICKET" /></a>
+            </button>
+            <button>
+              <a href="Caja.html"><img src="LOGO CAJA.png" width="75%" alt="TICKET" /></a>
+            </button>
+            <button>
+              <a href="Ticket didi.html"><img src="LOGO DIDI.png" width="75%" alt="DIDI" /></a>
+            </button>
+            <button>
+              <a href="Ticket rappi.html"><img src="LOGO RAPPI.jpg" width="75%" alt="RAPPI" /></a>
+            </button>
+            <button>
+              <a href="Ticket uber.html"><img src="LOGO UBER.png" width="10%" alt="UBER" /></a>
+            </button>
+            
             <h3>Informacion de la Sucursal</h3>
             <label for="sucursal">Sucursal:</label>
-            <select id="sucursal">
+            <select id="sucursal" onchange="guardarConfiguracion()">
                 <option value="01">Águilas</option>
                 <option value="02">Tapatio</option>
                 <option value="03">Tlaquepaque</option>
@@ -93,7 +109,7 @@
             </select><br><br>
 
             <label for="atendio">Atiende:</label>
-            <input type="text" id="atendio" placeholder="Nombre del empleado"><br><br>
+            <input type="text" id="atendio" placeholder="Nombre del empleado" oninput="guardarConfiguracion()"><br><br>
 
             <label for="servicio">Servicio:</label>
             <select id="servicio">
@@ -177,6 +193,31 @@
     </div>
 
     <script>
+        // Función para guardar sucursal y nombre en Local Storage
+        function guardarConfiguracion() {
+            const sucursal = document.getElementById("sucursal").value;
+            const atendio = document.getElementById("atendio").value;
+
+            localStorage.setItem("sucursal", sucursal);
+            localStorage.setItem("atendio", atendio);
+        }
+
+        // Función para cargar la configuración guardada
+        function cargarConfiguracion() {
+            const sucursal = localStorage.getItem("sucursal");
+            const atendio = localStorage.getItem("atendio");
+
+            if (sucursal) {
+                document.getElementById("sucursal").value = sucursal;
+            }
+            if (atendio) {
+                document.getElementById("atendio").value = atendio;
+            }
+        }
+
+        // Cargar la configuración cuando la página está lista
+        document.addEventListener("DOMContentLoaded", cargarConfiguracion);
+
         let totalPagado = 0;
 
         function mostrarPlatillos(categoria) {
@@ -467,8 +508,8 @@
                 total += precio;
             });
 
-            const iva = total * 0.16; // Calcular el IVA del 16%
-            const subtotal = total - iva;
+            const iva = total - subtotal; // Calcular el IVA del 16%
+            const subtotal = total / 1.16;
 
             document.getElementById('subtotal').innerText = subtotal.toFixed(2);
             document.getElementById('iva').innerText = iva.toFixed(2);
