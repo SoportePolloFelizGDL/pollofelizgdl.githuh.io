@@ -205,113 +205,16 @@
       <p>Río de La Loza 1976, El Rosario, 44870 Guadalajara, Jal.</p>
       <p>Fecha: <span id="fecha"></span> Hora: <span id="hora"></span></p>
       <div>
-        <label for="sucursalSelect">Sucursal:</label>
-        <select id="sucursalSelect">
-          <option value="01">Águilas</option>
-          <option value="02">Tapatio</option>
-          <option value="03">Tlaquepaque</option>
-          <option value="05">Loma Dorada</option>
-          <option value="06">Santa Margarita</option>
-          <option value="07">Patria</option>
-          <option value="08">Independencia</option>
-          <option value="10">Tesistan</option>
-          <option value="11">Oblatos</option>
-          <option value="12">Guadalupe</option>
-          <option value="13">Tetlan</option>
-          <option value="14">Sauz</option>
-          <option value="15">Santa Fe</option>
-          <option value="16">Tuzania</option>
-          <option value="17">La Cruz</option>
-          <option value="18">Juan Pablo II</option>
-          <option value="19">Box Market</option>
-          <option value="20">Plan de San Luis</option>
-          <option value="21">Autodromo</option>
-          <option value="22">Monumental</option>
-          <option value="23">16 de septiembre</option>
-          <option value="24">CEDIS</option>
-          <option value="25">Condo Plaza</option>
-          <option value="26">Avila Camacho</option>
-          <option value="27">Magnolias</option>
-          <option value="28">El Castillo</option>
-          <option value="29">Lomas del Gallo</option>
-          <option value="30">Torre Trimera</option>
-        </select>
-      </div>
-      <p>Atendió: <input type="text" id="atendio" /></p>
-      <p>
-        Servicio:
-        <select id="servicio">
-          <option value="comedor">Comedor</option>
-          <option value="paraLlevar">Para llevar</option>
-        </select>
-      </p>
-      <button onclick="nuevaCuenta()">Nueva Cuenta</button>
-      <table id="ticketTable">
-        <thead>
-          <tr>
-            <th>C.</th>
-            <th>Platillo</th>
-            <th>Subtotal</th>
-            <th>X</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Las filas se añadirán aquí -->
-        </tbody>
-      </table>
-      <!-- Nuevos renglones para Subtotal y IVA -->
-      <p>Subtotal: $<span id="subtotal">0.00</span></p>
-      <p>IVA 16%: $<span id="iva">0.00</span></p>
+        <h1>Aviso Importante a Todos los Empleados</h1>
 
-      <!-- Total -->
-      <p>Total: $<span id="total">0.00</span></p>
-
-      <!-- Elementos adicionales para método de pago y cálculo de cambio -->
-      <label for="payment-method">Método de Pago:</label>
-      <select id="payment-method">
-        <option value="efectivo">Efectivo</option>
-        <option value="credito">Tarjeta de Crédito</option>
-        <option value="debito">Tarjeta de Débito</option>
-        <option value="vale">Vale de Despensa</option>
-      </select>
-      <p>Tu pago: $<input type="number" id="pago" step="0.01" ondblclick="setTotalAsPayment()" /></p>
-      <button onclick="calcularCambio()">Pagar</button>
-      <p>Cambio: $<span id="cambio">0.00</span></p>
-
-      <div class="barcode">
-        <img id="barcode" src="" alt="Número de Ticket" />
-      </div>
-      <button onclick="imprimirTicket()">Imprimir Ticket</button>
-      <p>Facturación: facturacionpf.gdl@gmail.com</p>
-      <p>Enviándonos tu número de ticket, el costo total, metodo de pago y tus datos de facturacion:
-      </p>
-      <p id="ticketNumber">(Número de Ticket)</p>
-      <img src="QR.png" alt="QR MENÚ" />
-      <p>NUESTRO MENÚ</p>
-      <p>🍗🍗🍗🍗🍗🍗🍗🍗🍗🍗</p>
-    </div>
-
-    <div class="buttons-container">
-      <div class="buttons">
-        <p>🍗🍗</p>
-        <div class="button-container">
-          <button>
-            <a href="Ticket.html"><img src="LOGO POLLO O.png" width="10%" alt="TICKET" /></a>
-          </button>
-        </div>
-        <p>🍗🍗</p>
-        <div class="button-container">
-          <button>
-            <a href="Ticket Plataformas.html"><img src="Logo Plataformas.png" width="10%" alt="Plataformas" /></a>
-          </button>
-        </div>
-        <p>🍗🍗</p>
-        <div class="button-container">
-          <button>
-            <a href="VentasT.html"><img src="LOGO CAJA.png" width="10%" alt="CAJA" /></a>
-          </button>
-        </div>
-        <p>🍗🍗</p>
+          <h3>Nos hemos dado cuenta de que algunos empleados continúan utilizando la antigua aplicación de cobro de Pollo Feliz con la intención de cometer fraude y robar a la empresa. Queremos recordarles que este tipo de comportamiento es inaceptable y va en contra de nuestros valores y políticas.
+            
+            Acciones a tomar:
+            
+            Dejar de usar la antigua aplicación de inmediato: Todos los empleados deben utilizar la nueva aplicación de cobro autorizada por la empresa.
+            Reportar cualquier actividad sospechosa: Si observas algún comportamiento fraudulento, por favor, repórtalo a tu supervisor o al departamento de recursos humanos de inmediato.
+            Cumplir con las políticas de la empresa: Recordamos a todos los empleados que el incumplimiento de las políticas de la empresa puede resultar en medidas disciplinarias severas, incluyendo el despido.
+            Agradecemos su cooperación y compromiso para mantener la integridad y el éxito de nuestra empresa.</h3>
 
         <!-- Categoría: Paquetes Familiares -->
         <div class="button-group">
