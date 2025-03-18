@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen de Caja</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .summary {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+        .summary h2 {
+            text-align: center;
+        }
+        .summary p {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <button>
+      <a href="Chicket.html"><img src="LOGO POLLO O.png" width="75%" alt="TICKET" /></a>
+    </button>
+    <button>
+      <a href="Caja.html"><img src="LOGO CAJA.png" width="75%" alt="TICKET" /></a>
+    </button>
+    <button>
+      <a href="Ticket didi.html"><img src="LOGO DIDI.png" width="75%" alt="DIDI" /></a>
+    </button>
+    <button>
+      <a href="Ticket rappi.html"><img src="LOGO RAPPI.jpg" width="75%" alt="RAPPI" /></a>
+    </button>
+    <button>
+      <a href="Ticket uber.html"><img src="LOGO UBER.png" width="75%" alt="UBER" /></a>
+    </button>
+
+    <div class="summary">
+        <h2>Resumen de Caja - Hoy</h2>
+        <p>Efectivo: <span id="efectivo-total">0</span> MXN</p>
+        <p>Crédito: <span id="credito-total">0</span> MXN</p>
+        <p>Débito: <span id="debito-total">0</span> MXN</p>
+        <p>Vale de Despensa: <span id="vale-total">0</span> MXN</p>
+        <p>Total General: <span id="total-general">0</span> MXN</p>
+    </div>
+
+    <script>
+        // Cargar el resumen de caja del día actual
+        function cargarResumenCaja() {
+            const fechaActual = new Date().toISOString().split("T")[0];
+            fetch(`http://localhost:3000/obtener-ventas?fecha=${fechaActual}`)
+                .then(response => response.json())
+                .then(ventas => {
+                    let totalEfectivo = 0;
+                    let totalCredito = 0;
+                    let totalDebito = 0;
+                    let totalVale = 0;
+                    let totalGeneral = 0;
+
+                    ventas.forEach(venta => {
+                        switch (venta.tipoPago) {
+                            case 'efectivo':
+                                totalEfectivo += venta.total;
+                                break;
+                            case 'credito':
+                                totalCredito += venta.total;
+                                break;
+                            case 'debito':
+                                totalDebito += venta.total;
+                                break;
+                            case 'vale':
+                                totalVale += venta.total;
+                                break;
+                        }
+                        totalGeneral += venta.total;
+                    });
+
+                    // Actualizar los valores de resumen en el HTML
+                    document.getElementById("efectivo-total").textContent = totalEfectivo.toFixed(2);
+                    document.getElementById("credito-total").textContent = totalCredito.toFixed(2);
+                    document.getElementById("debito-total").textContent = totalDebito.toFixed(2);
+                    document.getElementById("vale-total").textContent = totalVale.toFixed(2);
+                    document.getElementById("total-general").textContent = totalGeneral.toFixed(2);
+                })
+                .catch(error => {
+                    console.error('Error al cargar el resumen de caja:', error);
+                });
+        }
+
+        // Cargar el resumen al iniciar la página
+        document.addEventListener("DOMContentLoaded", cargarResumenCaja);
+    </script>
+</body>
+</html>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen de Ventas</title>
+    <link rel="stylesheet" href="VentasStyles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        /* Estilos para la página de contraseña */
+        #passwordPrompt {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        #passwordPrompt div {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        #passwordPrompt input {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        #passwordPrompt button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #passwordPrompt button:hover {
+            background-color: #45a049;
+        }
+
+        /* Ocultar contenido principal inicialmente */
+        #contenidoPrincipal {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Ventana emergente para la contraseña -->
+    <div id="passwordPrompt">
+        <div>
+            <h2>Ingrese la Contraseña</h2>
+            <input type="password" id="passwordInput" placeholder="Contraseña" />
+            <br />
+            <button onclick="verificarContraseña()">Ingresar</button>
+        </div>
+    </div>
+
+    <!-- Contenido de la página (oculto hasta verificar la contraseña) -->
+    <div id="contenidoPrincipal">
+        <h2>Todas las Ventas</h2>
+
+        <!-- Tabla de Ventas Detalladas -->
+        <table id="todasVentas">
+            <thead>
+                <tr>
+                    <th>Sucursal</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Número de Ticket</th>
+                    <th>Atendido por</th>
+                    <th>Método de Pago</th>
+                    <th>Total</th>
+                    <th>Detalle</th>
+                    <th>Eliminar</th> <!-- Nueva columna para eliminar -->
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Las filas se añadirán aquí -->
+            </tbody>
+        </table>
+
+        <button onclick="exportarTablaAXLSX()">Exportar a Excel (.xlsx)</button>
+
+    </div>
+
+    <script>
+        // Función para verificar la contraseña
+        function verificarContraseña() {
+            const contraseñaCorrecta = "C4rb0n"; // La contraseña correcta
+            const contraseñaIngresada = document.getElementById("passwordInput").value;
+
+            if (contraseñaIngresada === contraseñaCorrecta) {
+                document.getElementById("passwordPrompt").style.display = "none"; // Ocultar el prompt de contraseña
+                document.getElementById("contenidoPrincipal").style.display = "block"; // Mostrar el contenido
+                cargarVentas(); // Cargar las ventas
+            } else {
+                alert("Contraseña incorrecta. Intente nuevamente.");
+            }
+        }
+
+        window.onload = () => {
+            // Solo cargamos las ventas si ya se verificó la contraseña
+            if (document.getElementById("contenidoPrincipal").style.display === "block") {
+                cargarVentas();
+            }
+        };
+
+        // Función para cargar las ventas desde localStorage y agregar las filas a la tabla
+        function cargarVentas() {
+            const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+            const todasVentas = document.getElementById("todasVentas").getElementsByTagName("tbody")[0];
+            todasVentas.innerHTML = ""; // Limpiar la tabla
+
+            ventas.forEach((venta, index) => {
+                const row = todasVentas.insertRow();
+                row.insertCell(0).textContent = venta.sucursal;
+                row.insertCell(1).textContent = venta.fecha;
+                row.insertCell(2).textContent = venta.hora;
+                row.insertCell(3).textContent = venta.ticket;
+                row.insertCell(4).textContent = venta.atendio;
+                row.insertCell(5).textContent = venta.metodoPago;
+                row.insertCell(6).textContent = `$${venta.total.toFixed(2)}`;
+
+                const detalleCell = row.insertCell(7);
+                const detalleBtn = document.createElement("button");
+                detalleBtn.textContent = "Ver Detalle";
+                detalleBtn.onclick = () => alert(`Detalle de Venta: ${venta.detalle}`);
+                detalleCell.appendChild(detalleBtn);
+
+                // Columna para el botón de eliminación
+                const eliminarCell = row.insertCell(8);
+                const deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "X";
+                deleteBtn.classList.add("delete-btn");
+                deleteBtn.onclick = () => eliminarVenta(index);
+                eliminarCell.appendChild(deleteBtn);
+            });
+        }
+
+        // Eliminar una venta por su índice y actualizar localStorage
+        function eliminarVenta(index) {
+            let ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+            ventas.splice(index, 1); // Eliminar la venta en la posición 'index'
+            localStorage.setItem("ventas", JSON.stringify(ventas)); // Guardar los cambios
+            cargarVentas(); // Recargar las ventas actualizadas
+        }
+
+        function exportarTablaAXLSX() {
+            const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+
+            const data = ventas.map(venta => ({
+                Sucursal: venta.sucursal,
+                Fecha: `${venta.fecha} ${venta.hora}`,
+                "Número de Ticket": venta.ticket,
+                "Atendido por": venta.atendio,
+                "Método de Pago": venta.metodoPago,
+                Total: venta.total.toFixed(2),
+                Detalle: venta.detalle || "No disponible",
+            }));
+
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(data);
+            XLSX.utils.book_append_sheet(wb, ws, "Ventas");
+            XLSX.writeFile(wb, "todas_ventas.xlsx");
+        }
+    </script>
+
+</body>
+
+</html>

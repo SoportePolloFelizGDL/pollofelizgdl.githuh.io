@@ -1,32 +1,540 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pollo Feliz GDL</title>
-</head>
-<body>
-    <h1>Pollo Feliz <span style="color:red">GDL</span></h1>
-    <h2>Pollos <span style="color:brown">asados</span> al carbon</h2>
-    <hr>
-    <!--Comentarios-->
-    <a target="_blank" href="https://pollopepe.com/">Ir a la competencia</a>
-    <img src="/Fondo.jpg" width="400" height="400" />
-    <hr>
-    <form action="/formulario" method="post">
-        <label for="Nombre">Nombre:</label>
-        <input type="text" id="Nombre" name="Nombre" placeholder="Nombre">
-        <br>
-        <label for="Apellido">Apellido:</label>
-        <input type="text" id="Apellido" name="Apellido" placeholder="Apellido">
-        <br>
-        <label for="Comentario">Comentario:</label>
-        <textarea cols="50" rows="10"  name="Comentario" id="Comentario" placeholder="Ingrese su Comentario" cols="30" rows="10"></textarea>
-        <br>
-        <!--input type="submit"-->
-        <button type="submit"><img src="/LogoPF.png" Enviar</button>
 
-    </form>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pollo Feliz GDL</title>
+  <link rel="shortcut icon" href="/LOGO POLLO FELIZ.jpg" />
+  <link rel="stylesheet" href="estilo.css" />
+  <style>
+    /* Estilos básicos */
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      /* Asegura que el html y body ocupen toda la altura de la pantalla */
+    }
+
+    #container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      /* Ajusta la altura del contenedor al 100% de la vista */
+      overflow: auto;
+      /* Permite el desplazamiento si el contenido excede la altura del contenedor */
+    }
+
+    .ticket {
+      width: 300px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 1px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 1px;
+      text-align: center;
+    }
+
+    .ticket h2 {
+      text-align: center;
+      margin-bottom: 1px;
+    }
+
+    .ticket table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1px;
+    }
+
+    .ticket table,
+    .ticket th,
+    .ticket td {
+      border: 1px solid #ddd;
+    }
+
+    .ticket th,
+    .ticket td {
+      padding: 1px;
+      text-align: left;
+    }
+
+    .ticket th {
+      background-color: #f2f2f2;
+    }
+
+    .ticket p {
+      margin: 1px 0;
+    }
+
+    .ticket input[type="number"],
+    .ticket input[type="text"] {
+      width: 100%;
+      padding: 1px;
+      margin-top: 1px;
+      box-sizing: border-box;
+    }
+
+    .ticket select {
+      width: 100%;
+      padding: 1px;
+      margin-top: 1px;
+      box-sizing: border-box;
+    }
+
+    .ticket button {
+      width: 100%;
+      padding: 1px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .ticket button:hover {
+      background-color: red;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      /* Espacio entre botones */
+      margin-top: 20px;
+    }
+
+    .buttons button {
+      width: calc(33% - 10px);
+      /* Ajusta el ancho para caber en 3 columnas con espacio entre botones */
+      padding: 5px;
+      background-color: #ffe602;
+      color: black;
+      border: black;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .buttons button:hover {
+      background-color: #ff0000;
+      color: white;
+      border: black;
+    }
+
+    .barcode {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .barcode img {
+      height: 2cm;
+      width: 100%;
+    }
+
+    .ticket img {
+      max-width: 70%;
+      /* Asegura que la imagen no esté aplastada */
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .ticket .delete-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+      padding: 5px;
+      margin: 0;
+    }
+
+    .ticket .delete-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      .ticket,
+      .ticket * {
+        visibility: visible;
+      }
+
+      .ticket {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 80mm;
+      }
+
+      .buttons,
+      .buttons button {
+        display: none;
+      }
+
+      button {
+        display: none;
+      }
+
+      select,
+      input {
+        border: none;
+        background: transparent;
+        outline: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-container">
+    <div class="ticket" id="ticket">
+      <!-- Aquí va el logo, después de "Ticket" y antes de la información -->
+      <img src="/LOGO POLLO DICIEMBRE 1.png" alt="POLLO FELIZ" />
+
+      <p>PROMOTORA DE ALIMENTOS LA GRANJA SA DE CV</p>
+      <p>Río de La Loza 1976, El Rosario, 44870 Guadalajara, Jal.</p>
+      <p>Fecha: <span id="fecha"></span> Hora: <span id="hora"></span></p>
+      <div>
+        <label for="sucursalSelect">Sucursal:</label>
+        <select id="sucursalSelect">
+          <option value="01">Águilas</option>
+          <option value="02">Tapatio</option>
+          <option value="03">Tlaquepaque</option>
+          <option value="05">Loma Dorada</option>
+          <option value="06">Santa Margarita</option>
+          <option value="07">Patria</option>
+          <option value="08">Independencia</option>
+          <option value="10">Tesistan</option>
+          <option value="11">Oblatos</option>
+          <option value="12">Guadalupe</option>
+          <option value="13">Tetlan</option>
+          <option value="14">Sauz</option>
+          <option value="15">Santa Fe</option>
+          <option value="16">Tuzania</option>
+          <option value="17">La Cruz</option>
+          <option value="18">Juan Pablo II</option>
+          <option value="19">Box Market</option>
+          <option value="20">Plan de San Luis</option>
+          <option value="21">Autodromo</option>
+          <option value="22">Monumental</option>
+          <option value="23">16 de septiembre</option>
+          <option value="24">CEDIS</option>
+          <option value="25">Condo Plaza</option>
+          <option value="26">Avila Camacho</option>
+          <option value="27">Magnolias</option>
+          <option value="28">El Castillo</option>
+          <option value="29">Lomas del Gallo</option>
+          <option value="30">Torre Trimera</option>
+        </select>
+      </div>
+      <p>Atendió: <input type="text" id="atendio" /></p>
+      <p>
+        Servicio:
+        <select id="servicio">
+          <option value="comedor">Comedor</option>
+          <option value="paraLlevar">Para llevar</option>
+        </select>
+      </p>
+      <button onclick="nuevaCuenta()">Nueva Cuenta</button>
+      <table id="ticketTable">
+        <thead>
+          <tr>
+            <th>C.</th>
+            <th>Platillo</th>
+            <th>Subtotal</th>
+            <th>X</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Las filas se añadirán aquí -->
+        </tbody>
+      </table>
+      <!-- Nuevos renglones para Subtotal y IVA -->
+      <p>Subtotal: $<span id="subtotal">0.00</span></p>
+      <p>IVA 16%: $<span id="iva">0.00</span></p>
+
+      <!-- Total -->
+      <p>Total: $<span id="total">0.00</span></p>
+
+      <!-- Elementos adicionales para método de pago y cálculo de cambio -->
+      <label for="payment-method">Método de Pago:</label>
+      <select id="payment-method">
+        <option value="efectivo">Efectivo</option>
+        <option value="credito">Tarjeta de Crédito</option>
+        <option value="debito">Tarjeta de Débito</option>
+        <option value="vale">Vale de Despensa</option>
+      </select>
+      <p>Tu pago: $<input type="number" id="pago" step="0.01" ondblclick="setTotalAsPayment()" /></p>
+      <button onclick="calcularCambio()">Pagar</button>
+      <p>Cambio: $<span id="cambio">0.00</span></p>
+
+      <div class="barcode">
+        <img id="barcode" src="" alt="Número de Ticket" />
+      </div>
+      <button onclick="imprimirTicket()">Imprimir Ticket</button>
+      <p>Facturación: facturacionpf.gdl@gmail.com</p>
+      <p>Enviándonos tu número de ticket, el costo total, metodo de pago y tus datos de facturacion:
+      </p>
+      <p id="ticketNumber">(Número de Ticket)</p>
+      <img src="QR.png" alt="QR MENÚ" />
+      <p>NUESTRO MENÚ</p>
+      <p>🍗🍗🍗🍗🍗🍗🍗🍗🍗🍗</p>
+    </div>
+
+    <div class="buttons-container">
+      <div class="buttons">
+        <p>🍗🍗</p>
+        <div class="button-container">
+          <button>
+            <a href="Ticket.html"><img src="LOGO POLLO O.png" width="10%" alt="TICKET" /></a>
+          </button>
+        </div>
+        <p>🍗🍗</p>
+        <div class="button-container">
+          <button>
+            <a href="Ticket Plataformas.html"><img src="Logo Plataformas.png" width="10%" alt="Plataformas" /></a>
+          </button>
+        </div>
+        <p>🍗🍗</p>
+        <div class="button-container">
+          <button>
+            <a href="VentasT.html"><img src="LOGO CAJA.png" width="10%" alt="CAJA" /></a>
+          </button>
+        </div>
+        <p>🍗🍗</p>
+
+        <!-- Categoría: Paquetes Familiares -->
+        <div class="button-group">
+          <h1>Aviso Importante a Todos los Empleados</h1>
+
+          <h3>Nos hemos dado cuenta de que algunos empleados continúan utilizando la antigua aplicación de cobro de Pollo Feliz con la intención de cometer fraude y robar a la empresa. Queremos recordarles que este tipo de comportamiento es inaceptable y va en contra de nuestros valores y políticas.
+            
+            Acciones a tomar:
+            
+            Dejar de usar la antigua aplicación de inmediato: Todos los empleados deben utilizar la nueva aplicación de cobro autorizada por la empresa.
+            Reportar cualquier actividad sospechosa: Si observas algún comportamiento fraudulento, por favor, repórtalo a tu supervisor o al departamento de recursos humanos de inmediato.
+            Cumplir con las políticas de la empresa: Recordamos a todos los empleados que el incumplimiento de las políticas de la empresa puede resultar en medidas disciplinarias severas, incluyendo el despido.
+            Agradecemos su cooperación y compromiso para mantener la integridad y el éxito de nuestra empresa.</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Elementos
+    const sucursalSelect = document.getElementById('sucursalSelect');
+    const atendioInput = document.getElementById('atendio');
+    const totalElement = document.getElementById("total"); // Elemento total
+    const pagoInput = document.getElementById("pago"); // Campo de pago
+
+    // Función para cargar los valores guardados en localStorage
+    function cargarValoresGuardados() {
+      const sucursalGuardada = localStorage.getItem('sucursalSeleccionada');
+      const atendioGuardado = localStorage.getItem('nombreAtendio');
+
+      if (sucursalGuardada) {
+        sucursalSelect.value = sucursalGuardada;
+      }
+
+      if (atendioGuardado) {
+        atendioInput.value = atendioGuardado;
+      }
+    }
+
+    // Guardar la selección de sucursal en localStorage
+    sucursalSelect.addEventListener('change', () => {
+      localStorage.setItem('sucursalSeleccionada', sucursalSelect.value);
+    });
+
+    // Guardar el nombre de quien atendió en localStorage
+    atendioInput.addEventListener('input', () => {
+      localStorage.setItem('nombreAtendio', atendioInput.value);
+    });
+
+    // Cargar los valores al iniciar la página
+    window.addEventListener('DOMContentLoaded', cargarValoresGuardados);
+
+    let total = 0;
+
+    function agregarPlatillo(nombre, descripcion, precio) {
+      const table = document
+        .getElementById("ticketTable")
+        .getElementsByTagName("tbody")[0];
+      let found = false;
+
+      // Recorre todas las filas para ver si el platillo ya está en la tabla
+      for (let row of table.rows) {
+        const cellDescription = row.cells[1].innerText;
+        if (cellDescription.includes(descripcion)) {
+          // Si el platillo ya está, actualiza la cantidad y el subtotal
+          const quantityCell = row.cells[0];
+          const subtotalCell = row.cells[2];
+          const currentQuantity = parseInt(quantityCell.innerText);
+          const currentSubtotal = parseFloat(
+            subtotalCell.innerText.replace("$", "")
+          );
+
+          // Incrementa la cantidad
+          const newQuantity = currentQuantity + 1;
+          quantityCell.innerText = newQuantity;
+
+          // Actualiza el subtotal
+          const newSubtotal = currentSubtotal + precio;
+          subtotalCell.innerText = `$${newSubtotal.toFixed(2)}`;
+
+          // Actualiza el total
+          total += precio;
+          actualizarTotal(total);
+
+          found = true;
+          break;
+        }
+      }
+
+      // Si el platillo no se encontró, agrega una nueva fila
+      if (!found) {
+        const newRow = table.insertRow();
+        const cell1 = newRow.insertCell(0);
+        const cell2 = newRow.insertCell(1);
+        const cell3 = newRow.insertCell(2);
+        const cell4 = newRow.insertCell(3);
+        cell1.innerHTML = "1";
+        cell2.innerHTML = `${nombre} - ${descripcion}`;
+        cell3.innerHTML = `$${precio.toFixed(2)}`;
+        cell4.innerHTML =
+          '<button class="delete-btn" onclick="eliminarPlatillo(this)">X</button>';
+        total += precio;
+        actualizarTotal(total);
+      }
+    }
+
+    function eliminarPlatillo(button) {
+      const row = button.parentElement.parentElement;
+      const subtotal = parseFloat(row.cells[2].innerText.replace("$", ""));
+      total -= subtotal;
+      actualizarTotal(total);
+      row.remove();
+    }
+
+    function calcularCambio() {
+      generarCodigoBarras();
+      const pago = parseFloat(document.getElementById("pago").value);
+      const cambio = pago - total;
+      document.getElementById("cambio").innerText = cambio.toFixed(2);
+    }
+
+    function calcularSubtotalYIVA() {
+      const total = parseFloat(document.getElementById("total").innerText) || 0;
+      const subtotal = total / 1.16;
+      const iva = subtotal * 0.16;
+
+      document.getElementById("subtotal").innerText = subtotal.toFixed(2);
+      document.getElementById("iva").innerText = iva.toFixed(2);
+    }
+
+    function actualizarTotal(nuevoTotal) {
+      document.getElementById("total").innerText = nuevoTotal.toFixed(2);
+      calcularSubtotalYIVA(); // Calcula Subtotal e IVA después de actualizar el total
+    }
+
+    function nuevaCuenta() {
+      // Resetea los campos del ticket
+      document
+        .getElementById("ticketTable")
+        .getElementsByTagName("tbody")[0].innerHTML = "";
+      total = 0;
+      actualizarTotal(total); // Resetea el total y calcula Subtotal e IVA
+      document.getElementById("cambio").innerText = "0.00";
+      document.getElementById("pago").value = "";
+    }
+
+    function generarCodigoBarras() {
+      const sucursal = document.getElementById("sucursalSelect").value;
+      const now = new Date();
+      const fecha =
+        now.getFullYear().toString().slice(-2) +
+        (now.getMonth() + 1).toString().padStart(2, "0") +
+        now.getDate().toString().padStart(2, "0");
+      const hora =
+        now.getHours().toString().padStart(2, "0") +
+        now.getMinutes().toString().padStart(2, "0") +
+        now.getSeconds().toString().padStart(2, "0");
+      const codigo = sucursal + fecha + hora + "-" + total;
+      document.getElementById(
+        "barcode"
+      ).src = `https://barcode.tec-it.com/barcode.ashx?data=${codigo}&code=Code128&translate-esc=true`;
+      document.getElementById("ticketNumber").innerText = codigo; // Muestra el número de ticket en el párrafo
+    }
+
+    function imprimirTicket() {
+      // Obtener los datos del ticket
+      const sucursal = document.getElementById('sucursalSelect').value;
+      const atendio = document.getElementById('atendio').value;
+      const metodoPago = document.getElementById('payment-method').value;
+      const total = parseFloat(document.getElementById('total').textContent);
+      const detalleVenta = []; // Array para almacenar detalles individuales de los productos
+
+      // Recorrer los productos en el ticket
+      const filas = document.querySelectorAll("#ticketTable tbody tr");
+      filas.forEach(fila => {
+        const cantidad = fila.cells[0].textContent;
+        const platillo = fila.cells[1].textContent;
+        const subtotal = fila.cells[2].textContent;
+        detalleVenta.push(`${cantidad}x ${platillo} - $${subtotal}`);
+      });
+
+      const fechaActual = new Date();
+      const fecha = fechaActual.toISOString().split("T")[0]; // Formato YYYY-MM-DD
+      const hora = fechaActual.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Formato HH:MM
+
+      // Crear un objeto para la venta
+      const venta = {
+        sucursal,
+        fecha,
+        hora,
+        atendio,
+        metodoPago,
+        total,
+        detalle: detalleVenta.join(", "),
+        ticket: Date.now() // ID único de ticket
+      };
+
+      // Guardar la venta en localStorage
+      let ventasGuardadas = JSON.parse(localStorage.getItem("ventas")) || [];
+      ventasGuardadas.push(venta);
+      localStorage.setItem("ventas", JSON.stringify(ventasGuardadas));
+      window.print();
+    }
+
+    function actualizarHora() {
+      const now = new Date();
+      const fecha = now.toLocaleDateString();
+      const hora = now.toLocaleTimeString();
+      document.getElementById("fecha").innerText = fecha;
+      document.getElementById("hora").innerText = hora;
+    }
+
+    // Evento para hacer doble clic en el total y copiarlo al campo de pago
+    totalElement.addEventListener('dblclick', function () {
+      pagoInput.value = totalElement.innerText; // Copiar total al campo de pago
+      calcularCambio(); // Calcular cambio automáticamente
+    });
+
+    setInterval(actualizarHora, 1000);
+    window.onload = actualizarHora;
+  </script>
+
+
 </body>
+
 </html>

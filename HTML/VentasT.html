@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen de Ventas</title>
+    <link rel="stylesheet" href="VentasStyles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Configuración principal para alinear los botones en fila */
+        .buttons-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            /* Alinea los botones a la izquierda */
+            gap: 10px;
+            /* Espacio entre botones */
+        }
+
+        .button-container {
+            width: 120px;
+            /* Fija un ancho para mantener cada botón en la misma fila */
+            text-align: center;
+        }
+
+        .button-link {
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .button-link img {
+            width: 100%;
+            /* Asegura que las imágenes se ajusten al ancho de los botones */
+        }
+
+        /* Estilo para el logo */
+        .logo-container {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .logo-container img {
+            width: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="buttons-container">
+        <div class="button-container">
+            <a href="Ticket.html" class="button-link">
+                <img src="LOGO POLLO O.png" width="80%" alt="TICKET" />
+            </a>
+        </div>
+        <div class="button-container">
+            <a href="Ticket Plataformas.html" class="button-link">
+                <img src="Logo Plataformas.png" width="80%" alt="PLATAFORMAS" />
+            </a>
+        </div>
+        <div class="button-container">
+            <a href="VentasT.html" class="button-link">
+                <img src="LOGO CAJA.png" width="80%" alt="CAJA" />
+            </a>
+        </div>
+        <div class="button-container">
+            <a href="VentasA.html" class="button-link">
+                <img src="logo en blanco.png" width="80%" alt="🍗" />
+            </a>
+        </div>
+    </div>
+    <!-- Campo de selección de fecha -->
+    <label for="fechaSelect">Seleccionar Fecha:</label>
+    <input type="date" id="fechaSelect" onchange="filtrarVentasPorFecha()" />
+
+    <h2>Resumen de Ventas Diarias</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Efectivo</th>
+                <th>Débito</th>
+                <th>Crédito</th>
+                <th>Vale</th>
+                <th>DIDI</th> <!-- Nuevo método de pago -->
+                <th>RAPPI</th> <!-- Nuevo método de pago -->
+                <th>UBER</th> <!-- Nuevo método de pago -->
+                <th>Total del Día</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="totalEfectivo">$0.00</td>
+                <td id="totalDebito">$0.00</td>
+                <td id="totalCredito">$0.00</td>
+                <td id="totalVale">$0.00</td>
+                <td id="DIDI">$0.00</td>
+                <td id="RAPPI">$0.00</td>
+                <td id="UBER">$0.00</td>
+                <td id="totalDia">$0.00</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button onclick="imprimirResumen()">Imprimir Resumen del Día</button>
+
+    <h2>Todas las Ventas</h2>
+
+    <!-- Tabla de Ventas Detalladas -->
+
+    <table id="todasVentas">
+    <thead>
+        <tr>
+            <th>Sucursal</th>
+            <th>Fecha</th> <!-- Columna para la fecha -->
+            <th>Hora</th> <!-- Columna para la hora -->
+            <th>Número de Ticket</th>
+            <th>Atendido por</th>
+            <th>Método de Pago</th>
+            <th>Total</th>
+            <th>Detalle</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Las filas se añadirán aquí -->
+    </tbody>
+</table>
+
+    <button onclick="exportarTablaAXLSX()">Exportar a Excel (.xlsx)</button>
+
+
+    <script>
+        function filtrarVentasPorFecha() {
+            const fechaSeleccionada = document.getElementById("fechaSelect").value;
+            const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+
+            const resumen = { efectivo: 0, debito: 0, credito: 0, vale: 0, total: 0 };
+            const todasVentas = document.getElementById("todasVentas").getElementsByTagName("tbody")[0];
+            todasVentas.innerHTML = ""; // Limpiar la tabla
+
+            // Filtrar y ordenar ventas de la fecha seleccionada
+            const ventasFiltradas = ventas
+                .filter(venta => venta.fecha === fechaSeleccionada)
+                .sort((a, b) => {
+                    // Ordenar por fecha y hora descendente
+                    const fechaHoraA = new Date(`${a.fecha}T${a.hora}`);
+                    const fechaHoraB = new Date(`${b.fecha}T${b.hora}`);
+                    return fechaHoraB - fechaHoraA; // Más reciente primero
+                });
+
+            // Debug: Mostrar el orden en consola
+            console.log("Ventas ordenadas:", ventasFiltradas);
+
+            // Actualizar la tabla con las ventas filtradas y ordenadas
+            ventasFiltradas.forEach(venta => {
+                switch (venta.metodoPago) {
+                    case "efectivo":
+                        resumen.efectivo += venta.total;
+                        break;
+                    case "debito":
+                        resumen.debito += venta.total;
+                        break;
+                    case "credito":
+                        resumen.credito += venta.total;
+                        break;
+                    case "vale":
+                        resumen.vale += venta.total;
+                        break;
+                }
+                resumen.total += venta.total;
+
+                // Agregar fila a la tabla detallada
+                const row = todasVentas.insertRow();
+                row.insertCell(0).textContent = venta.sucursal;
+                row.insertCell(1).textContent = `${venta.fecha} ${venta.hora}`;
+                row.insertCell(2).textContent = venta.ticket;
+                row.insertCell(3).textContent = venta.atendio;
+                row.insertCell(4).textContent = venta.metodoPago;
+                row.insertCell(5).textContent = `$${venta.total.toFixed(2)}`;
+                const detalleCell = row.insertCell(6);
+                const detalleBtn = document.createElement("button");
+                detalleBtn.textContent = "Ver Detalle";
+                detalleBtn.onclick = () => alert(`Detalle de Venta: ${venta.detalle}`);
+                detalleCell.appendChild(detalleBtn);
+            });
+
+            // Actualizar la tabla resumen
+            document.getElementById("totalEfectivo").textContent = `$${resumen.efectivo.toFixed(2)}`;
+            document.getElementById("totalDebito").textContent = `$${resumen.debito.toFixed(2)}`;
+            document.getElementById("totalCredito").textContent = `$${resumen.credito.toFixed(2)}`;
+            document.getElementById("totalVale").textContent = `$${resumen.vale.toFixed(2)}`;
+            document.getElementById("totalDia").textContent = `$${resumen.total.toFixed(2)}`;
+        }
+
+        // Inicializar la fecha seleccionada con la actual y cargar ventas
+        window.onload = () => {
+            document.getElementById("fechaSelect").value = new Date().toISOString().split("T")[0];
+            filtrarVentasPorFecha();
+        };
+
+        function imprimirResumen() {
+            // Obtener la fecha seleccionada del campo correcto
+            const fechaSeleccionada = document.getElementById('fechaSelect').value;
+            const ventasDelDia = obtenerVentasDelDia(fechaSeleccionada);
+
+            if (ventasDelDia.length === 0) {
+                alert('No hay ventas registradas para este día.');
+                return;
+            }
+
+            // Generar el resumen
+            let resumen = 'Resumen de Ventas del Día\n';
+            resumen += `Sucursal: ${ventasDelDia[0].sucursal}\n`;
+            resumen += `Fecha: ${fechaSeleccionada}\n\n`;
+
+            let totalEfectivo = 0, totalCredito = 0, totalDebito = 0, totalVale = 0;
+            let totalDIDI = 0, totalRAPPI = 0, totalUBER = 0; // Variables para los nuevos métodos de pago
+
+            ventasDelDia.forEach(venta => {
+                switch (venta.metodoPago) {
+                    case 'efectivo':
+                        totalEfectivo += venta.total;
+                        break;
+                    case 'credito':
+                        totalCredito += venta.total;
+                        break;
+                    case 'debito':
+                        totalDebito += venta.total;
+                        break;
+                    case 'vale':
+                        totalVale += venta.total;
+                        break;
+                    case 'DIDI': // Nuevo método de pago
+                        totalDIDI += venta.total;
+                        break;
+                    case 'RAPPI': // Nuevo método de pago
+                        totalRAPPI += venta.total;
+                        break;
+                    case 'UBER': // Nuevo método de pago
+                        totalUBER += venta.total;
+                        break;
+                }
+            });
+
+            resumen += `Efectivo: $${totalEfectivo.toFixed(2)}\n`;
+            resumen += `Tarjeta de Crédito: $${totalCredito.toFixed(2)}\n`;
+            resumen += `Tarjeta de Débito: $${totalDebito.toFixed(2)}\n`;
+            resumen += `Vale de Despensa: $${totalVale.toFixed(2)}\n`;
+            resumen += `DIDI: $${totalDIDI.toFixed(2)}\n`; // Añadir DIDI al resumen
+            resumen += `RAPPI: $${totalRAPPI.toFixed(2)}\n`; // Añadir RAPPI al resumen
+            resumen += `UBER: $${totalUBER.toFixed(2)}\n`; // Añadir UBER al resumen
+
+            const totalGeneral = totalEfectivo + totalCredito + totalDebito + totalVale + totalDIDI + totalRAPPI + totalUBER;
+            resumen += `\nTotal General: $${totalGeneral.toFixed(2)}\n`;
+
+            // Crear la ventana de impresión con el logo y los detalles
+            const ventanaImpresion = window.open('', '_blank', 'width=300,height=400');
+            ventanaImpresion.document.write('<html><head><title>Resumen de Ventas</title>');
+            ventanaImpresion.document.write('<style>body { font-family: Arial, sans-serif; font-size: 14px; }</style></head><body>');
+
+            // Añadir el logo y el nombre de la sucursal
+            ventanaImpresion.document.write('<div class="logo-container"><img src="/LogoPFo.png" alt="Pollo Feliz" /></div>'); // Agregar ruta al logo
+            ventanaImpresion.document.write('<h3>' + ventasDelDia[0].sucursal + '</h3>');
+
+            // Escribir el resumen
+            ventanaImpresion.document.write('<pre>' + resumen + '</pre>');
+            ventanaImpresion.document.write('</body></html>');
+            ventanaImpresion.document.close();
+
+            ventanaImpresion.onload = function () {
+                ventanaImpresion.print();
+                ventanaImpresion.close();
+            };
+        }
+
+        function obtenerVentasDelDia(fecha) {
+            let ventasGuardadas = JSON.parse(localStorage.getItem("ventas")) || [];
+            return ventasGuardadas.filter(venta => venta.fecha === fecha);
+        }
+        function obtenerDatosPlataformas() {
+            const ventasPlataformas = JSON.parse(localStorage.getItem("ventasPlataformas")) || [];
+            const resumen = { DIDI: 0, RAPPI: 0, UBER: 0 };
+
+            ventasPlataformas.forEach(venta => {
+                switch (venta.metodoPago) {
+                    case "DIDI":
+                        resumen.DIDI += venta.total;
+                        break;
+                    case "RAPPI":
+                        resumen.RAPPI += venta.total;
+                        break;
+                    case "UBER":
+                        resumen.UBER += venta.total;
+                        break;
+                }
+            });
+
+            // Actualizar la tabla Resumen de Ventas Diarias
+            document.getElementById("totalDIDI").textContent = `$${resumen.DIDI.toFixed(2)}`;
+            document.getElementById("totalRAPPI").textContent = `$${resumen.RAPPI.toFixed(2)}`;
+            document.getElementById("totalUBER").textContent = `$${resumen.UBER.toFixed(2)}`;
+        }
+
+        // Llamar al cargar la página
+        window.onload = () => {
+            obtenerDatosPlataformas();
+        };
+
+        function exportarTablaAXLSX() {
+            const ventas = JSON.parse(localStorage.getItem("ventas")) || [];
+
+            // Crear los datos para la hoja de cálculo
+            const data = ventas.map(venta => ({
+                Sucursal: venta.sucursal,
+                Fecha: `${venta.fecha} ${venta.hora}`,
+                "Número de Ticket": venta.ticket,
+                "Atendido por": venta.atendio,
+                "Método de Pago": venta.metodoPago,
+                Total: venta.total.toFixed(2),
+                Detalle: venta.detalle || "No disponible",
+            }));
+
+            // Crear un libro de trabajo y una hoja
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.json_to_sheet(data);
+
+            // Agregar la hoja al libro
+            XLSX.utils.book_append_sheet(wb, ws, "Ventas");
+
+            // Exportar el libro a un archivo .xlsx
+            XLSX.writeFile(wb, "todas_ventas.xlsx");
+        }
+
+    </script>
+
+</body>
+
+</html>

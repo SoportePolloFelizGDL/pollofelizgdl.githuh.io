@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Ventas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .summary {
+            margin-bottom: 20px;
+        }
+        .summary h3 {
+            margin-bottom: 10px;
+        }
+        .summary p {
+            margin: 5px 0;
+        }
+        .date-picker {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Historial de Ventas</h2>
+
+    <!-- Sección de resumen de ventas -->
+    <div class="summary">
+        <h3>Resumen de Ventas</h3>
+        <p>Efectivo: <span id="efectivo-total">0</span> MXN</p>
+        <p>Crédito: <span id="credito-total">0</span> MXN</p>
+        <p>Débito: <span id="debito-total">0</span> MXN</p>
+        <p>Vale de Despensa: <span id="vale-total">0</span> MXN</p>
+        <p>Total General: <span id="total-general">0</span> MXN</p>
+    </div>
+
+    <!-- Selector de fecha -->
+    <div class="date-picker">
+        <label for="fecha">Seleccionar Fecha:</label>
+        <input type="date" id="fecha" value="">
+        <button onclick="cargarVentas()">Ver Ventas</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Folio</th>
+                <th>Fecha y Hora</th>
+                <th>Sucursal</th>
+                <th>Atendido Por</th>
+                <th>Servicio</th>
+                <th>Total</th>
+                <th>Detalles</th>
+            </tr>
+        </thead>
+        <tbody id="ventas-table-body">
+            <!-- Las ventas se agregarán aquí -->
+        </tbody>
+    </table>
+
+    <script>
+        // Cargar ventas según la fecha seleccionada o el día actual
+        function cargarVentas() {
+            const fechaSeleccionada = document.getElementById("fecha").value || new Date().toISOString().split("T")[0];
+            fetch(`http://localhost:3000/obtener-ventas?fecha=${fechaSeleccionada}`)
+                .then(response => response.json())
+                .then(ventas => {
+                    const ventasTableBody = document.getElementById("ventas-table-body");
+                    let totalEfectivo = 0;
+                    let totalCredito = 0;
+                    let totalDebito = 0;
+                    let totalVale = 0;
+                    let totalGeneral = 0;
+
+                    ventasTableBody.innerHTML = "";
+
+                    ventas.forEach(venta => {
+                        // Calcular los totales por tipo de pago
+                        switch (venta.tipoPago) {
+                            case 'efectivo':
+                                totalEfectivo += venta.total;
+                                break;
+                            case 'credito':
+                                totalCredito += venta.total;
+                                break;
+                            case 'debito':
+                                totalDebito += venta.total;
+                                break;
+                            case 'vale':
+                                totalVale += venta.total;
+                                break;
+                        }
+                        totalGeneral += venta.total;
+
+                        // Agregar la venta a la tabla
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${venta.folio}</td>
+                            <td>${venta.fechaHora}</td>
+                            <td>${venta.sucursal}</td>
+                            <td>${venta.atendidoPor}</td>
+                            <td>${venta.servicio}</td>
+                            <td>${venta.total} MXN</td>
+                            <td>
+                                <button onclick="mostrarDetalles('${venta.folio}')">Ver Detalles</button>
+                            </td>
+                        `;
+                        ventasTableBody.appendChild(row);
+                    });
+
+                    // Actualizar los valores de resumen en el HTML
+                    document.getElementById("efectivo-total").textContent = totalEfectivo.toFixed(2);
+                    document.getElementById("credito-total").textContent = totalCredito.toFixed(2);
+                    document.getElementById("debito-total").textContent = totalDebito.toFixed(2);
+                    document.getElementById("vale-total").textContent = totalVale.toFixed(2);
+                    document.getElementById("total-general").textContent = totalGeneral.toFixed(2);
+                })
+                .catch(error => {
+                    console.error('Error al cargar las ventas:', error);
+                });
+        }
+
+        function mostrarDetalles(folio) {
+            fetch('http://localhost:3000/obtener-ventas')
+                .then(response => response.json())
+                .then(ventas => {
+                    const venta = ventas.find(v => v.folio === folio);
+                    if (venta) {
+                        let detalleItems = venta.items;
+                        alert(`Detalles de la venta ${folio}:\n${detalleItems}`);
+                    } else {
+                        alert("Venta no encontrada.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al cargar los detalles de la venta:', error);
+                });
+        }
+
+        // Cargar ventas del día actual al iniciar la página
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("fecha").value = new Date().toISOString().split("T")[0];
+            cargarVentas();
+        });
+    </script>
+</body>
+</html>

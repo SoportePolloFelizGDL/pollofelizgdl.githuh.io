@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pollo Feliz GDL</title>
+  <link rel="shortcut icon" href="/LOGO POLLO FELIZ.jpg" />
+  <link rel="stylesheet" href="estilo.css" />
+  <style>
+    /* Estilos básicos */
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      /* Asegura que el html y body ocupen toda la altura de la pantalla */
+    }
+
+    #container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      /* Ajusta la altura del contenedor al 100% de la vista */
+      overflow: auto;
+      /* Permite el desplazamiento si el contenido excede la altura del contenedor */
+    }
+
+    .ticket {
+      width: 300px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 1px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 1px;
+      text-align: center;
+    }
+
+    .ticket h2 {
+      text-align: center;
+      margin-bottom: 1px;
+    }
+
+    .ticket table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1px;
+    }
+
+    .ticket table,
+    .ticket th,
+    .ticket td {
+      border: 1px solid #ddd;
+    }
+
+    .ticket th,
+    .ticket td {
+      padding: 1px;
+      text-align: left;
+    }
+
+    .ticket th {
+      background-color: #f2f2f2;
+    }
+
+    .ticket p {
+      margin: 1px 0;
+    }
+
+    .ticket input[type="number"],
+    .ticket input[type="text"] {
+      width: 100%;
+      padding: 1px;
+      margin-top: 1px;
+      box-sizing: border-box;
+    }
+
+    .ticket select {
+      width: 100%;
+      padding: 1px;
+      margin-top: 1px;
+      box-sizing: border-box;
+    }
+
+    .ticket button {
+      width: 100%;
+      padding: 1px;
+      background-color: red;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .ticket button:hover {
+      background-color: red;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      /* Espacio entre botones */
+      margin-top: 20px;
+    }
+
+    .buttons button {
+      width: calc(33% - 10px);
+      /* Ajusta el ancho para caber en 3 columnas con espacio entre botones */
+      padding: 5px;
+      background-color: #ffe602;
+      color: black;
+      border: black;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    .buttons button:hover {
+      background-color: #ff0000;
+      color: white;
+      border: black;
+    }
+
+    .barcode {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .barcode img {
+      height: 2cm;
+      width: 100%;
+    }
+
+    .ticket img {
+      max-width: 70%;
+      /* Asegura que la imagen no esté aplastada */
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .ticket .delete-btn {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+      padding: 5px;
+      margin: 0;
+    }
+
+    .ticket .delete-btn:hover {
+      background-color: #d32f2f;
+    }
+
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+
+      .ticket,
+      .ticket * {
+        visibility: visible;
+      }
+
+      .ticket {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 80mm;
+      }
+
+      .buttons,
+      .buttons button {
+        display: none;
+      }
+
+      button {
+        display: none;
+      }
+
+      select,
+      input {
+        border: none;
+        background: transparent;
+        outline: none;
+      }
+    }
+
+    .dropdown-content {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .dropdown-toggle {
+      font-weight: bold;
+      font-size: 1.1em;
+      background-color: #f2f2f2;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      width: 100%;
+      text-align: left;
+    }
+
+    .dropdown-content button {
+      width: 100%;
+      padding: 8px;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main-container">
+    <div class="ticket" id="ticket">
+      <!-- Aquí va el logo, después de "Ticket" y antes de la información -->
+      <img src="/LogoPFo.png" alt="Logo Restaurante" />
+
+      <p>PROMOTORA DE ALIMENTOS LA GRANJA SA DE CV</p>
+      <p>Río de La Loza 1976, El Rosario, 44870 Guadalajara, Jal.</p>
+      <p>Fecha: <span id="fecha"></span> Hora: <span id="hora"></span></p>
+      <div>
+        <label for="sucursalSelect">Sucursal:</label>
+        <select id="sucursalSelect">
+          <option value="01">Águilas</option>
+          <option value="02">Tapatio</option>
+          <option value="03">Tlaquepaque</option>
+          <option value="05">Loma Dorada</option>
+          <option value="06">Santa Margarita</option>
+          <option value="07">Patria</option>
+          <option value="08">Independencia</option>
+          <option value="10">Tesistan</option>
+          <option value="11">Oblatos</option>
+          <option value="12">Guadalupe</option>
+          <option value="13">Tetlan</option>
+          <option value="14">Sauz</option>
+          <option value="15">Santa Fe</option>
+          <option value="16">Tuzania</option>
+          <option value="17">La Cruz</option>
+          <option value="18">Juan Pablo II</option>
+          <option value="19">Box Market</option>
+          <option value="20">Plan de San Luis</option>
+          <option value="21">Autodromo</option>
+          <option value="22">Monumental</option>
+          <option value="23">16 de septiembre</option>
+          <option value="24">CEDIS</option>
+          <option value="25">Condo Plaza</option>
+          <option value="26">Avila Camacho</option>
+          <option value="27">Magnolias</option>
+          <option value="28">El Castillo</option>
+          <option value="29">Lomas del Gallo</option>
+          <option value="30">Torre Trimera</option>
+          <!-- Aquí se agregarán las demás sucursales -->
+        </select>
+      </div>
+      <p>Atendió: <input type="text" id="atendio" /></p>
+      <p>
+        Servicio:
+        <select id="servicio">
+          <option value="comedor">Comedor</option>
+          <option value="paraLlevar">Para llevar</option>
+        </select>
+      </p>
+      <button onclick="nuevaCuenta()">Nueva Cuenta</button>
+      <table id="ticketTable">
+        <thead>
+          <tr>
+            <th>C.</th>
+            <th>Platillo</th>
+            <th>Subtotal</th>
+            <th>X</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Las filas se añadirán aquí -->
+        </tbody>
+      </table>
+      <p>Subtotal: $<span id="subtotal">0.00</span></p>
+      <p>IVA 16%: $<span id="iva">0.00</span></p>
+      <p>Total: $<span id="total">0.00</span></p>
+      <label for="payment-method">Seleccionar Método de Pago:</label>
+      <select id="payment-method">
+        <option value="efectivo">Efectivo</option>
+        <option value="credito">Tarjeta de Crédito</option>
+        <option value="debito">Tarjeta de Débito</option>
+        <option value="vale">Vale de Despensa</option>
+      </select>
+      <p>
+        Tu pago: $<input type="number" id="pago" step="0.01" ondblclick="setTotalAsPayment()" />
+      </p>
+      <button onclick="calcularCambio()">Pagar</button>
+      <p>Cambio: $<span id="cambio">0.00</span></p>
+      <div class="barcode">
+        <img id="barcode" src="" alt="Número de Ticket" />
+      </div>
+      <button onclick="imprimirTicket()">Imprimir Ticket</button>
+      <p>Facturación: facturacionpf.gdl@gmail.com</p>
+      <p>
+        Enviándonos tu número de ticket, el costo total, metodo de pago y tus
+        datos de facturacion:
+      </p>
+      <p id="ticketNumber">(Número de Ticket)</p>
+      <img src="QR.png" alt="QR MENÚ" />
+      <p>NUESTRO MENÚ</p>
+      <p>🍗🍗🍗🍗🍗🍗🍗🍗🍗🍗</p>
+    </div>
+
+    <div class="buttons-container">
+      <div class="buttons">
+        <p>🍗🍗</p>
+        <div class="button-container">
+          <button>
+            <a href="Ticket.html"><img src="LOGO POLLO O.png" width="10%" alt="TICKET" /></a>
+          </button>
+        </div>
+        <p>🍗🍗</p>
+        <div class="button-container">
+          <button>
+            <a href="Ticket didi.html"><img src="LOGO DIDI.png" width="10%" alt="DIDI" /></a>
+          </button>
+        </div>
+        <p>🍗🍗</p>
+        <div class="button-container">
+          <button>
+            <a href="Ticket rappi.html"><img src="LOGO RAPPI.jpg" width="10%" alt="RAPPI" /></a>
+          </button>
+        </div>
+        <p>🍗🍗</p>
+        <div class="button-container">
+          <button>
+            <a href="Ticket uber.html"><img src="LOGO UBER.png" width="10%" alt="UBER" /></a>
+          </button>
+        </div>
+        <p>🍗🍗</p>
+        <div class="button-container">
+          <button>
+            <a href="Ticket.html"><img src="LOGO CAJA.png" width="10%" alt="CAJA" /></a>
+          </button>
+        </div>
+        <p>🍗🍗</p>
+
+        <div class="buttons-container">
+          <div class="buttons">
+            <!-- Categoría: Paquetes Familiares -->
+            <div class="button-group">
+              <button class="dropdown-toggle" onclick="toggleDropdown('familiares')">Paquetes Familiares</button>
+              <div class="dropdown-content" id="familiares">
+                <button onclick="agregarPlatillo('', '1/2 pollo, 1 salsita, 2 tortillas, 1 chile toreado', 159)">
+                  PKT FELIZ 1/2
+                </button>
+                <button onclick="agregarPlatillo('', '1 pollo, 1 salsita, 4 tortillas, 1 chile toreado', 189)">
+                  PKT FELIZ 1
+                </button>
+                <button
+                  onclick="agregarPlatillo('', '1 y 1/2 pollos, 2 salsitas, 6 tortillas, 2 chiles toreados', 269)">
+                  PKT FELIZ 1&1/2
+                </button>
+                <button
+                  onclick="agregarPlatillo('', '3 piernas, 3 muslos, 1 salsita, 3 tortillas, 1 chile toreado', 149)">
+                  PKT FFAMILIAR 6
+                </button>
+                <button
+                  onclick="agregarPlatillo('', '6 piernas, 6 muslos, 2 salsitas, 6 tortillas, 2 chiles toreados', 209)">
+                  PKT FFAMILIAR 12
+                </button>
+                <button onclick="agregarPlatillo('', '2 pollos, 2 salsitas, 8 tortillas, 2 chiles toreados', 329)">
+                  PKTFELIZ 2
+                </button>
+              </div>
+            </div>
+            <!-- Categoría: Promocion del Mes -->
+            <div class="button-group">
+              <button class="dropdown-toggle" onclick="toggleDropdown('promo-mes')">Promoción del Mes</button>
+              <div class="dropdown-content" id="promo-mes">
+                <button
+                  onclick="agregarPlatillo('', 'pollo & 1/2, 2 salsita, 6 tortillas, 2 chile toreado, 10 flautas', 269)">
+                  PROMO POP 1&1/2
+                </button>
+                <button
+                  onclick="agregarPlatillo('', '2 pollos, 2 complementos, 2 salsitas, 8 tortillas, 2 chiles toreados, 10 flautas', 399)">
+                  PROMO POP 2
+                </button>
+                <button
+                  onclick="agregarPlatillo('', '1 pollo, 1 salsita, 4 tortillas, 1 chile toreado, 1 papa asada, 10 flautas de pollo', 293)">
+                  SUPER PKT FELIZ 1
+                </button>
+              </div>
+            </div>
+            <!-- Categoría: Individuales -->
+            <div class="button-group">
+              <button class="dropdown-toggle" onclick="toggleDropdown('Individuales')">Individuales</button>
+              <div class="dropdown-content" id="Individuales">
+                <button
+                  onclick="agregarPlatillo('', '1/4 de pollo, 1 complemento, 1 salsita, 2 tortillas, 1 chile toreado', 89)">
+                  PKT FELIZ 1/4
+                </button>
+                <button onclick="agregarPlatillo('', 'Hambur guesa, papas a la francesa y bebida', 89)">
+                  PKTHAMBURGUESA
+                </button>
+                <button onclick="agregarPlatillo('', 'Nuggets y papas a la francesa', 69)">
+                  PKTNUGGETS
+                </button>
+              </div>
+            </div>
+            <!-- Categoría: Antojos -->
+            <div class="button-group">
+              <button class="dropdown-toggle" onclick="toggleDropdown('Antojos')">Antojos</button>
+              <div class="dropdown-content" id="Antojos">
+                <button onclick="agregarPlatillo('', '1 flauta de pollo', 10)">
+                  FLAUTA
+                </button>
+                <button onclick="agregarPlatillo('', '5 flautas de pollo, + 5 flautas de pollo gratis', 49)">
+                  DELI5FLAUTAS
+                </button>
+                <button onclick="agregarPlatillo('', '10 flautas de pollo, + 10 flautas de pollo gratis', 98)">
+                  DELI10FLAUTAS
+                </button>
+                <button onclick="agregarPlatillo('', '5 flautas de pollo, 1 guacamole', 79)">
+                  PROMOFLAUTAS
+                </button>
+                <button onclick="agregarPlatillo('', 'Papas a la francesa', 49)">
+                  PAPASFRANCESA
+                </button>
+                <button onclick="agregarPlatillo('', 'Quesa dilla de 26 cm, 1 salsita', 49)">
+                  QUESABROSA
+                </button>
+                <button onclick="agregarPlatillo('', 'Papa asada', 55)">
+                  PAPA ASADA
+                </button>
+                <button onclick="agregarPlatillo('', 'Palo mitas de pollo', 49)">
+                  PALOMITAS
+                </button>
+              </div>
+            </div>
+            <!-- Categoría: Complementos -->
+            <div class="button-group">
+              <button class="dropdown-toggle" onclick="toggleDropdown('Complementos')">Complementos</button>
+              <div class="dropdown-content" id="Complementos">
+                <button onclick="agregarPlatillo('', '3 Complementos a elegir', 85)">
+                  PROMO 3 COMPLE MENTOS
+                </button>
+                <button onclick="agregarPlatillo('', '1/4 de arroz rojo', 35)">
+                  ARROZ ROJO
+                </button>
+                <button onclick="agregarPlatillo('', '1/4 de frijoles charros', 35)">
+                  FRIJOLES CHARROS
+                </button>
+                <button onclick="agregarPlatillo('', '1/4 de ensalada de col', 35)">
+                  ENSALADA COL
+                </button>
+                <button onclick="agregarPlatillo('', '1/4 de sopa de coditos', 35)">
+                  SOPAFRIA
+                </button>
+                <button onclick="agregarPlatillo('', '1/4 de Guacamole fresco', 49)">
+                  GUACAMOLE
+                </button>
+              </div>
+            </div>
+            <!-- Categoría: Postres -->
+            <div class="button-group">
+              <button class="dropdown-toggle" onclick="toggleDropdown('Postres')">Postres</button>
+              <div class="dropdown-content" id="Postres">
+                <button onclick="agregarPlatillo('', 'Porción de Flan Napolitano', 25)">
+                  FLAN NAPOLITANO
+                </button>
+                <button onclick="agregarPlatillo('', 'Porción de Arroz con Leche', 25)">
+                  ARROZ CON LECHE
+                </button>
+                <button onclick="agregarPlatillo('', 'Porción de Jericalla', 25)">
+                  JERICALLA
+                </button>
+              </div>
+            </div>
+            <!-- Categoría: Extras -->
+            <div class="button-group">
+              <button class="dropdown-toggle" onclick="toggleDropdown('Extras')">Extras</button>
+              <div class="dropdown-content" id="Extras">
+                <button onclick="agregarPlatillo('', 'Chile asado extra', 10)">
+                  CHILE ASADO
+                </button>
+                <button onclick="agregarPlatillo('', '1 pkt de tortillas extras', 12)">
+                  TORTILLAS
+                </button>
+                <button onclick="agregarPlatillo('', '1 salsita extra', 12)">
+                  SALSA
+                </button>
+                <button onclick="agregarPlatillo('', 'cruji entes y sala ditos', 12)">
+                  TOTOPOS
+                </button>
+              </div>
+            </div>
+            <!-- Categoría: Bebidas -->
+            <div class="button-group">
+              <button class="dropdown-toggle" onclick="toggleDropdown('Bebidas')">Bebidas</button>
+              <div class="dropdown-content" id="Bebidas">
+                <button onclick="agregarPlatillo('', 'Agua de limon 500ml', 22)">
+                  LIMON
+                </button>
+                <button onclick="agregarPlatillo('', 'Agua de pepino 500ml', 22)">
+                  PEPINO
+                </button>
+                <button onclick="agregarPlatillo('', 'Agua de horcha ta 500ml', 22)">
+                  HORCHATA
+                </button>
+                <button onclick="agregarPlatillo('', 'Agua de horcha ta fresa 500ml', 22)">
+                  FRESA
+                </button>
+                <button onclick="agregarPlatillo('', 'Agua de jamaica 500ml', 22)">
+                  JAMAICA
+                </button>
+                <button onclick="agregarPlatillo('', 'EPURA 600ml', 22)">
+                  EPURA600
+                </button>
+                <button onclick="agregarPlatillo('', '7UP 600ml', 25)">
+                  7UP600
+                </button>
+                <button onclick="agregarPlatillo('', 'Manza nita 600ml', 25)">
+                  MANZANA600
+                </button>
+                <button onclick="agregarPlatillo('', 'PEPSI 600ml', 25)">
+                  PEPSI600
+                </button>
+                <button onclick="agregarPlatillo('', 'Mirinda 600ml', 25)">
+                  MIRINDA600
+                </button>
+                <button onclick="agregarPlatillo('', 'Sangria 600ml', 25)">
+                  SANGRIA600
+                </button>
+                <button onclick="agregarPlatillo('', '7UP 1.5lt', 35)">
+                  7UP1.5
+                </button>
+                <button onclick="agregarPlatillo('', 'Manza nita 1.5lt', 35)">
+                  MANZANA1.5
+                </button>
+                <button onclick="agregarPlatillo('', 'PEPSI 1.5lt', 35)">
+                  PEPSI1.5
+                </button>
+                <button onclick="agregarPlatillo('', 'Mirinda 1.5lt', 35)">
+                  MIRINDA1.5
+                </button>
+                <button onclick="agregarPlatillo('', 'Sangria 1.5lt', 35)">
+                  SANGRIA1.5
+                </button>
+              </div>
+            </div>
+            <!-- Categoría: Complementos Incluidos en paquetes -->
+            <div class="button-group">
+              <button class="dropdown-toggle"
+                onclick="toggleDropdown('Complementos Incluidos en paquetes')">Complementos Incluidos en
+                paquetes</button>
+              <div class="dropdown-content" id="Complementos Incluidos en paquetes">
+                <button onclick="agregarPlatillo('', '1/4 de arroz rojo', 0)">
+                  ARROZ ROJO
+                </button>
+                <button onclick="agregarPlatillo('', '1/4 de frijoles charros', 0)">
+                  FRIJOLES CHARROS
+                </button>
+                <button onclick="agregarPlatillo('', '1/4 de ensalada de col', 0)">
+                  ENSALADA COL
+                </button>
+                <button onclick="agregarPlatillo('', '1/4 de sopa de coditos', 0)">
+                  SOPAFRIA
+                </button>
+              </div>
+            </div>
+            <!-- Categoría: Bebidas incluidas en paquetes -->
+            <div class="button-group">
+              <button class="dropdown-toggle" onclick="toggleDropdown('Bebidas incluidas en paquetes')">Bebidas
+                incluidas en paquetes</button>
+              <div class="dropdown-content" id="Bebidas incluidas en paquetes">
+                <button onclick="agregarPlatillo('', 'Agua de limon 500ml', 0)">
+                  LIMON
+                </button>
+                <button onclick="agregarPlatillo('', 'Agua de pepino 500ml', 0)">
+                  PEPINO
+                </button>
+                <button onclick="agregarPlatillo('', 'Agua de horcha ta 500ml', 0)">
+                  HORCHATA
+                </button>
+                <button onclick="agregarPlatillo('', 'Agua de horcha ta fresa 500ml', 0)">
+                  FRESA
+                </button>
+                <button onclick="agregarPlatillo('', 'Agua de jamaica 500ml', 0)">
+                  JAMAICA
+                </button>
+                <button onclick="agregarPlatillo('', 'EPURA 600ml', 0)">
+                  EPURA600
+                </button>
+                <button onclick="agregarPlatillo('', '7UP 600ml', 0)">
+                  7UP600
+                </button>
+                <button onclick="agregarPlatillo('', 'Manza nita 600ml', 0)">
+                  MANZANA600
+                </button>
+                <button onclick="agregarPlatillo('', 'PEPSI 600ml', 0)">
+                  PEPSI600
+                </button>
+                <button onclick="agregarPlatillo('', 'Mirinda 600ml', 0)">
+                  MIRINDA600
+                </button>
+                <button onclick="agregarPlatillo('', 'Sangria 600ml', 0)">
+                  SANGRIA600
+                </button>
+              </div>
+            </div>
+            <!-- Categoría: Regalias -->
+            <div class="button-group">
+              <button class="dropdown-toggle" onclick="toggleDropdown('Regalias')">Regalias</button>
+              <div class="dropdown-content" id="Regalias">
+                <button onclick="agregarPlatillo('PKT RH', '1 pollo, 1 salsa, 4 tortillas, 1 chile toreado', 0)">
+                  PKT RH
+                </button>
+                <button onclick="agregarPlatillo('EMPLEADO FLAUTAS', '5 flautas de pollo, 1 salsa', 0)">
+                  EMPLEADO FLAUTAS
+                </button>
+                <button
+                  onclick="agregarPlatillo('EMPLEADO 1/4 POLLO', '1/4 de pollo, 1 salsa, 2 tortillas, 1 chile toreado', 0)">
+                  EMPLEADO 1/4 POLLO
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        function setTotalAsPayment() {
+          var total = parseFloat(document.getElementById("total").textContent);
+          document.getElementById("pago").value = total.toFixed(2);
+          calcularCambio();
+        }
+
+        let total = 0;
+
+        function agregarPlatillo(nombre, descripcion, precio) {
+          const table = document.getElementById("ticketTable").getElementsByTagName("tbody")[0];
+          let found = false;
+          // Recorre todas las filas para ver si el platillo ya está en la tabla
+          for (let row of table.rows) {
+            const cellDescription = row.cells[1].innerText;
+            if (cellDescription.includes(descripcion)) {
+              const quantityCell = row.cells[0];
+              const subtotalCell = row.cells[2];
+              const currentQuantity = parseInt(quantityCell.innerText);
+              const currentSubtotal = parseFloat(subtotalCell.innerText.replace("$", ""));
+              // Incrementa la cantidad
+              const newQuantity = currentQuantity + 1;
+              quantityCell.innerText = newQuantity;
+              // Actualiza el subtotal
+              const newSubtotal = currentSubtotal + precio;
+              subtotalCell.innerText = `$${newSubtotal.toFixed(2)}`;
+              // Actualiza el total
+              total += precio;
+              updateTotals();
+
+              found = true;
+              break;
+            }
+          }
+          // Si el platillo no se encontró, agrega una nueva fila
+          if (!found) {
+            const newRow = table.insertRow();
+            const cellQuantity = newRow.insertCell(0);
+            const cellDescription = newRow.insertCell(1);
+            const cellSubtotal = newRow.insertCell(2);
+
+            cellQuantity.innerText = 1;
+            cellDescription.innerText = descripcion;
+            cellSubtotal.innerText = `$${precio.toFixed(2)}`;
+
+            total += precio;
+            updateTotals();
+          }
+        }
+
+        function eliminarPlatillo(button) {
+          const row = button.parentElement.parentElement;
+          const subtotal = parseFloat(row.cells[2].innerText.replace("$", ""));
+          total -= subtotal;
+          document.getElementById("total").innerText = total.toFixed(2);
+          row.remove();
+        }
+
+        function updateTotals() {
+          // Calcula el subtotal y el IVA con base en el total actual
+          const subtotal = total / 1.16;
+          const iva = total - subtotal;
+
+          // Actualiza los valores en la pantalla
+          document.getElementById("subtotal").innerText = subtotal.toFixed(2);
+          document.getElementById("iva").innerText = iva.toFixed(2);
+          document.getElementById("total").innerText = total.toFixed(2);
+        }
+
+        function calcularCambio() {
+          generarCodigoBarras();
+          const pago = parseFloat(document.getElementById("pago").value) || 0;
+          const cambio = pago - total;
+          document.getElementById("cambio").innerText = cambio >= 0 ? cambio.toFixed(2) : "0.00";
+        }
+
+        function generarCodigoBarras() {
+          const sucursal = document.getElementById("sucursalSelect").value;
+          const now = new Date();
+          const fecha =
+            now.getFullYear().toString().slice(-2) +
+            (now.getMonth() + 1).toString().padStart(2, "0") +
+            now.getDate().toString().padStart(2, "0");
+          const hora =
+            now.getHours().toString().padStart(2, "0") +
+            now.getMinutes().toString().padStart(2, "0") +
+            now.getSeconds().toString().padStart(2, "0");
+          const codigo = sucursal + fecha + hora + "-" + total;
+          document.getElementById(
+            "barcode"
+          ).src = `https://barcode.tec-it.com/barcode.ashx?data=${codigo}&code=Code128&translate-esc=true`;
+          document.getElementById("ticketNumber").innerText = codigo; // Muestra el número de ticket en el párrafo
+        }
+
+        function imprimirTicket() {
+          window.print();
+        }
+
+        function nuevaCuenta() {
+          // Resetea los campos del ticket
+          document
+            .getElementById("ticketTable")
+            .getElementsByTagName("tbody")[0].innerHTML = "";
+          total = 0;
+          document.getElementById("total").innerText = "0.00";
+          document.getElementById("cambio").innerText = "0.00";
+          document.getElementById("pago").value = "";
+        }
+
+        function actualizarHora() {
+          const now = new Date();
+          const fecha = now.toLocaleDateString();
+          const hora = now.toLocaleTimeString();
+          document.getElementById("fecha").innerText = fecha;
+          document.getElementById("hora").innerText = hora;
+        }
+
+        setInterval(actualizarHora, 1000);
+        window.onload = actualizarHora;
+
+        function toggleDropdown(id) {
+          // Obtener todos los elementos de contenido desplegable
+          const dropdowns = document.querySelectorAll('.dropdown-content');
+
+          // Cerrar todos los desplegables, excepto el que fue seleccionado
+          dropdowns.forEach(dropdown => {
+            if (dropdown.id === id) {
+              dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            } else {
+              dropdown.style.display = 'none';
+            }
+          });
+        }
+      </script>
+</body>
+
+</html>
